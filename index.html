@@ -1020,6 +1020,31 @@ async function realCheckout(items){
 async function saveFavorites(){ try{ await window.storage.set(FAVORITES_KEY, JSON.stringify(favorites), false); }catch(e){} }
 function cleanupCart(){ const before=cart.length; cart = cart.filter(id => listings.some(l=>l.id===id)); if(cart.length!==before) saveCart(); }
 function cleanupFavorites(){ const before=favorites.length; favorites = favorites.filter(id => listings.some(l=>l.id===id)); if(favorites.length!==before) saveFavorites(); }
+async function syncFavoriteWithBackend(id, added){
+  if(!currentUser || !currentUser.email) return;
+  try{
+    if(added){
+      await fetch(LISTINGS_API_BASE+'/api/favorites', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({listingId:id, email: currentUser.email})
+      });
+    } else {
+      await fetch(LISTINGS_API_BASE+'/api/favorites?listingId='+encodeURIComponent(id)+'&email='+encodeURIComponent(currentUser.email), { method:'DELETE' });
+    }
+  }catch(e){}
+}
+async function syncFavoritesFromBackend(){
+  if(!currentUser || !currentUser.email) return;
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/favorites?email='+encodeURIComponent(currentUser.email));
+    if(!res.ok) return;
+    const data = await res.json();
+    const remoteIds = (data.favorites||[]).map(x=>Number(x));
+    let changed = false;
+    remoteIds.forEach(rid=>{ if(!favorites.includes(rid)){ favorites.push(rid); changed = true; } });
+    if(changed) saveFavorites();
+  }catch(e){}
+}
 
 /* ---------- NAVIGATION ---------- */
 async function showPage(page){
@@ -1233,6 +1258,7 @@ async function refreshAuthSession(){
     const u = findLocalUser(authToken);
     currentUser = u ? {nom:u.nom, email:u.email} : null;
     if(!currentUser) await saveAuthToken(null);
+      syncFavoritesFromBackend();
     updateAccountNav();
     return;
   }
@@ -1278,6 +1304,7 @@ async function doRegister(){
     await saveLocalUsers();
     await saveAuthToken(email.toLowerCase().trim());
     currentUser = {nom, email};
+      syncFavoritesFromBackend();
     updateAccountNav(); closeModal('modal-auth');
     showToast("Compte créé (mode test), bienvenue !");
     return;
@@ -1305,6 +1332,7 @@ async function doLogin(){
     if(!u || u.password !== password){ showToast("E-mail ou mot de passe incorrect"); return; }
     await saveAuthToken(u.email.toLowerCase().trim());
     currentUser = {nom:u.nom, email:u.email};
+      syncFavoritesFromBackend();
     updateAccountNav(); closeModal('modal-auth');
     showToast("Connexion réussie (mode test)");
     return;
@@ -1548,6 +1576,7 @@ function toggleFav(id){
   const i = favorites.indexOf(id);
   if(i>-1) favorites.splice(i,1); else favorites.push(id);
   saveFavorites();
+  syncFavoriteWithBackend(id, i===-1);
   renderAnnonces();
   if(document.getElementById('page-favoris').style.display==='block') renderFavPage();
 }
