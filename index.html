@@ -1462,7 +1462,7 @@ async function saveEditedPhotos(){
   l.images = editPhotosDraft.slice();
   if(LISTINGS_API_BASE){
     try{
-      await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(frontendToBackend(l)) });
+      await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify(frontendToBackend(l)) });
     }catch(e){}
   }
   await saveListings();
@@ -2257,7 +2257,7 @@ async function toggleListingSold(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   l.vendu = !l.vendu;
   if(LISTINGS_API_BASE){
-    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
+    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+window.__adminToken}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
   }
   await saveListings();
   renderAdminAds(); renderAnnonces();
@@ -2269,7 +2269,7 @@ async function toggleListingSolde(id){
     if(!confirm("Retirer le solde en cours sur cette annonce ?")) return;
     delete l.soldePrix; delete l.soldeExpire;
     if(LISTINGS_API_BASE){
-      try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
+      try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+window.__adminToken}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
     }
     await saveListings();
     renderAdminAds(); renderAnnonces(); renderSoldesPage();
@@ -2282,7 +2282,7 @@ async function toggleListingSolde(id){
   l.soldePrix = Math.round(newPrice*100)/100;
   l.soldeExpire = Date.now() + 10*24*60*60*1000;
   if(LISTINGS_API_BASE){
-    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
+    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+window.__adminToken}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
   }
   await saveListings();
   renderAdminAds(); renderAnnonces(); renderSoldesPage();
