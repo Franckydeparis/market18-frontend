@@ -226,6 +226,7 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
 .admin-msgs-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding:10px 12px;background:#f7f5ff;border-radius:10px;color:#3a2a5c;}
 .admin-msg-select{margin-bottom:6px;display:inline-block;}
 </style>
+<script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
 </head>
 <body>
 <div class="construction-ribbon">Site en construction</div>
@@ -516,6 +517,8 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
       <button id="auth-tab-btn-register" onclick="setAuthTab('register')">Créer un compte</button>
     </div>
     <div id="auth-tab-login">
+      <div id="google-signin-btn-login" style="margin-bottom:12px;display:flex;justify-content:center"></div>
+      <div style="text-align:center;color:#ccc;font-size:13px;margin-bottom:12px">&mdash; ou &mdash;</div>
       <label>Adresse e-mail</label>
       <input id="login-email" name="login-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe</label>
@@ -524,6 +527,8 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
       <button class="btn" style="margin-top:16px;width:100%" onclick="doLogin()">Se connecter</button>
     </div>
     <div id="auth-tab-register" style="display:none">
+      <div id="google-signin-btn-register" style="margin-bottom:12px;display:flex;justify-content:center"></div>
+      <div style="text-align:center;color:#ccc;font-size:13px;margin-bottom:12px">&mdash; ou &mdash;</div>
       <label>Nom</label>
       <input id="register-nom" name="register-nom" autocomplete="name" placeholder="Votre nom">
       <label>Adresse e-mail</label>
@@ -2506,7 +2511,33 @@ function initMobileNav(){
   const nav = document.getElementById('nav');
   if(nav) nav.addEventListener('click', e=>{ if(e.target.closest('a')) closeMobileNav(); });
 }
+function handleGoogleCredential(response){
+  if(!response || !response.credential) return;
+  fetch(LISTINGS_API_BASE+'/api/auth/google', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({credential: response.credential}) })
+    .then(function(r){ return r.json().then(function(data){ return {ok:r.ok, data:data}; }); })
+    .then(function(res){
+      if(!res.ok){ showToast(res.data.error || "Erreur de connexion Google"); return; }
+      return saveAuthToken(res.data.token).then(function(){
+        currentUser = res.data.user;
+        syncFavoritesFromBackend();
+        updateAccountNav();
+        closeModal('modal-auth');
+        showToast("Connecte avec Google, bienvenue !");
+      });
+    })
+    .catch(function(){ showToast("Impossible de contacter le serveur"); });
+}
+function initGoogleSignIn(){
+  if(!window.google || !google.accounts || !google.accounts.id) return;
+  google.accounts.id.initialize({ client_id: '834910886589-mdb7jrk4ocna362umnqjisum7g2fj616.apps.googleusercontent.com', callback: handleGoogleCredential });
+  var elLogin = document.getElementById('google-signin-btn-login');
+  var elRegister = document.getElementById('google-signin-btn-register');
+  if(elLogin){ elLogin.innerHTML=''; google.accounts.id.renderButton(elLogin, { theme:'outline', size:'large', width:280, locale:'fr' }); }
+  if(elRegister){ elRegister.innerHTML=''; google.accounts.id.renderButton(elRegister, { theme:'outline', size:'large', width:280, locale:'fr' }); }
+}
+window.initGoogleSignIn = initGoogleSignIn;
 async function init(){
+  initGoogleSignIn();
   const __urlParams = new URLSearchParams(window.location.search);
   const __resetToken = __urlParams.get('resetToken');
   if(__resetToken){ resetPasswordWithToken(__resetToken); }
