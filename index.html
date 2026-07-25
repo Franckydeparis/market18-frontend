@@ -1959,11 +1959,11 @@ function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;'
 function escapeAttr(s){ s = String(s==null?'':s); s = s.replace(/\\/g,'\\\\').replace(/'/g,"\\'"); s = s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); return s; }
 function getMyEmail(){
   if(typeof currentUser !== 'undefined' && currentUser && currentUser.email) return currentUser.email;
-  return window.storage.get('moretvia-guest-email', false) || null;
+  try{ return localStorage.getItem('mv_moretvia-guest-email') || null; }catch(e){ return null; }
 }
 function getMyNom(){
   if(typeof currentUser !== 'undefined' && currentUser && currentUser.nom) return currentUser.nom;
-  return window.storage.get('moretvia-guest-nom', false) || '';
+  try{ return localStorage.getItem('mv_moretvia-guest-nom') || ''; }catch(e){ return ''; }
 }
 let __contactInfoResolve = null;
 function ensureMyContact(){
