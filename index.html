@@ -460,7 +460,7 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
         <h2 id="ad-titre" style="margin:4px 0"></h2>
         <p style="font-size:2rem;font-weight:900;margin:6px 0" id="ad-prix"></p>
         <p class="small"><span id="ad-ville"></span> · <span id="ad-nom"></span></p>
-        <p class="small" id="ad-etat-row" style="display:none"><span class="mini-tag">État : <span id="ad-etat"></span></span></p>
+        <p class="small" id="ad-etat-row" style="display:none"><span class="mini-tag" style="color:#5b21b6">État : <span id="ad-etat"></span></span></p>
         <div id="ad-map-wrap"></div>
         <p class="small" id="ad-tel-row"><span id="ad-tel"></span></p>
         <p style="margin-top:16px;line-height:1.6" id="ad-desc"></p>
@@ -1197,7 +1197,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#f
         ${trust.hasRating ? '<span class="mini-tag trustscore">'+ICON_STAR+' '+trust.score+'/100</span>' : ''}
         <span class="mini-tag c-blue">${ICON_SHIELD} Paiement sécurisé</span>
         ${hasDelivery ? '<span class="mini-tag c-orange">'+ICON_TRUCK+' Livraison possible</span>' : ''}
-        ${l.etat ? '<span class="mini-tag">'+escapeHtml(l.etat)+'</span>' : ''}
+        ${l.etat ? '<span class="mini-tag" style="color:#5b21b6">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
       <div class="row">
