@@ -352,6 +352,15 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
         <label>Ville *</label>
         <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
         <datalist id="ville-suggestions"></datalist>
+        <label>État du produit</label>
+        <select id="etat">
+          <option value="">Non précisé</option>
+          <option value="Neuf">Neuf</option>
+          <option value="Très bon état">Très bon état</option>
+          <option value="Bon état">Bon état</option>
+          <option value="État moyen">État moyen</option>
+          <option value="Pour pièces / à réparer">Pour pièces / à réparer</option>
+        </select>
         <label>Description</label>
         <textarea id="description" placeholder="État, caractéristiques, raison de la vente..."></textarea>
         <label>Photos (jusqu'à 4)</label>
@@ -451,6 +460,8 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
         <h2 id="ad-titre" style="margin:4px 0"></h2>
         <p style="font-size:2rem;font-weight:900;margin:6px 0" id="ad-prix"></p>
         <p class="small"><span id="ad-ville"></span> · <span id="ad-nom"></span></p>
+        <p class="small" id="ad-etat-row" style="display:none"><span class="mini-tag">État : <span id="ad-etat"></span></span></p>
+        <div id="ad-map-wrap"></div>
         <p class="small" id="ad-tel-row"><span id="ad-tel"></span></p>
         <p style="margin-top:16px;line-height:1.6" id="ad-desc"></p>
         <div id="ad-livraison" style="margin-top:14px"></div>
@@ -574,6 +585,15 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
     <select id="edit-categorie"></select>
     <label>Ville</label>
     <input id="edit-ville" name="edit-ville" autocomplete="address-level2" list="ville-suggestions">
+    <label>État du produit</label>
+    <select id="edit-etat">
+      <option value="">Non précisé</option>
+      <option value="Neuf">Neuf</option>
+      <option value="Très bon état">Très bon état</option>
+      <option value="Bon état">Bon état</option>
+      <option value="État moyen">État moyen</option>
+      <option value="Pour pièces / à réparer">Pour pièces / à réparer</option>
+    </select>
     <label>Téléphone (optionnel)</label>
     <input id="edit-telephone" name="edit-telephone" type="tel" autocomplete="tel">
     <label>Description</label>
@@ -772,7 +792,10 @@ function backendToFrontend(l){
     soldePrix: l.soldePrix || undefined,
     soldeExpire: l.soldeExpire || undefined,
     livraison: Array.isArray(l.livraison) ? l.livraison : [],
-    sellerIsPro: !!l.sellerIsPro
+    sellerIsPro: !!l.sellerIsPro,
+    etat: l.etat || '',
+    lat: (typeof l.lat === 'number') ? l.lat : null,
+    lon: (typeof l.lon === 'number') ? l.lon : null
   };
 }
 function frontendToBackend(l){
@@ -790,7 +813,10 @@ function frontendToBackend(l){
     vendu: !!l.vendu,
     soldePrix: l.soldePrix || null,
     soldeExpire: l.soldeExpire || null,
-    livraison: Array.isArray(l.livraison) ? l.livraison : []
+    livraison: Array.isArray(l.livraison) ? l.livraison : [],
+    etat: l.etat || '',
+    lat: (typeof l.lat === 'number') ? l.lat : null,
+    lon: (typeof l.lon === 'number') ? l.lon : null
   };
 }
 const LIVRAISON_MODES = {
@@ -1171,6 +1197,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#f
         ${trust.hasRating ? '<span class="mini-tag trustscore">'+ICON_STAR+' '+trust.score+'/100</span>' : ''}
         <span class="mini-tag c-blue">${ICON_SHIELD} Paiement sécurisé</span>
         ${hasDelivery ? '<span class="mini-tag c-orange">'+ICON_TRUCK+' Livraison possible</span>' : ''}
+        ${l.etat ? '<span class="mini-tag">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
       <div class="row">
@@ -1219,6 +1246,7 @@ function openAd(id){
   if(l.telephone){ telRow.style.display='block'; document.getElementById('ad-tel').textContent = l.telephone; } else { telRow.style.display='none'; }
   document.getElementById('ad-desc').textContent = l.desc||'';
   renderAdLivraison(l);
+  renderAdEtatCarte(l);
   const sold = !!l.vendu;
   document.getElementById('ad-sold-banner').style.display = sold ? 'block' : 'none';
   document.getElementById('ad-addcart-btn').style.display = sold ? 'none' : 'inline-block';
@@ -1237,6 +1265,21 @@ function renderAdLivraison(l){
       const prixTxt = mode.payant ? (item.prix>0 ? fmtPrice(item.prix) : 'Gratuit') : 'Gratuit';
       return `<div class="small" style="display:flex;justify-content:space-between;max-width:280px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.12)"><span>${mode.label}</span><span style="font-weight:bold">${prixTxt}</span></div>`;
     }).join('');
+}
+function renderAdEtatCarte(l){
+  const etatRow = document.getElementById('ad-etat-row');
+  if(l.etat){ etatRow.style.display='block'; document.getElementById('ad-etat').textContent = l.etat; }
+  else { etatRow.style.display='none'; }
+  const mapWrap = document.getElementById('ad-map-wrap');
+  if(typeof l.lat === 'number' && typeof l.lon === 'number'){
+    const d = 0.06;
+    const bbox = (l.lon-d)+','+(l.lat-d)+','+(l.lon+d)+','+(l.lat+d);
+    mapWrap.innerHTML = '<p class="small" style="font-weight:bold;margin:14px 0 6px">Localisation</p>'
+      + '<iframe width="100%" height="200" style="border:0;border-radius:12px" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox='+bbox+'&marker='+l.lat+','+l.lon+'"></iframe>'
+      + '<a href="https://www.google.com/maps?q='+l.lat+','+l.lon+'" target="_blank" rel="noopener" class="linklike" style="display:inline-block;margin-top:8px;font-size:.85rem">Ouvrir dans Google Maps</a>';
+  } else {
+    mapWrap.innerHTML = '';
+  }
 }
 function addCartCurrent(){
   if(!currentAdId) return;
@@ -1442,6 +1485,7 @@ function openEditPhotos(){
   document.getElementById('edit-titre').value = l.titre||'';
   document.getElementById('edit-prix').value = l.prix||'';
   document.getElementById('edit-ville').value = l.ville||'';
+  document.getElementById('edit-etat').value = l.etat||'';
   document.getElementById('edit-telephone').value = l.telephone||'';
   document.getElementById('edit-desc').value = l.desc||'';
   const catSel = document.getElementById('edit-categorie');
@@ -1499,7 +1543,10 @@ async function saveEditedPhotos(){
   l.prix = prix;
   l.categorie = document.getElementById('edit-categorie').value;
   l.ville = ville;
+  const geo = await geocodeVille(ville);
+  if(geo){ l.lat = geo.lat; l.lon = geo.lon; }
   l.telephone = document.getElementById('edit-telephone').value.trim();
+  l.etat = document.getElementById('edit-etat').value;
   l.desc = document.getElementById('edit-desc').value.trim();
   l.images = editPhotosDraft.slice();
   if(LISTINGS_API_BASE){
@@ -1559,6 +1606,18 @@ function togglePubSoldeField(){
   const checked = document.getElementById('pub-solde-toggle').checked;
   document.getElementById('pub-solde-box').style.display = checked ? 'block' : 'none';
 }
+async function geocodeVille(nom){
+  if(!nom) return null;
+  try{
+    const r = await fetch('https://geo.api.gouv.fr/communes?nom='+encodeURIComponent(nom)+'&fields=centre&boost=population&limit=1');
+    const list = await r.json();
+    if(Array.isArray(list) && list.length && list[0].centre && list[0].centre.coordinates){
+      const c = list[0].centre.coordinates;
+      return {lat:c[1], lon:c[0]};
+    }
+  }catch(e){}
+  return null;
+}
 async function publishAd(e){
   e.preventDefault();
   await photosProcessing;
@@ -1570,6 +1629,7 @@ async function publishAd(e){
   const nom = document.getElementById('nom').value.trim();
   const email = document.getElementById('email').value.trim();
   const telephone = document.getElementById('telephone').value.trim();
+  const etat = document.getElementById('etat').value;
   if(!titre||!prix||!categorie||!ville||!nom||!email){ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
   if(isNaN(prix) || prix<=0){ showToast("Merci d'indiquer un prix valide"); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast("Merci d'indiquer une adresse e-mail valide"); return; }
@@ -1584,7 +1644,8 @@ async function publishAd(e){
   }
 
   const livraison = collectPubLivraison();
-  const draft = {titre, prix, categorie, ville, nom, email, telephone, desc, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
+  const geo = await geocodeVille(ville);
+  const draft = {titre, prix, categorie, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
   if(LISTINGS_API_BASE){
     try{
       const res = await fetch(LISTINGS_API_BASE+'/api/listings', {
