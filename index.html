@@ -766,7 +766,8 @@ function backendToFrontend(l){
     vendu: !!l.vendu,
     soldePrix: l.soldePrix || undefined,
     soldeExpire: l.soldeExpire || undefined,
-    livraison: Array.isArray(l.livraison) ? l.livraison : []
+    livraison: Array.isArray(l.livraison) ? l.livraison : [],
+    sellerIsPro: !!l.sellerIsPro
   };
 }
 function frontendToBackend(l){
@@ -1158,7 +1159,7 @@ function cardHtml(l){
     <div class="body">
       <div class="cat-tag"><span class="cat-badge-sm">${CATEGORIES_SHORT[l.categorie]||'?'}</span>${escapeHtml(l.categorie||'')}</div>
       <h4>${escapeHtml(l.titre)}</h4>
-      <div class="price">${priceHtml}</div>
+${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
       <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${trustBadgeHtml(l.email)}</span></div>
       <div class="card-meta-row">
         ${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
@@ -1208,7 +1209,7 @@ function openAd(id){
     : fmtPrice(l.prix);
   document.getElementById('ad-ville').textContent = l.ville||'-';
   currentAdSellerEmail = l.email||'';
-  document.getElementById('ad-nom').innerHTML = `<button type="button" class="seller-chip" onclick="openSellerProfile()">${escapeHtml(l.nom||'-')}</button> ${trustBadgeHtml(l.email)}`;
+  document.getElementById('ad-nom').innerHTML = `<button type="button" class="seller-chip" onclick="openSellerProfile()">${escapeHtml(l.nom||'-')}</button> ${trustBadgeHtml(l.email)} ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;vertical-align:middle">Vendeur professionnel</span>' : ''}`;
   const telRow = document.getElementById('ad-tel-row');
   if(l.telephone){ telRow.style.display='block'; document.getElementById('ad-tel').textContent = l.telephone; } else { telRow.style.display='none'; }
   document.getElementById('ad-desc').textContent = l.desc||'';
@@ -1277,7 +1278,7 @@ async function refreshAuthSession(){
 }
 function updateAccountNav(){
   const nav = document.getElementById('nav-account');
-  nav.textContent = currentUser ? (currentUser.nom || currentUser.email) : 'Connexion';
+  nav.textContent = (currentUser ? (currentUser.nom || currentUser.email) : 'Connexion') + (currentUser && currentUser.isPro ? ' ✓ Pro' : '');
 }
 function openAccountArea(){
   if(currentUser){
