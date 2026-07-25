@@ -620,6 +620,20 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
   </div>
 </div>
 
+<!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
+<div class="modal-overlay" id="modal-contact-info" onclick="if(event.target===this) cancelContactInfo()">
+  <div class="modal-box" style="max-width:400px">
+    <button class="modal-close" onclick="cancelContactInfo()">×</button>
+    <h2 style="margin-top:0">Vos coordonnées</h2>
+    <p class="small" style="margin-bottom:14px">Pour contacter le vendeur, indiquez votre e-mail.</p>
+    <label>Adresse e-mail *</label>
+    <input id="contact-info-email" type="email" placeholder="vous@exemple.fr" autocomplete="email" onkeydown="if(event.key==='Enter') submitContactInfo()">
+    <label>Votre nom (optionnel)</label>
+    <input id="contact-info-nom" type="text" placeholder="Prénom Nom" autocomplete="name" onkeydown="if(event.key==='Enter') submitContactInfo()">
+    <button class="btn" style="margin-top:16px;width:100%" onclick="submitContactInfo()">Continuer</button>
+  </div>
+</div>
+
 <!-- MODAL LEGAL -->
 <div class="modal-overlay" id="modal-legal">
   <div class="modal-box">
@@ -1951,16 +1965,34 @@ function getMyNom(){
   if(typeof currentUser !== 'undefined' && currentUser && currentUser.nom) return currentUser.nom;
   return window.storage.get('moretvia-guest-nom', false) || '';
 }
-async function ensureMyContact(){
-  let email = getMyEmail();
-  if(email) return { email, nom: getMyNom() };
-  email = prompt('Pour contacter le vendeur, indiquez votre e-mail :');
-  if(!email) return null;
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('E-mail invalide'); return null; }
-  const nom = prompt('Votre nom (optionnel) :') || '';
+let __contactInfoResolve = null;
+function ensureMyContact(){
+  return new Promise(function(resolve){
+    const email = getMyEmail();
+    if(email){ resolve({ email: email, nom: getMyNom() }); return; }
+    __contactInfoResolve = resolve;
+    const emailInput = document.getElementById('contact-info-email');
+    const nomInput = document.getElementById('contact-info-nom');
+    if(emailInput) emailInput.value = '';
+    if(nomInput) nomInput.value = '';
+    openModal('modal-contact-info');
+    setTimeout(function(){ if(emailInput) emailInput.focus(); }, 150);
+  });
+}
+function submitContactInfo(){
+  const emailInput = document.getElementById('contact-info-email');
+  const nomInput = document.getElementById('contact-info-nom');
+  const email = emailInput.value.trim();
+  const nom = nomInput.value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast('Merci d\'indiquer une adresse e-mail valide'); return; }
   window.storage.set('moretvia-guest-email', email);
   if(nom) window.storage.set('moretvia-guest-nom', nom);
-  return { email, nom };
+  closeModal('modal-contact-info');
+  if(__contactInfoResolve){ __contactInfoResolve({ email: email, nom: nom }); __contactInfoResolve = null; }
+}
+function cancelContactInfo(){
+  closeModal('modal-contact-info');
+  if(__contactInfoResolve){ __contactInfoResolve(null); __contactInfoResolve = null; }
 }
 async function sendMessage(){
   const input = document.getElementById('thread-input-current');
