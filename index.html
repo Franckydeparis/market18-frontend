@@ -2536,8 +2536,57 @@ function initGoogleSignIn(){
   if(elRegister){ elRegister.innerHTML=''; google.accounts.id.renderButton(elRegister, { theme:'outline', size:'large', width:280, locale:'fr' }); }
 }
 window.initGoogleSignIn = initGoogleSignIn;
+function attachVilleAutocomplete(inputId){
+  var input = document.getElementById(inputId);
+  if(!input) return;
+  var box = document.createElement('div');
+  box.style.cssText = 'position:fixed;z-index:99999;background:#fff;color:#222;border:1px solid #ccc;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.2);max-height:220px;overflow-y:auto;display:none;text-align:left';
+  document.body.appendChild(box);
+  var debounceTimer = null;
+  function positionBox(){
+    var r = input.getBoundingClientRect();
+    box.style.left = r.left + 'px';
+    box.style.top = (r.bottom + 4) + 'px';
+    box.style.width = r.width + 'px';
+  }
+  function hideBox(){ box.style.display = 'none'; }
+  input.addEventListener('input', function(){
+    var q = input.value.trim();
+    clearTimeout(debounceTimer);
+    if(q.length < 2){ hideBox(); return; }
+    debounceTimer = setTimeout(function(){
+      fetch('https://geo.api.gouv.fr/communes?nom=' + encodeURIComponent(q) + '&fields=nom,codesPostaux&boost=population&limit=8')
+        .then(function(r){ return r.json(); })
+        .then(function(list){
+          if(!Array.isArray(list) || !list.length){ hideBox(); return; }
+          box.innerHTML = '';
+          list.forEach(function(c){
+            var item = document.createElement('div');
+            item.textContent = c.nom + (c.codesPostaux && c.codesPostaux[0] ? ' (' + c.codesPostaux[0] + ')' : '');
+            item.style.cssText = 'padding:8px 12px;cursor:pointer';
+            item.onmouseenter = function(){ item.style.background = '#f0f0f0'; };
+            item.onmouseleave = function(){ item.style.background = '#fff'; };
+            item.onclick = function(){
+              input.value = c.nom;
+              hideBox();
+              input.dispatchEvent(new Event('change', {bubbles:true}));
+            };
+            box.appendChild(item);
+          });
+          positionBox();
+          box.style.display = 'block';
+        })
+        .catch(function(){ hideBox(); });
+    }, 250);
+  });
+  input.addEventListener('blur', function(){ setTimeout(hideBox, 150); });
+  window.addEventListener('scroll', function(){ if(box.style.display==='block') positionBox(); }, true);
+}
 async function init(){
   initGoogleSignIn();
+  attachVilleAutocomplete('f-ville');
+  attachVilleAutocomplete('ville');
+  attachVilleAutocomplete('edit-ville');
   const __urlParams = new URLSearchParams(window.location.search);
   const __resetToken = __urlParams.get('resetToken');
   if(__resetToken){ resetPasswordWithToken(__resetToken); }
