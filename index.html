@@ -330,9 +330,7 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
       <input id="f-prix" type="number" min="0" placeholder="Prix maximum" oninput="renderAnnonces()">
       <button class="btn" onclick="renderAnnonces()">Rechercher</button>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-bottom:16px;font-size:.9rem">
-      <input type="checkbox" id="f-hide-sold" style="width:auto" checked onchange="renderAnnonces()"> Masquer les annonces vendues
-    </label>
+    
     <div id="ads" class="grid"></div>
   </section>
 
@@ -1165,14 +1163,12 @@ function applyFilters(){
   const cat = document.getElementById('f-cat').value;
   const ville = (document.getElementById('f-ville').value||'').trim().toLowerCase();
   const maxPrice = parseFloat(document.getElementById('f-prix').value);
-  const hideSoldEl = document.getElementById('f-hide-sold');
-  const hideSold = hideSoldEl ? hideSoldEl.checked : true;
   return listings.filter(l=>
     l.titre.toLowerCase().includes(term) &&
     (!cat || l.categorie===cat) &&
     (!ville || (l.ville||'').toLowerCase().includes(ville)) &&
     (isNaN(maxPrice) || effectivePrice(l)<=maxPrice) &&
-    (!hideSold || !l.vendu)
+    !l.vendu
   ).sort((a,b)=>b.ts-a.ts);
 }
 function renderAnnonces(){
