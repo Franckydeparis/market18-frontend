@@ -1920,14 +1920,16 @@ function openLegal(key){
 }
 
 /* ---------- ADMIN ---------- */
-function openAdmin(){
+async function openAdmin(){
   openModal('modal-admin');
-  if(adminUnlocked){ document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); checkSecurityBadge(); }
+  if(adminUnlocked){ document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); checkSecurityBadge(); return; }
+
+if(currentUser && authToken && LISTINGS_API_BASE){ try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin/whoami', { headers:{ Authorization:'Bearer '+authToken } }); if(res.ok){ window.__adminToken = authToken; adminUnlocked = true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } }catch(e){} }
 }
-function checkAdminPin(){
+function checkAdminPinLegacyDisabled(){
   const v = document.getElementById('admin-pin-input').value;
   if(v===ADMIN_PIN){ adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); }
-  else{ showToast("Code incorrect"); document.getElementById('admin-pin-input').value=''; }
+  else{ showToast("Code incorrect"); document.getElementById('admin-pin-input').value=''; async function checkAdminPin(){ const v = document.getElementById('admin-pin-input').value; try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin:v}) }); const data = await res.json(); if(res.ok && data.token){ window.__adminToken = data.token; adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } else { showToast(data.error || "Code incorrect"); document.getElementById('admin-pin-input').value=''; } }catch(e){ showToast("Impossible de contacter le serveur"); } }
 }
 async function setAdminTab(tab){
   adminTab = tab;
