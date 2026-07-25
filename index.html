@@ -2732,17 +2732,20 @@ function attachVilleAutocomplete(inputId){
           if(!Array.isArray(list) || !list.length){ hideBox(); return; }
           box.innerHTML = '';
           list.forEach(function(c){
-            var item = document.createElement('div');
-            item.textContent = c.nom + (c.codesPostaux && c.codesPostaux[0] ? ' (' + c.codesPostaux[0] + ')' : '');
-            item.style.cssText = 'padding:8px 12px;cursor:pointer';
-            item.onmouseenter = function(){ item.style.background = '#f0f0f0'; };
-            item.onmouseleave = function(){ item.style.background = '#fff'; };
-            item.onclick = function(){
-              input.value = c.nom;
-              hideBox();
-              input.dispatchEvent(new Event('change', {bubbles:true}));
-            };
-            box.appendChild(item);
+            var cps = (c.codesPostaux && c.codesPostaux.length) ? c.codesPostaux.slice().sort() : [null];
+            cps.forEach(function(cp){
+              var item = document.createElement('div');
+              item.textContent = c.nom + (cp ? ' (' + cp + ')' : '');
+              item.style.cssText = 'padding:8px 12px;cursor:pointer';
+              item.onmouseenter = function(){ item.style.background = '#f0f0f0'; };
+              item.onmouseleave = function(){ item.style.background = '#fff'; };
+              item.onclick = function(){
+                input.value = c.nom + (cp ? ' (' + cp + ')' : '');
+                hideBox();
+                input.dispatchEvent(new Event('change', {bubbles:true}));
+              };
+              box.appendChild(item);
+            });
           });
           positionBox();
           box.style.display = 'block';
