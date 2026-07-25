@@ -238,6 +238,11 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
 </head>
 <body>
 <div class="construction-ribbon">Site en construction</div>
+<div id="pwa-banner" style="display:none;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#5b21b6;color:#fff;padding:12px 44px;text-align:center;font-weight:700;position:relative;font-size:.95rem">
+  <span>Installe l'application Moretvia sur ton telephone, en un clic</span>
+  <button onclick="installPwa()" style="background:#fff;color:#5b21b6;border:none;border-radius:8px;padding:8px 16px;font-weight:800;cursor:pointer">Installer l'application</button>
+  <button onclick="dismissPwaBanner()" aria-label="Fermer" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;line-height:1">&times;</button>
+</div>
 
 <header>
   <div class="header-inner">
@@ -2655,16 +2660,37 @@ function attachVilleAutocomplete(inputId){
 let deferredInstallPrompt = null;
 function isIosDevice(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream; }
 function isStandaloneApp(){ return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; }
+function isPhoneLikeDevice(){
+  return isIosDevice() || /android/i.test(navigator.userAgent) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+}
+function hidePwaInstallUi(){
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'none';
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'none';
+}
+function showPwaBannerIfNeeded(){
+  if(isStandaloneApp()) return;
+  if(localStorage.getItem('mv_pwa_banner_dismissed')) return;
+  if(!isPhoneLikeDevice()) return;
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'flex';
+}
+function dismissPwaBanner(){
+  try{ localStorage.setItem('mv_pwa_banner_dismissed', '1'); }catch(e){}
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'none';
+}
 window.addEventListener('beforeinstallprompt', function(e){
   e.preventDefault();
   deferredInstallPrompt = e;
   var btn = document.getElementById('pwa-install-btn');
   if(btn) btn.style.display = 'inline-block';
+  showPwaBannerIfNeeded();
 });
 window.addEventListener('appinstalled', function(){
   deferredInstallPrompt = null;
-  var btn = document.getElementById('pwa-install-btn');
-  if(btn) btn.style.display = 'none';
+  hidePwaInstallUi();
   showToast("Moretvia est installee sur votre appareil");
 });
 function installPwa(){
@@ -2688,6 +2714,8 @@ if(isIosDevice() && !isStandaloneApp()){
 if('serviceWorker' in navigator){
   window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
 }
+if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', showPwaBannerIfNeeded); }
+else { showPwaBannerIfNeeded(); }
 async function init(){
   initGoogleSignIn();
   attachVilleAutocomplete('f-ville');
