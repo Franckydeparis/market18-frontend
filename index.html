@@ -530,6 +530,11 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
       <input id="register-email" name="register-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe (8 caractères minimum)</label>
       <input id="register-password" name="register-password" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()">
+      <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px"><input type="checkbox" id="register-pro" onchange="document.getElementById('register-siret-wrap').style.display=this.checked?'block':'none'"> Je vends en tant que professionnel (auto-entrepreneur, société...)</label>
+      <div id="register-siret-wrap" style="display:none;margin-top:8px">
+        <label for="register-siret">Numéro SIRET (14 chiffres)</label>
+        <input id="register-siret" name="register-siret" type="text" inputmode="numeric" maxlength="14" placeholder="12345678900012">
+      </div>
       <button class="btn" style="margin-top:16px;width:100%" onclick="doRegister()">Créer mon compte</button>
     </div>
   </div>
@@ -1296,11 +1301,15 @@ async function doRegister(){
   const nom = document.getElementById('register-nom').value.trim();
   const email = document.getElementById('register-email').value.trim();
   const password = document.getElementById('register-password').value;
+  const isPro = document.getElementById('register-pro').checked;
+  const siret = document.getElementById('register-siret').value.replace(/\s/g,'').trim();
+  if(isPro && !/^\d{14}$/.test(siret)){ showToast("Le numéro SIRET doit contenir exactement 14 chiffres"); return; }
+
   if(!email || !password){ showToast("Merci de remplir l'e-mail et le mot de passe"); return; }
   if(password.length < 8){ showToast("Le mot de passe doit contenir au moins 8 caractères"); return; }
   if(!LISTINGS_API_BASE){
     if(findLocalUser(email)){ showToast("Un compte existe déjà avec cet e-mail"); return; }
-    localUsers.push({nom, email, password});
+    localUsers.push({nom, email, password, isPro, siret});
     await saveLocalUsers();
     await saveAuthToken(email.toLowerCase().trim());
     currentUser = {nom, email};
@@ -1311,7 +1320,7 @@ async function doRegister(){
   }
   try{
     const res = await fetch(LISTINGS_API_BASE+'/api/auth/register', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom})
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom, isPro, siret})
     });
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur lors de l'inscription"); return; }
