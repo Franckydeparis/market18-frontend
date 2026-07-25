@@ -1396,6 +1396,7 @@ async function doRegister(){
     await saveAuthToken(email.toLowerCase().trim());
     currentUser = {nom, email};
       syncFavoritesFromBackend();
+    offerSaveCredential(email.toLowerCase().trim(), password, nom);
     updateAccountNav(); closeModal('modal-auth');
     showToast("Compte créé (mode test), bienvenue !");
     return;
@@ -1407,6 +1408,7 @@ async function doRegister(){
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur lors de l'inscription"); return; }
     await saveAuthToken(data.token); currentUser = data.user;
+    offerSaveCredential(email, password, (data.user && data.user.nom) || nom);
     updateAccountNav(); closeModal('modal-auth');
     showToast("Compte créé, bienvenue !");
   }catch(e){ showToast("Impossible de contacter le serveur de comptes"); }
@@ -1451,6 +1453,7 @@ async function doLogin(){
     await saveAuthToken(u.email.toLowerCase().trim());
     currentUser = {nom:u.nom, email:u.email};
       syncFavoritesFromBackend();
+    offerSaveCredential(u.email.toLowerCase().trim(), password, u.nom);
     updateAccountNav(); closeModal('modal-auth');
     showToast("Connexion réussie (mode test)");
     return;
@@ -1462,6 +1465,7 @@ async function doLogin(){
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur de connexion"); return; }
     await saveAuthToken(data.token); currentUser = data.user;
+    offerSaveCredential(email, password, data.user && data.user.nom);
     updateAccountNav(); closeModal('modal-auth');
     showToast("Connexion réussie");
   }catch(e){ showToast("Impossible de contacter le serveur de comptes"); }
@@ -1481,6 +1485,7 @@ async function doChangePassword(){
     if(!u || u.password !== currentPassword){ showToast("Mot de passe actuel incorrect"); return; }
     u.password = newPassword;
     await saveLocalUsers();
+    offerSaveCredential(currentUser && currentUser.email, newPassword, currentUser && currentUser.nom);
     document.getElementById('change-current-password').value='';
     document.getElementById('change-new-password').value='';
     showToast("Mot de passe mis à jour (mode test)");
@@ -1492,6 +1497,7 @@ async function doChangePassword(){
     });
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur lors du changement de mot de passe"); return; }
+    offerSaveCredential(currentUser && currentUser.email, newPassword, currentUser && currentUser.nom);
     document.getElementById('change-current-password').value='';
     document.getElementById('change-new-password').value='';
     showToast("Mot de passe mis à jour");
@@ -2033,6 +2039,13 @@ async function sendMessage(){
 
 /* ---------- MODALS / TOAST ---------- */
 function openModal(id){ document.getElementById(id).classList.add('show'); }
+async function offerSaveCredential(id, password, name){
+  try{
+    if(window.PasswordCredential && navigator.credentials && navigator.credentials.store){
+      await navigator.credentials.store(new PasswordCredential({ id: id, password: password, name: name || id }));
+    }
+  }catch(e){}
+}
 function clearModalPasswords(modalEl){
   if(!modalEl) return;
   modalEl.querySelectorAll('input[type="password"]').forEach(inp=>{ inp.value=''; });
