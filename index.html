@@ -283,6 +283,7 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
   <a onclick="showPage('annonces')" data-page="annonces">Explorer</a>
   <a onclick="showPage('messages')" data-page="messages">Messages</a>
   <a onclick="showPage('favoris')" data-page="favoris">Favoris</a>
+  <a onclick="showPage('mes-annonces')" data-page="mes-annonces">Mes annonces</a>
   <a onclick="showPage('soldes')" data-page="soldes">🏷️ Soldes</a>
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('apropos')" data-page="apropos">À propos</a>
@@ -412,6 +413,13 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
     <h3 style="margin-top:0">Mes favoris</h3>
     <p class="small" style="margin-bottom:18px">Vos favoris sont conservés le temps de votre visite.</p>
     <div id="fav-grid" class="grid"></div>
+  </section>
+
+  <!-- MES ANNONCES -->
+  <section class="page" id="page-mes-annonces">
+    <h3 style="margin-top:0">Mes annonces</h3>
+    <p class="small" style="margin-bottom:18px">Retrouve ici toutes tes annonces. Marque-les vendues en un clic, modifie-les ou supprime-les quand tu veux.</p>
+    <div id="mes-annonces-grid" class="grid"></div>
   </section>
 
   <!-- SOLDES -->
@@ -1117,6 +1125,7 @@ async function showPage(page){
   if(page==='annonces') renderAnnonces();
   if(page==='messages'){ await loadMessages(); renderMessagesPage(); }
   if(page==='favoris') renderFavPage();
+  if(page==='mes-annonces') renderMesAnnonces();
   if(page==='soldes') renderSoldesPage();
   if(page==='panier') renderCartPage();
   if(page==='deposer' && currentUser){
@@ -2405,6 +2414,61 @@ async function toggleSellerVerified(key, checked){
 }
 let selectedAdIds = [];
 let selectedMsgIds = [];
+function renderMesAnnonces(){
+  const el = document.getElementById('mes-annonces-grid');
+  const myEmail = getMyEmail();
+  if(!myEmail){
+    el.innerHTML = `<p class="empty">Connecte-toi pour retrouver et gérer tes annonces ici. <span onclick="openAccountArea()" style="cursor:pointer;text-decoration:underline;color:#5b21b6">Se connecter</span></p>`;
+    return;
+  }
+  const mine = listings.filter(l=>(l.email||'').toLowerCase().trim()===myEmail.toLowerCase().trim()).sort((a,b)=>b.ts-a.ts);
+  if(!mine.length){
+    el.innerHTML = `<p class="empty">Tu n'as pas encore publié d'annonce. <span onclick="showPage('deposer')" style="cursor:pointer;text-decoration:underline;color:#5b21b6">Dépose ta première annonce</span></p>`;
+    return;
+  }
+  el.innerHTML = mine.map(l=>{
+    const sold = !!l.vendu;
+    return `<div class="card ${sold?'sold':''}">
+      <div style="position:relative">
+        <img src="${escapeHtml(thumb(l))}" loading="lazy">
+        <span class="sold-badge" style="${sold?'':'background:#16a34a'}">${sold?'Vendue':'En ligne'}</span>
+      </div>
+      <div class="body">
+        <div class="cat-tag">${escapeHtml(l.categorie||'')}</div>
+        <h4>${escapeHtml(l.titre)}</h4>
+        <div class="price">${fmtPrice(l.prix)}</div>
+        <div class="city">${escapeHtml(l.ville||'-')}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+          <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openAd(${l.id})">Voir</button>
+          <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openEditPhotos(${l.id})">Modifier</button>
+          <button class="btn" style="padding:8px 12px;font-size:.85rem;background:${sold?'#16a34a':'#1e0a45'}" onclick="mySellerToggleSold(${l.id})">${sold?'Remettre en vente':'Marquer vendue'}</button>
+          <button class="btn" style="padding:8px 12px;font-size:.85rem;background:#dc2626" onclick="mySellerDeleteListing(${l.id})">Supprimer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+async function mySellerToggleSold(id){
+  const l = listings.find(x=>x.id===id); if(!l) return;
+  l.vendu = !l.vendu;
+  if(LISTINGS_API_BASE){
+    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+l.id, { method:'PUT', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify(frontendToBackend(l)) }); }catch(e){}
+  }
+  await saveListings();
+  renderMesAnnonces(); renderAnnonces();
+  showToast(l.vendu ? "Annonce marquée comme vendue" : "Annonce remise en vente");
+}
+async function mySellerDeleteListing(id){
+  if(!confirm("Supprimer définitivement cette annonce ?")) return;
+  listings = listings.filter(l=>l.id!==id);
+  if(LISTINGS_API_BASE){
+    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+id, { method:'DELETE', headers:{'Authorization':'Bearer '+authToken} }); }catch(e){}
+  }
+  await saveListings();
+  cleanupCart(); cleanupFavorites(); updateCartBadge(); updateStats();
+  renderMesAnnonces(); renderAnnonces();
+  showToast("Annonce supprimée");
+}
 async function toggleListingSold(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   l.vendu = !l.vendu;
