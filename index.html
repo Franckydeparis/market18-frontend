@@ -2546,7 +2546,7 @@ async function deleteListing(id){
   if(!confirm("Supprimer cette annonce ?")) return;
   listings = listings.filter(l=>l.id!==id);
   if(LISTINGS_API_BASE){
-    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+id, { method:'DELETE' }); }catch(e){}
+    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+id, { method:'DELETE', headers:{'Authorization':'Bearer '+window.__adminToken} }); }catch(e){}
   }
   await saveListings();
   cleanupCart(); cleanupFavorites(); updateCartBadge(); updateStats();
