@@ -227,6 +227,14 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
 .admin-msg-select{margin-bottom:6px;display:inline-block;}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#5b21b6">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Moretvia">
 </head>
 <body>
 <div class="construction-ribbon">Site en construction</div>
@@ -274,6 +282,7 @@ h1,h2,h3,h4,header h1,.hero h2,.action,.btn,.stat b{font-family:'Poppins','Inter
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('apropos')" data-page="apropos">À propos</a>
   <a onclick="openAccountArea()" id="nav-account">Connexion</a>
+<a onclick="installPwa()" id="pwa-install-btn" style="display:none">Installer l'application</a>
 </nav>
 
 <main>
@@ -2642,6 +2651,42 @@ function attachVilleAutocomplete(inputId){
   });
   input.addEventListener('blur', function(){ setTimeout(hideBox, 150); });
   window.addEventListener('scroll', function(){ if(box.style.display==='block') positionBox(); }, true);
+}
+let deferredInstallPrompt = null;
+function isIosDevice(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream; }
+function isStandaloneApp(){ return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; }
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'inline-block';
+});
+window.addEventListener('appinstalled', function(){
+  deferredInstallPrompt = null;
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'none';
+  showToast("Moretvia est installee sur votre appareil");
+});
+function installPwa(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(function(){ deferredInstallPrompt = null; });
+  } else if(isIosDevice()){
+    showToast('Pour installer : appuyez sur le bouton Partager de Safari, puis "Sur l\'ecran d\'accueil"');
+  } else {
+    showToast("Ouvrez le menu de votre navigateur et choisissez Installer l'application, ou Ajouter a l'ecran d'accueil");
+  }
+}
+function __showIosInstallBtnIfNeeded(){
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'inline-block';
+}
+if(isIosDevice() && !isStandaloneApp()){
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', __showIosInstallBtnIfNeeded); }
+  else { __showIosInstallBtnIfNeeded(); }
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
 }
 async function init(){
   initGoogleSignIn();
