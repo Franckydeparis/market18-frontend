@@ -308,7 +308,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       </div>
       
 <div style="max-width:640px;margin:24px auto">
-<input id="hero-search" placeholder="Rechercher un produit, une marque, une ville..." onkeydown="if(event.key==='Enter')heroSearch()" style="width:100%;padding:16px 20px;border:none;border-radius:18px;font-size:1rem;box-shadow:0 12px 28px rgba(0,0,0,.28);background:#7c3aed;color:#fff">
+<input id="hero-search" autocomplete="off" placeholder="Rechercher un produit, une marque, une ville..." onkeydown="if(event.key==='Enter')heroSearch()" style="width:100%;padding:16px 20px;border:none;border-radius:18px;font-size:1rem;box-shadow:0 12px 28px rgba(0,0,0,.28);background:#7c3aed;color:#fff">
 </div>
 <div class="actions">
         <button class="action" onclick="showPage('annonces')">Explorer les annonces</button>
@@ -327,9 +327,9 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
   <section class="page" id="page-annonces">
     <h3 style="margin-top:0">Annonces</h3>
     <div class="filters">
-      <input id="f-search" placeholder="Que recherchez-vous ?" oninput="renderAnnonces()">
+      <input id="f-search" autocomplete="off" placeholder="Que recherchez-vous ?" oninput="renderAnnonces()">
       <select id="f-cat" onchange="renderAnnonces()"><option value="">Toutes catégories</option></select>
-      <input id="f-ville" placeholder="Ville" oninput="renderAnnonces()">
+      <input id="f-ville" autocomplete="off" placeholder="Ville" oninput="renderAnnonces()">
       <input id="f-prix" type="number" min="0" placeholder="Prix maximum" oninput="renderAnnonces()">
       <button class="btn" onclick="renderAnnonces()">Rechercher</button>
     </div>
@@ -1947,7 +1947,7 @@ function renderMessagesPage(){
         <h4>${escapeHtml(title)}</h4>
         <div class="msgs-box" id="thread-msgs-current">${currentThreadMsgs.map(m=>`<div class="msg ${m.from}">${escapeHtml(m.text)}</div>`).join('') || '<p class="small">Pas encore de message. Envoyez le premier !</p>'}</div>
         <div class="msg-input">
-          <input id="thread-input-current" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMessage()">
+          <input id="thread-input-current" autocomplete="off" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMessage()">
           <button onclick="sendMessage()">Envoyer</button>
         </div>
       </div>`;
