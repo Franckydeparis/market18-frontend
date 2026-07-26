@@ -2939,7 +2939,7 @@ async function init(){
   initMobileNav();
   await loadListings();
   const __adId = __urlParams.get('ad');
-  if(__adId){ const __l = listings.find(x=>x.id===__adId); if(__l){ openAd(__adId); openModal('modal-ad'); } }
+  if(__adId){ const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
   await loadMessages();
   await loadThreadTitles();
   await loadCart();
