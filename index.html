@@ -2926,7 +2926,27 @@ if(isIosDevice() && !isStandaloneApp()){
   else { __showIosInstallBtnIfNeeded(); }
 }
 if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
+  var __swReg = null;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/sw.js').then(function(reg){
+      __swReg = reg;
+      reg.addEventListener('updatefound', function(){
+        var nouveauWorker = reg.installing;
+        if(!nouveauWorker) return;
+        nouveauWorker.addEventListener('statechange', function(){
+          if(nouveauWorker.state === 'installed' && navigator.serviceWorker.controller){
+            if(!sessionStorage.getItem('moretvia-sw-reloaded')){
+              sessionStorage.setItem('moretvia-sw-reloaded', '1');
+              window.location.reload();
+            }
+          }
+        });
+      });
+    }).catch(function(){});
+  });
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible' && __swReg){ __swReg.update().catch(function(){}); }
+  });
 }
 if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', showPwaBannerIfNeeded); }
 else { showPwaBannerIfNeeded(); }
