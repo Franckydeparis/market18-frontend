@@ -497,7 +497,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
           <button class="btn" id="ad-addcart-btn" onclick="addCartCurrent()">Ajouter au panier</button>
           <button class="btn outline" id="ad-contact-btn" onclick="openMessages(currentAdId);closeModal('modal-ad')">Contacter le vendeur</button>
           <button class="iconbtn fav" id="ad-fav-btn" onclick="toggleFavCurrent()">Favori</button>
-          <button class="iconbtn" id="ad-sms-btn" onclick="shareSMSCurrent()">Partager par SMS</button>
+          <button class="iconbtn" id="ad-sms-btn" onclick="shareSMSCurrent()">Partager</button>
         </div>
         <button type="button" class="linklike" style="margin-top:14px;font-size:.82rem;opacity:.8" onclick="openEditPhotos()">C'est votre annonce ? Modifier l'annonce</button>
       </div>
@@ -1339,13 +1339,22 @@ function addCartCurrent(){
 }
 function toggleFavCurrent(){ if(currentAdId){ toggleFav(currentAdId); document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(currentAdId)); } }
 
-function shareSMSCurrent(){
+async function shareSMSCurrent(){
   if(!currentAdId) return;
   const l = listings.find(x=>x.id===currentAdId);
   if(!l) return;
   const url = 'https://moretvia.fr/?ad='+encodeURIComponent(currentAdId);
   const prixAffiche = isOnSale(l) ? l.soldePrix : l.prix;
-  const texte = l.titre+' - '+fmtPrice(prixAffiche)+' sur Moretvia.fr : '+url;
+  const titreTexte = l.titre+' - '+fmtPrice(prixAffiche)+' sur Moretvia.fr';
+  if(navigator.share){
+    try{
+      await navigator.share({ title: titreTexte, text: titreTexte, url: url });
+      return;
+    }catch(e){
+      if(e && e.name === 'AbortError') return;
+    }
+  }
+  const texte = titreTexte+' : '+url;
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const separateur = isIOS ? '&' : '?';
   window.location.href = 'sms:'+separateur+'body='+encodeURIComponent(texte);
