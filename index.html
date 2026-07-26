@@ -2167,6 +2167,10 @@ async function renderAdminNewsletter(){
       '<h3 style="margin-bottom:10px">Envoyer une campagne</h3>' +
       '<input id="newsletter-subject" placeholder="Sujet" style="width:100%;padding:10px;border-radius:9px;border:2px solid #ddd;margin-bottom:10px;box-sizing:border-box">' +
       '<textarea id="newsletter-body" placeholder="Message" rows="8" style="width:100%;padding:10px;border-radius:9px;border:2px solid #ddd;margin-bottom:10px;box-sizing:border-box;font-family:inherit"></textarea>' +
+      '<div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;flex-wrap:wrap">' +
+        '<input id="newsletter-test-email" type="email" autocomplete="off" value="gofranckygo@gmail.com" placeholder="Votre e-mail" style="flex:1;min-width:180px;padding:8px;border-radius:9px;border:2px solid #ddd;box-sizing:border-box">' +
+        '<button class="btn outline" onclick="sendNewsletterTest()">Envoyer un test (a moi)</button>' +
+      '</div>' +
       '<button class="btn" onclick="sendNewsletterCampaign()">Envoyer a tous les abonnes</button>' +
       '<div id="newsletter-send-status" style="margin-top:10px"></div>';
   }catch(err){ el.innerHTML = '<p class="empty">Erreur de chargement des abonnes.</p>'; }
@@ -2187,6 +2191,25 @@ async function sendNewsletterCampaign(){
     const data = await res.json().catch(()=>({}));
     if(res.ok){ statusEl.textContent = 'Envoye : '+data.sent+'/'+data.total+' (echecs : '+data.failed+')'; showToast("Newsletter envoyee"); }
     else { statusEl.textContent = data.error || "Erreur lors de l'envoi"; }
+  }catch(err){ statusEl.textContent = 'Erreur reseau'; }
+}
+
+async function sendNewsletterTest(){
+  const testEmail = (document.getElementById('newsletter-test-email').value||'').trim();
+  const subject = (document.getElementById('newsletter-subject').value||'').trim();
+  const text = (document.getElementById('newsletter-body').value||'').trim();
+  if(!subject || !text){ showToast("Sujet et message requis"); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail)){ showToast("Adresse de test invalide"); return; }
+  const statusEl = document.getElementById('newsletter-send-status');
+  statusEl.textContent = 'Envoi du test en cours...';
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/newsletter/send', {
+      method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+window.__adminToken},
+      body: JSON.stringify({subject, text, testEmail})
+    });
+    const data = await res.json().catch(()=>({}));
+    if(res.ok){ statusEl.textContent = 'Test envoye a '+testEmail; showToast("Test envoye"); }
+    else { statusEl.textContent = data.error || "Erreur lors de l'envoi du test"; }
   }catch(err){ statusEl.textContent = 'Erreur reseau'; }
 }
 
