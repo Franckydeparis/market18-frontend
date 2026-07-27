@@ -339,6 +339,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       <input id="f-ville" autocomplete="off" placeholder="Ville" oninput="renderAnnonces()">
       <input id="f-prix" type="number" min="0" placeholder="Prix maximum" oninput="renderAnnonces()">
       <button class="btn" onclick="renderAnnonces()">Rechercher</button>
+      <button class="btn outline" onclick="creerAlerteRecherche()">🔔 Creer une alerte</button>
     </div>
     
     <div id="ads" class="grid"></div>
@@ -2124,6 +2125,36 @@ async function subscribeNewsletter(){
     if(res.ok){ showToast("Inscription reussie, merci !"); input.value=''; }
     else { const d = await res.json().catch(()=>({})); showToast(d.error||"Erreur lors de l'inscription"); }
   }catch(err){ showToast("Erreur reseau, reessayez"); }
+}
+
+async function creerAlerteRecherche(){
+  const q = document.getElementById('f-search').value.trim();
+  const categorie = document.getElementById('f-cat').value;
+  const ville = document.getElementById('f-ville').value.trim();
+  const prixMax = document.getElementById('f-prix').value;
+  if(!q && !categorie && !ville && !prixMax){
+    showToast('Renseignez au moins un critere de recherche avant de creer une alerte');
+    return;
+  }
+  let email = (currentUser && currentUser.email) ? currentUser.email : '';
+  if(!email){
+    email = prompt('Votre e-mail pour recevoir les alertes :', '');
+    if(!email) return;
+  }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/alerts', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, q, categorie, ville, prixMax })
+    });
+    if(res.ok){
+      showToast('Alerte creee ! Vous recevrez un e-mail des qu’une annonce correspondante sera publiee.');
+    } else {
+      const d = await res.json().catch(()=>({}));
+      showToast(d.error || "Erreur lors de la creation de l'alerte");
+    }
+  }catch(err){
+    showToast('Erreur reseau, reessayez');
+  }
 }
 
 /* ---------- PAGES LEGALES ---------- */
