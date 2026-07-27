@@ -45,9 +45,10 @@ main{max-width:1200px;margin:auto;padding:34px 20px 60px}
 .action:hover{transform:translateY(-5px)}
 .section{margin-top:38px}
 .section h3{font-size:1.7rem;margin-bottom:16px}
-.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-.cat{background:rgba(255,255,255,.08);padding:20px;border-radius:16px;text-align:center;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:.2s}
-.cat-badge{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#fff,#e9d8ff);color:#5b21b6;font-weight:900;font-size:.85rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:10px}
+.cat{background:rgba(255,255,255,.08);padding:12px 8px;border-radius:14px;text-align:center;border:1px solid rgba(255,255,255,.15);cursor:pointer;transition:.2s}
+.cat strong{font-size:.8rem;line-height:1.2;display:block}
+.cat-badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,#fff,#e9d8ff);color:#5b21b6;font-weight:900;font-size:.68rem;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
 .cat-tag .cat-badge-sm{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#fff,#e9d8ff);color:#5b21b6;font-weight:900;font-size:.6rem;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:5px}
 .page{display:none}
 .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;background:rgba(255,255,255,.08);padding:18px;border-radius:18px;margin-bottom:24px}
@@ -365,10 +366,12 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <label>Catégorie *</label>
         <select id="categorie" required>
           <option value="" disabled selected>Choisir une catégorie</option>
-          <option>Téléphonie</option><option>Informatique</option><option>Image &amp; Son</option>
-          <option>Maison &amp; Jardin</option><option>Mode</option><option>Véhicules</option>
-          <option>Sports &amp; Loisirs</option><option>Enfants &amp; Bébé</option><option>Animaux</option>
-          <option>Emploi</option><option>Immobilier</option><option>Autres</option>
+          <option>Immobilier</option><option>Véhicules</option><option>Mode</option>
+          <option>Maison &amp; Jardin</option><option>Enfants &amp; Bébé</option><option>Téléphonie</option>
+          <option>Informatique</option><option>Photo, Audio &amp; Vidéo</option><option>Consoles &amp; Jeux vidéo</option>
+          <option>Électroménager</option><option>Sports &amp; Loisirs</option><option>Loisirs créatifs &amp; Collection</option>
+          <option>Animaux</option><option>Emploi</option><option>Matériel pro</option>
+          <option>Services</option><option>Autres</option>
         </select>
         <label>Ville *</label>
         <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
@@ -880,8 +883,8 @@ const LIVRAISON_MODES = {
   'chronopost': { label: 'Chronopost', payant: true },
   'relais': { label: 'Point relais (Mondial Relay)', payant: true }
 };
-const CATEGORIES = ["Téléphonie","Informatique","Image & Son","Maison & Jardin","Mode","Véhicules","Sports & Loisirs","Enfants & Bébé","Animaux","Emploi","Immobilier","Autres"];
-const CATEGORIES_SHORT = {"Téléphonie":"TE","Informatique":"IN","Image & Son":"IS","Maison & Jardin":"MJ","Mode":"MO","Véhicules":"VE","Sports & Loisirs":"SL","Enfants & Bébé":"EB","Animaux":"AN","Emploi":"EM","Immobilier":"IM","Autres":"AU"};
+const CATEGORIES = ["Immobilier","Véhicules","Mode","Maison & Jardin","Enfants & Bébé","Téléphonie","Informatique","Photo, Audio & Vidéo","Consoles & Jeux vidéo","Électroménager","Sports & Loisirs","Loisirs créatifs & Collection","Animaux","Emploi","Matériel pro","Services","Autres"];
+const CATEGORIES_SHORT = {"Immobilier":"IM","Véhicules":"VE","Mode":"MO","Maison & Jardin":"MJ","Enfants & Bébé":"EB","Téléphonie":"TE","Informatique":"IN","Photo, Audio & Vidéo":"PV","Consoles & Jeux vidéo":"CJ","Électroménager":"EL","Sports & Loisirs":"SL","Loisirs créatifs & Collection":"LC","Animaux":"AN","Emploi":"EM","Matériel pro":"MP","Services":"SE","Autres":"AU"};
 
 const TITRE_SUGGESTIONS = [
   "iPhone 13 Pro","iPhone 14","iPhone 15","iPhone SE","Samsung Galaxy S23","Samsung Galaxy A54","Xiaomi Redmi Note",
