@@ -1990,7 +1990,7 @@ function renderMessagesPage(){
     const l = listings.find(x=>String(x.id)===String(openThreadId));
     const inInbox = myThreads.find(t=>String(t.listingId)===String(openThreadId) && t.buyerEmail===openThreadBuyerEmail);
     const title = l ? l.titre : (inInbox ? inInbox.listingTitre : 'Annonce');
-    el.innerHTML = `<div class="thread-back"><button class="linklike" onclick="closeThread()">&larr; Toutes les conversations</button></div>
+    el.innerHTML = `<div class="thread-back"><button class="linklike" onclick="closeThread()" style="color:#fff;font-size:1.2rem;font-weight:700;">&larr; Toutes les conversations</button></div>
       <div class="thread">
         <h4>${escapeHtml(title)}</h4>
         <div class="msgs-box" id="thread-msgs-current">${currentThreadMsgs.map(m=>`<div class="msg ${m.from}">${escapeHtml(m.text)}</div>`).join('') || '<p class="small">Pas encore de message. Envoyez le premier !</p>'}</div>
@@ -3054,6 +3054,19 @@ async function init(){
       if(document.getElementById('page-soldes') && document.getElementById('page-soldes').style.display==='block') renderSoldesPage();
     }
   }, 20000);
+  setInterval(async ()=>{
+    const pm = document.getElementById('page-messages');
+    if(pm && pm.style.display==='block' && !document.getElementById('modal-admin').classList.contains('show')){
+      const __draftEl = document.getElementById('thread-input-current');
+      const __draftVal = __draftEl ? __draftEl.value : null;
+      await loadMessages();
+      renderMessagesPage();
+      if(__draftVal){
+        const __restoreEl = document.getElementById('thread-input-current');
+        if(__restoreEl) __restoreEl.value = __draftVal;
+      }
+    }
+  }, 5000);
 }
 init();
 </script>
