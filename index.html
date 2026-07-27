@@ -3019,11 +3019,12 @@ async function init(){
   if(__adId){ const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
   const __msgListing = __urlParams.get('msgListing');
   const __msgEmail = __urlParams.get('msgEmail');
+  const __msgBuyer = __urlParams.get('msgBuyer');
   let __autoOpenMessages = false;
   if(__msgListing && __msgEmail){
     try{ localStorage.setItem('mv_moretvia-guest-email', __msgEmail); }catch(e){}
     openThreadId = __msgListing;
-    openThreadBuyerEmail = __msgEmail;
+    openThreadBuyerEmail = __msgBuyer || __msgEmail;
     __autoOpenMessages = true;
   }
   await loadMessages();
