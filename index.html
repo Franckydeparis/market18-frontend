@@ -3017,7 +3017,17 @@ async function init(){
   await loadListings();
   const __adId = __urlParams.get('ad');
   if(__adId){ const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
+  const __msgListing = __urlParams.get('msgListing');
+  const __msgEmail = __urlParams.get('msgEmail');
+  let __autoOpenMessages = false;
+  if(__msgListing && __msgEmail){
+    try{ localStorage.setItem('mv_moretvia-guest-email', __msgEmail); }catch(e){}
+    openThreadId = __msgListing;
+    openThreadBuyerEmail = __msgEmail;
+    __autoOpenMessages = true;
+  }
   await loadMessages();
+  if(__autoOpenMessages){ showPage('messages'); }
   await loadThreadTitles();
   await loadCart();
   await loadFavorites();
