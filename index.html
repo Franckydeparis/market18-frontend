@@ -1034,7 +1034,7 @@ async function loadSellerAccounts(){
 }
 async function saveSellerAccounts(){ try{ await window.storage.set(SELLER_ACCOUNTS_KEY, JSON.stringify(sellerAccounts), true); }catch(e){} }
 async function loadReviews(){
-  try{ const res = await window.storage.get(REVIEWS_KEY, true); reviews = res && res.value ? JSON.parse(res.value) : []; }
+  try{ const res = await fetch(LISTINGS_API_BASE+'/api/reviews'); reviews = res.ok ? await res.json() : []; }
   catch(e){ reviews = []; }
 }
 async function saveReviews(){ try{ await window.storage.set(REVIEWS_KEY, JSON.stringify(reviews), true); }catch(e){} }
@@ -1937,18 +1937,23 @@ function renderSellerProfile(){
   document.getElementById('review-rating').value='5';
 }
 async function submitReview(){
-  const email = currentAdSellerEmail;
-  if(!email){ showToast("Vendeur inconnu"); return; }
-  const authorNom = document.getElementById('review-nom').value.trim();
+  if(!currentUser || !authToken){ showToast("Connectez-vous pour laisser un avis"); return; }
   const rating = parseInt(document.getElementById('review-rating').value,10);
   const comment = document.getElementById('review-comment').value.trim();
-  if(!authorNom){ showToast("Merci d'indiquer votre nom"); return; }
   if(!comment){ showToast("Merci d'ajouter un commentaire"); return; }
-  reviews.push({id:(reviews.length?Math.max(...reviews.map(r=>r.id))+1:1), sellerEmail: email, listingId: currentAdId, rating, comment, authorNom, ts: Date.now()});
-  await saveReviews();
-  renderSellerProfile();
-  renderAnnonces();
-  showToast("Avis publié, merci !");
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+authToken },
+      body: JSON.stringify({ listingId: currentAdId, rating, comment })
+    });
+    const data = await res.json();
+    if(!res.ok){ showToast(data.error || "Impossible d'envoyer l'avis"); return; }
+    await loadReviews();
+    renderSellerProfile();
+    renderAnnonces();
+    showToast("Avis publié, merci !");
+  }catch(e){ showToast("Erreur réseau, réessayez"); }
 }
 
 /* ---------- MESSAGES ---------- */
