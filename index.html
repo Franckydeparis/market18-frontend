@@ -3017,9 +3017,10 @@ async function init(){
   await loadListings();
   const __adId = __urlParams.get('ad');
   if(__adId){ const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
-  const __msgListing = __urlParams.get('msgListing');
-  const __msgEmail = __urlParams.get('msgEmail');
-  const __msgBuyer = __urlParams.get('msgBuyer');
+  function __unv(s){ return (s && s.charAt(0)==='v') ? s.slice(1) : s; }
+  const __msgListing = __unv(__urlParams.get('msgListing'));
+  const __msgEmail = __unv(__urlParams.get('msgEmail'));
+  const __msgBuyer = __unv(__urlParams.get('msgBuyer'));
   let __autoOpenMessages = false;
   if(__msgListing && __msgEmail){
     try{ localStorage.setItem('mv_moretvia-guest-email', __msgEmail); }catch(e){}
