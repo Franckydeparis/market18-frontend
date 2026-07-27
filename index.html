@@ -3029,7 +3029,6 @@ async function init(){
     __autoOpenMessages = true;
   }
   await loadMessages();
-  if(__autoOpenMessages){ showPage('messages'); }
   await loadThreadTitles();
   await loadCart();
   await loadFavorites();
@@ -3046,7 +3045,7 @@ async function init(){
   cleanupFavorites();
   updateCartBadge();
   updateStats();
-  showPage('accueil');
+  showPage(__autoOpenMessages ? 'messages' : 'accueil');
   setInterval(async ()=>{
     if(!document.getElementById('modal-admin').classList.contains('show')){
       await loadListings();
