@@ -22,6 +22,26 @@
   gtag('config', 'G-GFGG77CK7J');
 </script>
 <style>
+  /* === Effets lumineux (glow) === */
+  .card{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .25s ease,box-shadow .25s ease}
+  .card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 18px 40px rgba(139,92,246,.45),0 0 0 1px rgba(196,181,253,.4)}
+  .filters,.form-box,.modal-box{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .btn,.action{transition:transform .2s ease,box-shadow .2s ease}
+  .btn:hover,.action:hover{box-shadow:0 0 0 3px rgba(196,181,253,.35),0 14px 30px rgba(124,58,237,.5)}
+  .hero-pill{transition:transform .2s ease,box-shadow .2s ease}
+  .hero-pill:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(124,58,237,.35)}
+  header h1{text-shadow:0 0 24px rgba(196,181,253,.55)}
+  @media (prefers-reduced-motion: no-preference){
+    .card{animation:mvFadeUp .5s ease both}
+    .card:nth-child(1){animation-delay:.03s}
+    .card:nth-child(2){animation-delay:.06s}
+    .card:nth-child(3){animation-delay:.09s}
+    .card:nth-child(4){animation-delay:.12s}
+    .card:nth-child(5){animation-delay:.15s}
+    .card:nth-child(6){animation-delay:.18s}
+    @keyframes mvFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  }
+  
 *{box-sizing:border-box}
 html{background:#fff;overflow-x:hidden}
 #hero-search::placeholder{color:#fff;opacity:.85}
