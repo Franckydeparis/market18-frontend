@@ -375,7 +375,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
           <p class="small" style="margin-top:4px">Le solde apparaîtra dans l'onglet 🏷️ Soldes du site pendant 10 jours.</p>
         </div>
         <label>Catégorie *</label>
-        <select id="categorie" required>
+        <select id="categorie" required onchange="onCategorieChange()">
           <option value="" disabled selected>Choisir une catégorie</option>
           <option>Immobilier</option><option>Véhicules</option><option>Mode</option>
           <option>Maison &amp; Jardin</option><option>Enfants &amp; Bébé</option><option>Téléphonie</option>
@@ -384,6 +384,18 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
           <option>Animaux</option><option>Emploi</option><option>Matériel pro</option>
           <option>Services</option><option>Autres</option>
         </select>
+        <div id="marque-box" style="display:none">
+          <label>Type de véhicule</label>
+          <select id="vehicule-type" onchange="updateMarqueOptions()">
+            <option value="Voiture">Voiture</option>
+            <option value="Utilitaire">Utilitaire</option>
+            <option value="Moto">Moto / Scooter</option>
+          </select>
+          <label>Marque *</label>
+          <select id="marque">
+            <option value="">Choisir une marque</option>
+          </select>
+        </div>
         <label>Ville *</label>
         <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
         <datalist id="ville-suggestions"></datalist>
@@ -625,7 +637,19 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     <label>Prix (€)</label>
     <input id="edit-prix" type="number" min="0" step="0.01">
     <label>Catégorie</label>
-    <select id="edit-categorie"></select>
+    <select id="edit-categorie" onchange="onEditCategorieChange()"></select>
+    <div id="edit-marque-box" style="display:none">
+      <label>Type de véhicule</label>
+      <select id="edit-vehicule-type" onchange="updateEditMarqueOptions()">
+        <option value="Voiture">Voiture</option>
+        <option value="Utilitaire">Utilitaire</option>
+        <option value="Moto">Moto / Scooter</option>
+      </select>
+      <label>Marque</label>
+      <select id="edit-marque">
+        <option value="">Choisir une marque</option>
+      </select>
+    </div>
     <label>Ville</label>
     <input id="edit-ville" name="edit-ville" autocomplete="address-level2" list="ville-suggestions">
     <label>État du produit</label>
@@ -850,6 +874,7 @@ function backendToFrontend(l){
     titre: l.titre,
     prix: l.prix,
     categorie: l.categorie,
+    marque: l.marque || '',
     ville: l.ville || '',
     nom: l.nom || '',
     email: l.email || '',
@@ -873,6 +898,7 @@ function frontendToBackend(l){
     description: l.desc || '',
     prix: l.prix,
     categorie: l.categorie || '',
+    marque: l.marque || '',
     images: l.images || [],
     contact: l.telephone || l.email || '',
     ville: l.ville || '',
@@ -896,6 +922,40 @@ const LIVRAISON_MODES = {
 };
 const CATEGORIES = ["Immobilier","Véhicules","Mode","Maison & Jardin","Enfants & Bébé","Téléphonie","Informatique","Photo, Audio & Vidéo","Consoles & Jeux vidéo","Électroménager","Sports & Loisirs","Loisirs créatifs & Collection","Animaux","Emploi","Matériel pro","Services","Autres"];
 const CATEGORIES_SHORT = {"Immobilier":"IM","Véhicules":"VE","Mode":"MO","Maison & Jardin":"MJ","Enfants & Bébé":"EB","Téléphonie":"TE","Informatique":"IN","Photo, Audio & Vidéo":"PV","Consoles & Jeux vidéo":"CJ","Électroménager":"EL","Sports & Loisirs":"SL","Loisirs créatifs & Collection":"LC","Animaux":"AN","Emploi":"EM","Matériel pro":"MP","Services":"SE","Autres":"AU"};
+const CAR_BRANDS = ["Abarth","Alfa Romeo","Alpine","Aston Martin","Audi","Bentley","BMW","Bugatti","BYD","Cadillac","Chevrolet","Chrysler","Citroën","Cupra","Dacia","Daihatsu","Dodge","DS Automobiles","Ferrari","Fiat","Ford","Honda","Hummer","Hyundai","Infiniti","Isuzu","Iveco","Jaguar","Jeep","Kia","Lada","Lamborghini","Lancia","Land Rover","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Nissan","Opel","Peugeot","Polestar","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo","Autre"];
+const MOTO_BRANDS = ["Aprilia","Beta","BMW","Cagiva","Derbi","Ducati","Fantic","Gas Gas","Gilera","Harley-Davidson","Honda","Husqvarna","Indian","Kawasaki","KTM","Kymco","Malaguti","MBK","Moto Guzzi","MV Agusta","Peugeot Motocycles","Piaggio","Rieju","Royal Enfield","Sherco","Suzuki","SYM","Triumph","Vespa","Yamaha","Zero Motorcycles","Autre"];
+function onCategorieChange(){
+  const catEl = document.getElementById('categorie');
+  const box = document.getElementById('marque-box');
+  if(!catEl || !box) return;
+  if(catEl.value === 'Véhicules'){ box.style.display='block'; updateMarqueOptions(); }
+  else { box.style.display='none'; }
+}
+function updateMarqueOptions(){
+  const typeEl = document.getElementById('vehicule-type');
+  const sel = document.getElementById('marque');
+  if(!typeEl || !sel) return;
+  const list = typeEl.value === 'Moto' ? MOTO_BRANDS : CAR_BRANDS;
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Choisir une marque</option>' + list.map(function(m){ return '<option value="'+escapeAttr(m)+'">'+escapeHtml(m)+'</option>'; }).join('');
+  if(list.indexOf(current) !== -1) sel.value = current;
+}
+function onEditCategorieChange(){
+  const catEl = document.getElementById('edit-categorie');
+  const box = document.getElementById('edit-marque-box');
+  if(!catEl || !box) return;
+  if(catEl.value === 'Véhicules'){ box.style.display='block'; updateEditMarqueOptions(); }
+  else { box.style.display='none'; }
+}
+function updateEditMarqueOptions(){
+  const typeEl = document.getElementById('edit-vehicule-type');
+  const sel = document.getElementById('edit-marque');
+  if(!typeEl || !sel) return;
+  const list = typeEl.value === 'Moto' ? MOTO_BRANDS : CAR_BRANDS;
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Choisir une marque</option>' + list.map(function(m){ return '<option value="'+escapeAttr(m)+'">'+escapeHtml(m)+'</option>'; }).join('');
+  if(list.indexOf(current) !== -1) sel.value = current;
+}
 
 const TITRE_SUGGESTIONS = [
   "iPhone 13 Pro","iPhone 14","iPhone 15","iPhone SE","Samsung Galaxy S23","Samsung Galaxy A54","Xiaomi Redmi Note",
@@ -1265,6 +1325,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#f
         ${trust.hasRating ? '<span class="mini-tag trustscore">'+ICON_STAR+' '+trust.score+'/100</span>' : ''}
         <span class="mini-tag c-blue">${ICON_SHIELD} Paiement sécurisé</span>
         ${hasDelivery ? '<span class="mini-tag c-orange">'+ICON_TRUCK+' Livraison possible</span>' : ''}
+        ${l.marque ? '<span class="mini-tag" style="background:#0f766e;color:#fff">'+escapeHtml(l.marque)+'</span>' : ''}
         ${l.etat ? '<span class="mini-tag" style="background:#5b21b6;color:#fff">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
@@ -1302,7 +1363,7 @@ function openAd(id){
   currentAdImages = (l.images && l.images.length) ? l.images : [thumb(l)];
   currentAdImgIndex = 0;
   renderAdGallery();
-  document.getElementById('ad-cat').textContent = l.categorie;
+  document.getElementById('ad-cat').textContent = l.categorie + (l.marque ? ' · ' + l.marque : '');
   document.getElementById('ad-titre').textContent = l.titre;
   document.getElementById('ad-prix').innerHTML = isOnSale(l)
     ? `<span style="text-decoration:line-through;opacity:.6;font-size:1.2rem;margin-right:8px">${fmtPrice(l.prix)}</span><span style="color:#f43f5e">${fmtPrice(l.soldePrix)}</span>`
@@ -1586,6 +1647,14 @@ function openEditPhotos(){
   const catSel = document.getElementById('edit-categorie');
   if(!catSel.options.length) catSel.innerHTML = CATEGORIES.map(c=>`<option value="${c}">${c}</option>`).join('');
   catSel.value = l.categorie||'';
+  if(l.categorie === 'Véhicules'){
+    document.getElementById('edit-marque-box').style.display = 'block';
+    document.getElementById('edit-vehicule-type').value = MOTO_BRANDS.indexOf(l.marque) !== -1 ? 'Moto' : 'Voiture';
+    updateEditMarqueOptions();
+    document.getElementById('edit-marque').value = l.marque || '';
+  } else {
+    document.getElementById('edit-marque-box').style.display = 'none';
+  }
   closeModal('modal-ad');
   renderEditPhotosGrid();
   openModal('modal-edit-photos');
@@ -1637,6 +1706,7 @@ async function saveEditedPhotos(){
   l.titre = titre;
   l.prix = prix;
   l.categorie = document.getElementById('edit-categorie').value;
+  l.marque = (l.categorie === 'Véhicules') ? document.getElementById('edit-marque').value : '';
   l.ville = ville;
   const geo = await geocodeVille(ville);
   if(geo){ l.lat = geo.lat; l.lon = geo.lon; }
@@ -1725,7 +1795,9 @@ async function publishAd(e){
   const email = document.getElementById('email').value.trim();
   const telephone = document.getElementById('telephone').value.trim();
   const etat = document.getElementById('etat').value;
-  if(!titre||!prix||!categorie||!ville||!nom||!email){ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
+  const marque = document.getElementById('marque') ? document.getElementById('marque').value : '';
+  if(!titre||!prix||!categorie||!ville||!nom||!email)
+  if(categorie==='Véhicules' && !marque){ showToast("Merci de choisir la marque du véhicule"); return; }{ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
   if(isNaN(prix) || prix<=0){ showToast("Merci d'indiquer un prix valide"); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast("Merci d'indiquer une adresse e-mail valide"); return; }
 
@@ -1740,7 +1812,7 @@ async function publishAd(e){
 
   const livraison = collectPubLivraison();
   const geo = await geocodeVille(ville);
-  const draft = {titre, prix, categorie, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
+  const draft = {titre, prix, categorie, marque, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
   if(LISTINGS_API_BASE){
     try{
       const res = await fetch(LISTINGS_API_BASE+'/api/listings', {
