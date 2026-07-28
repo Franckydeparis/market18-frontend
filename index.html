@@ -2337,7 +2337,7 @@ function renderMessagesPage(){
     if(box) box.scrollTop = box.scrollHeight;
     const __lastTs = currentThreadMsgs.length ? currentThreadMsgs[currentThreadMsgs.length-1].ts : Date.now();
     const __threadInputEl = document.getElementById('thread-input-current');
-if(__threadInputEl && document.activeElement !== __threadInputEl){ __threadInputEl.focus(); }
+if(__threadInputEl && document.activeElement !== __threadInputEl){ __threadInputEl.focus({preventScroll:true}); }
 markThreadSeen(openThreadId, openThreadBuyerEmail, __lastTs);
     return;
   }
@@ -3479,7 +3479,7 @@ const __restoreEl = document.getElementById('thread-input-current');
 if(__restoreEl){
 __restoreEl.value = __draftVal;
 if(__wasFocused){
-__restoreEl.focus();
+__restoreEl.focus({preventScroll:true});
 const __pos = __caretPos!=null ? __caretPos : __draftVal.length;
 __restoreEl.setSelectionRange(__pos, __pos);
 }
