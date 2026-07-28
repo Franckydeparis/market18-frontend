@@ -328,6 +328,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 </div>
 <nav id="nav">
 <a onclick="openAccountArea()" id="nav-account">Connexion</a>
+<a onclick="doLogout()" id="nav-logout" style="display:none">Déconnexion</a>
   <a onclick="showPage('accueil')" data-page="accueil">Accueil</a>
   <a onclick="showPage('annonces')" data-page="annonces">Explorer</a>
   <a onclick="showPage('messages')" data-page="messages">Messages<span id="messages-badge" class="badge" style="display:none">0</span></a>
@@ -1659,6 +1660,8 @@ async function refreshAuthSession(){
 function updateAccountNav(){
   const nav = document.getElementById('nav-account');
   nav.textContent = (currentUser ? (currentUser.nom || currentUser.email) : 'Connexion') + (currentUser && currentUser.isPro ? ' ✓ Pro' : '');
+  const navLogout = document.getElementById('nav-logout');
+  if(navLogout) navLogout.style.display = currentUser ? '' : 'none';
 }
 function openAccountArea(){
   if(currentUser){
