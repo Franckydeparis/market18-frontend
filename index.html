@@ -3462,16 +3462,30 @@ async function init(){
     const pm = document.getElementById('page-messages');
     if(pm && pm.style.display==='block' && !document.getElementById('modal-admin').classList.contains('show')){
       const __draftEl = document.getElementById('thread-input-current');
-      const __draftVal = __draftEl ? __draftEl.value : null;
-      await loadMessages();
-      renderMessagesPage();
-      updateMessagesBadge();
-      if(__draftVal){
-        const __restoreEl = document.getElementById('thread-input-current');
-        if(__restoreEl) __restoreEl.value = __draftVal;
-      }
-    }
-  }, 5000);
+const __wasFocused = !!__draftEl && document.activeElement === __draftEl;
+const __draftVal = __draftEl ? __draftEl.value : null;
+const __caretPos = __draftEl ? __draftEl.selectionStart : null;
+const __prevMsgCount = currentThreadMsgs ? currentThreadMsgs.length : 0;
+await loadMessages();
+if(__wasFocused && currentThreadMsgs.length === __prevMsgCount){
+updateMessagesBadge();
+} else {
+renderMessagesPage();
+updateMessagesBadge();
+if(__draftVal){
+const __restoreEl = document.getElementById('thread-input-current');
+if(__restoreEl){
+__restoreEl.value = __draftVal;
+if(__wasFocused){
+__restoreEl.focus();
+const __pos = __caretPos!=null ? __caretPos : __draftVal.length;
+__restoreEl.setSelectionRange(__pos, __pos);
+}
+}
+}
+}
+}
+}, 5000);
 }
 init();
 
