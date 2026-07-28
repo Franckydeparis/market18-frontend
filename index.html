@@ -854,7 +854,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <p style="opacity:.85;font-size:.9rem;max-width:700px">Suivi informatif des seuils DAC7 (obligation de signalement des plateformes à l'administration fiscale) : au-delà de <b>30 ventes</b> ou <b>2 000 €</b> de chiffre d'affaires cumulé sur l'année pour un même vendeur, la plateforme doit transmettre ses informations aux impôts. Ceci n'est pas un avis juridique ou fiscal — vérifiez votre situation précise avec un comptable.</p>
         <p id="dac7-loading" class="empty">Chargement…</p>
         <div id="dac7-content"></div>
-
+        <button class="btn outline" style="margin-top:12px" onclick="exportDac7Csv()">Exporter DAC7 (Excel/CSV)</button>
       </div>
       <div id="admin-tab-clients" style="display:none"></div>
       <div id="admin-tab-securite" style="display:none"></div>
@@ -2756,6 +2756,40 @@ function exportStatsCsv(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'moretvia-ventes-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+async function exportDac7Csv(){
+  const data = await fetchJsonSafe('/api/stats/dac7');
+  if(!data){ showToast("Impossible de charger les donnees DAC7 (backend indisponible)."); return; }
+  const risque = (data.vendeurs||[]).filter(v=>v.statut!=='ok');
+  if(!risque.length){ showToast("Aucun vendeur ne depasse ou approche les seuils DAC7 pour le moment."); return; }
+  const header1 = ['Email','Nom','Statut','SIRET','Raison sociale','Adresse siege','RCS','TVA intracommunautaire','Nb ventes','Seuil ventes atteint (30)','CA annuel (EUR)','Seuil montant atteint (2000EUR)','Statut DAC7','Annotation'];
+  const rows1 = risque.map(v=>{
+    const c = v.compte || {};
+    return [v.email||'', v.nom||'', c.isPro?'Professionnel':'Particulier', c.siret||'', c.raisonSociale||'', c.adresseSiege||'', c.rcs||'', c.tva||'', v.transactions||0, v.seuilTransactionsAtteint?'Oui':'Non', v.ca||0, v.seuilMontantAtteint?'Oui':'Non', v.statut||'', (v.annotation&&v.annotation.note)||''];
+  });
+  const header2 = ['Email vendeur','Nom vendeur','Date','Titre annonce','Montant (EUR)'];
+  const rows2 = [];
+  risque.forEach(v=>{
+    (v.detail||[]).forEach(d=>{
+      rows2.push([v.email||'', v.nom||'', new Date(d.date).toLocaleDateString('fr-FR'), d.titre||'', d.montant||0]);
+    });
+  });
+  const escRow = r => r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';');
+  const lines = [];
+  lines.push('Export DAC7 '+(data.annee||'')+' - vendeurs a signaler (seuils : '+((data.seuils&&data.seuils.transactions)||30)+' ventes ou '+((data.seuils&&data.seuils.montant)||2000)+' EUR)');
+  lines.push(escRow(header1));
+  rows1.forEach(r=>lines.push(escRow(r)));
+  lines.push('');
+  lines.push('Detail des ventes');
+  lines.push(escRow(header2));
+  rows2.forEach(r=>lines.push(escRow(r)));
+  const csv = lines.join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dac7-'+(data.annee||new Date().getFullYear())+'.csv';
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 }
