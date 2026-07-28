@@ -854,11 +854,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <p style="opacity:.85;font-size:.9rem;max-width:700px">Suivi informatif des seuils DAC7 (obligation de signalement des plateformes à l'administration fiscale) : au-delà de <b>30 ventes</b> ou <b>2 000 €</b> de chiffre d'affaires cumulé sur l'année pour un même vendeur, la plateforme doit transmettre ses informations aux impôts. Ceci n'est pas un avis juridique ou fiscal — vérifiez votre situation précise avec un comptable.</p>
         <p id="dac7-loading" class="empty">Chargement…</p>
         <div id="dac7-content"></div>
-        <div class="section" style="margin-top:28px">
-          <h3 style="font-size:1.2rem">Franchise en base de TVA (revenu Moretvia)</h3>
-          <p style="opacity:.85;font-size:.9rem;max-width:700px">Ce seuil concerne le revenu de commission de Moretvia (10% des ventes), pas le chiffre d'affaires des vendeurs. Seuils 2026 pour une activité de prestation de services : <b>37 500 €</b> (seuil normal) et <b>41 250 €</b> (seuil majoré) de commission cumulée sur l'année.</p>
-          <div id="tva-content" style="margin-top:14px"><p class="empty">Chargement…</p></div>
-        </div>
+
       </div>
       <div id="admin-tab-clients" style="display:none"></div>
       <div id="admin-tab-securite" style="display:none"></div>
@@ -2458,7 +2454,7 @@ async function setAdminTab(tab){
   if(tab==='revenue') updateAdminRevenue();
   if(tab==='sellers') renderAdminSellers();
   if(tab==='stats') renderAdminStats();
-  if(tab==='dac7'){ renderAdminDac7(); renderAdminTva(); }
+  if(tab==='dac7'){ renderAdminDac7(); }
   if(tab==='newsletter') renderAdminNewsletter();
 }
 async function renderAdminNewsletter(){
@@ -2744,21 +2740,7 @@ async function saveSellerNote(email, idSafe){
     showToast("Annotation enregistrée");
   }catch(e){ showToast("Erreur lors de l'enregistrement de l'annotation"); }
 }
-async function renderAdminTva(){
-  const el = document.getElementById('tva-content');
-  const data = await fetchJsonSafe('/api/stats/tva');
-  if(!data){ el.innerHTML = '<p class="empty">Impossible de charger le suivi TVA (backend indisponible).</p>'; return; }
-  const statutLabel = {ok:'OK', attention:'À surveiller', depasse:'Seuil dépassé'};
-  const statutColor = {ok:'#22c55e', attention:'#f59e0b', depasse:'#f43f5e'};
-  el.innerHTML = `
-    <div class="statbar" style="margin-bottom:10px">
-      <div class="stat"><b>${fmtPrice(data.commissionEstimee)}</b>Commission estimée ${data.annee}</div>
-      <div class="stat"><b>${fmtPrice(data.seuils.normal)}</b>Seuil normal</div>
-      <div class="stat"><b>${fmtPrice(data.seuils.majore)}</b>Seuil majoré</div>
-    </div>
-    <div class="admin-item"><div class="info"><div class="t">Statut</div><div class="small">${escapeHtml(data.note)}</div></div><span style="background:${statutColor[data.statut]};color:#fff;font-weight:bold;font-size:.75rem;padding:5px 10px;border-radius:8px;white-space:nowrap">${statutLabel[data.statut]}</span></div>
-  `;
-}
+
 function exportStatsCsv(){
   if(!listings.length){ showToast("Aucune annonce à exporter"); return; }
   const ventes = listings.filter(l=>l.vendu);
