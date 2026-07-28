@@ -1397,7 +1397,7 @@ async function saveAuthToken(token){
 }
 async function refreshAuthSession(){
   if(!authToken){ updateAccountNav(); return; }
-  if(!LISTINGS_API_BASE){
+  if(false){
     const u = findLocalUser(authToken);
     currentUser = u ? {nom:u.nom, email:u.email} : null;
     if(!currentUser) await saveAuthToken(null);
@@ -1445,7 +1445,7 @@ async function doRegister(){
 
   if(!email || !password){ showToast("Merci de remplir l'e-mail et le mot de passe"); return; }
   if(password.length < 8){ showToast("Le mot de passe doit contenir au moins 8 caractères"); return; }
-  if(!LISTINGS_API_BASE){
+  if(false){
     if(findLocalUser(email)){ showToast("Un compte existe déjà avec cet e-mail"); return; }
     localUsers.push({nom, email, password, isPro, siret});
     await saveLocalUsers();
@@ -1503,7 +1503,7 @@ async function doLogin(){
   const email = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
   if(!email || !password){ showToast("Merci de remplir l'e-mail et le mot de passe"); return; }
-  if(!LISTINGS_API_BASE){
+  if(false){
     const u = findLocalUser(email);
     if(!u || u.password !== password){ showToast("E-mail ou mot de passe incorrect"); return; }
     await saveAuthToken(u.email.toLowerCase().trim());
@@ -1536,7 +1536,7 @@ async function doChangePassword(){
   const newPassword = document.getElementById('change-new-password').value;
   if(!currentPassword || !newPassword){ showToast("Merci de remplir les deux champs"); return; }
   if(newPassword.length < 8){ showToast("Le nouveau mot de passe doit contenir au moins 8 caractères"); return; }
-  if(!LISTINGS_API_BASE){
+  if(false){
     const u = findLocalUser(currentUser && currentUser.email);
     if(!u || u.password !== currentPassword){ showToast("Mot de passe actuel incorrect"); return; }
     u.password = newPassword;
