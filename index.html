@@ -956,6 +956,19 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       <a class="linklike" href="https://fr.trustpilot.com/review/moretvia.fr" target="_blank" rel="noopener" style="color:#fff">Laisser un avis sur Trustpilot</a>
     </div>
   </div>
+  <div style="text-align:center;margin:18px 0 6px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15)">
+    <div style="opacity:.8;font-size:.85rem;margin-bottom:10px">Partager Moretvia.fr</div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
+      <a class="linklike" style="color:#fff" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmoretvia.fr" target="_blank" rel="noopener nofollow">📘 Facebook</a>
+      <a class="linklike" style="color:#fff" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fmoretvia.fr&text=Moretvia.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow">✖️ X / Twitter</a>
+      <a class="linklike" style="color:#fff" href="https://api.whatsapp.com/send?text=Moretvia.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger%20-%20https%3A%2F%2Fmoretvia.fr" target="_blank" rel="noopener nofollow">💬 WhatsApp</a>
+      <a class="linklike" style="color:#fff" href="https://t.me/share/url?url=https%3A%2F%2Fmoretvia.fr&text=Moretvia.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow">✈️ Telegram</a>
+      <a class="linklike" style="color:#fff" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmoretvia.fr" target="_blank" rel="noopener nofollow">💼 LinkedIn</a>
+      <a class="linklike" style="color:#fff" href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fmoretvia.fr&description=Moretvia.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow">📌 Pinterest</a>
+      <a class="linklike" style="color:#fff" href="mailto:?subject=Moretvia.fr&body=Va%20jeter%20un%20oeil%20a%20Moretvia.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger%20%3A%20https%3A%2F%2Fmoretvia.fr">✉️ E-mail</a>
+      <a class="linklike" style="color:#fff;cursor:pointer" onclick="shareSiteLink()">🔗 Copier le lien</a>
+    </div>
+  </div>
   <hr>
   <div class="copyright">© 2026 Moretvia.fr — Tous droits réservés.</div>
   <div class="copyright" style="margin-top:6px;opacity:.7">Site entièrement réalisé par Claude, intelligence artificielle d'Anthropic.</div>
@@ -2470,6 +2483,11 @@ document.addEventListener('keydown', e=>{
 });
 function showSupportContact(){
   alert("Support téléphonique Moretvia.fr\n\n07 64 15 07 77\nDe 10h00 à 20h00");
+}
+function shareSiteLink(){
+  try{
+    navigator.clipboard.writeText("https://moretvia.fr").then(function(){ showToast("Lien copié !"); });
+  }catch(e){ showToast("Impossible de copier le lien"); }
 }
 function showToast(msg){
   const el = document.createElement('div'); el.className='toast'; el.textContent = msg;
