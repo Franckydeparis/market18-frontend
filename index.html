@@ -668,7 +668,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       <label>Adresse e-mail</label>
       <input id="login-email" name="login-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe</label>
-      <input id="login-password" name="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <div style="position:relative"><input id="login-password" name="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('login-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
       <button type="button" class="linklike" style="display:block;margin-top:8px;font-size:.85rem" onclick="forgotPassword()">Mot de passe oublié ?</button>
       <button class="btn" style="margin-top:16px;width:100%" onclick="doLogin()">Se connecter</button>
     </div>
@@ -680,7 +680,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       <label>Adresse e-mail</label>
       <input id="register-email" name="register-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe (8 caractères minimum)</label>
-      <input id="register-password" name="register-password" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()">
+      <div style="position:relative"><input id="register-password" name="register-password" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('register-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
       <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px"><input type="checkbox" id="register-pro" onchange="document.getElementById('register-siret-wrap').style.display=this.checked?'block':'none'"> Je vends en tant que professionnel (auto-entrepreneur, société...)</label>
       <div id="register-siret-wrap" style="display:none;margin-top:8px">
         <label for="register-siret">Numéro SIRET (14 chiffres)</label>
@@ -707,9 +707,9 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     <p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
     <h4 style="margin-bottom:6px">Changer mon mot de passe</h4>
     <label>Mot de passe actuel</label>
-    <input id="change-current-password" name="change-current-password" type="password" autocomplete="current-password" placeholder="••••••••">
+    <div style="position:relative"><input id="change-current-password" name="change-current-password" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-current-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
     <label>Nouveau mot de passe (8 caractères minimum)</label>
-    <input id="change-new-password" name="change-new-password" type="password" autocomplete="new-password" placeholder="••••••••">
+    <div style="position:relative"><input id="change-new-password" name="change-new-password" type="password" autocomplete="new-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-new-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
     <button class="btn" style="margin-top:12px;width:100%" onclick="doChangePassword()">Mettre à jour le mot de passe</button>
     <button class="btn outline" style="margin-top:20px;width:100%" onclick="doLogout()">Se déconnecter</button>
   </div>
@@ -2437,9 +2437,15 @@ async function offerSaveCredential(id, password, name){
     }
   }catch(e){}
 }
+function togglePwField(id, btn){
+const el = document.getElementById(id);
+if(!el) return;
+if(el.type === 'password'){ el.type = 'text'; btn.textContent = '\u{1F648}'; btn.setAttribute('aria-label','Masquer le mot de passe'); }
+else { el.type = 'password'; btn.textContent = '\u{1F441}\u{FE0F}'; btn.setAttribute('aria-label','Afficher le mot de passe'); }
+}
 function clearModalPasswords(modalEl){
   if(!modalEl) return;
-  modalEl.querySelectorAll('input[type="password"]').forEach(inp=>{ inp.value=''; });
+  modalEl.querySelectorAll('input[type="password"], input[type="text"][id$="password"]').forEach(inp=>{ inp.value=''; inp.type='password'; });
 }
 function closeModal(id){ const el=document.getElementById(id); if(el){ el.classList.remove('show'); clearModalPasswords(el); } }
 function closeAllModals(){ document.querySelectorAll('.modal-overlay.show').forEach(m=>{ m.classList.remove('show'); clearModalPasswords(m); }); }
