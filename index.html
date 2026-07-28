@@ -2630,20 +2630,33 @@ async function sendNewsletterTest(){
 }
 
 async function renderAdminClients(){
-  const el = document.getElementById('admin-tab-clients');
-  el.innerHTML = '<p>Chargement...</p>';
-  try{
-    const res = await fetch(LISTINGS_API_BASE+'/api/admin/users', { headers: { Authorization: 'Bearer '+window.__adminToken } });
-    if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des clients.</p>'; return; }
-    const users = await res.json();
-    if(!users.length){ el.innerHTML = '<p class="empty">Aucun client inscrit.</p>'; return; }
-    el.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr style="text-align:left;border-bottom:2px solid rgba(255,255,255,.2)"><th style="padding:8px">Nom</th><th style="padding:8px">Email</th><th style="padding:8px">Inscrit le</th></tr></thead><tbody>' +
-      users.map(function(u){
-        const d = u.dateCreation ? new Date(u.dateCreation).toLocaleDateString('fr-FR') : '—';
-        return '<tr style="border-bottom:1px solid rgba(255,255,255,.1)"><td style="padding:8px">'+escapeHtml(u.nom||'—')+'</td><td style="padding:8px">'+escapeHtml(u.email)+'</td><td style="padding:8px">'+d+'</td></tr>';
-      }).join('') +
-      '</tbody></table>';
-  }catch(e){ el.innerHTML = '<p class="empty">Erreur de connexion.</p>'; }
+const el = document.getElementById('admin-tab-clients');
+el.innerHTML = '<p>Chargement...</p>';
+try{
+const res = await fetch(LISTINGS_API_BASE+'/api/admin/users', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des clients.</p>'; return; }
+const users = await res.json();
+if(!users.length){ el.innerHTML = '<p class="empty">Aucun client inscrit.</p>'; return; }
+el.innerHTML = '<table style="width:100%;border-collapse:collapse"><thead><tr style="text-align:left;border-bottom:2px solid rgba(255,255,255,.2)"><th style="padding:8px">Nom</th><th style="padding:8px">Email</th><th style="padding:8px">Inscrit le</th><th style="padding:8px">Actions</th></tr></thead><tbody>' +
+users.map(function(u){
+const d = u.dateCreation ? new Date(u.dateCreation).toLocaleDateString('fr-FR') : '—';
+const em = escapeAttr(u.email);
+return '<tr style="border-bottom:1px solid rgba(255,255,255,.1)"><td style="padding:8px">'+escapeHtml(u.nom||'—')+'</td><td style="padding:8px">'+escapeHtml(u.email)+'</td><td style="padding:8px">'+d+'</td><td style="padding:8px"><button class="btn outline" style="padding:4px 10px;font-size:.85rem" onclick="deleteClient(\''+em+'\')">Supprimer</button></td></tr>';
+}).join('') +
+'</tbody></table>';
+}catch(e){ el.innerHTML = '<p class="empty">Erreur de connexion.</p>'; }
+}
+
+async function deleteClient(email){
+if(!confirm('Supprimer definitivement le client '+email+' ? Cette action est irreversible (le compte sera supprime, ses annonces resteront visibles).')) return;
+if(!LISTINGS_API_BASE || !window.__adminToken) return;
+try{
+const res = await fetch(LISTINGS_API_BASE+'/api/admin/users/'+encodeURIComponent(email), { method:'DELETE', headers:{ Authorization:'Bearer '+window.__adminToken } });
+const data = await res.json().catch(function(){ return {}; });
+if(!res.ok){ showToast(data.error || "Impossible de supprimer ce client"); return; }
+showToast('Client supprime');
+renderAdminClients();
+}catch(e){ showToast("Erreur de connexion"); }
 }
 
 function securityNiveauColor(n){
