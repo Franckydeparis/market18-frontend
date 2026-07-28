@@ -352,7 +352,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <span class="hero-pill c-blue">🛡️ Paiement sécurisé</span>
         <span class="hero-pill c-green">✅ Vendeurs vérifiés</span>
         <span class="hero-pill c-orange">🚚 Livraison partout en France</span>
-        <span class="hero-pill c-violet">🎧 Support français</span>
+        <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer">🎧 Support français</span>
       </div>
       
 <div style="max-width:640px;margin:24px auto">
@@ -571,7 +571,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 <div class="vs-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg><b>Paiement 100% sécurisé</b><p class="small" style="margin-top:4px">Contrairement aux petites annonces classiques, vos règlements passent par Stripe : vos coordonnées bancaires ne sont jamais partagées avec le vendeur.</p></div>
 <div class="vs-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.3l2.3 2.3 4.7-5"/></svg><b>Vendeurs identifiés</b><p class="small" style="margin-top:4px">Un badge « vérifié » distingue les vendeurs dont l’identité a été contrôlée par notre équipe.</p></div>
 <div class="vs-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><b>Messagerie intégrée</b><p class="small" style="margin-top:4px">Toutes les conversations restent sur la plateforme, pour garder une trace en cas de litige.</p></div>
-<div class="vs-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5z"/><path d="M5 11v1a7 7 0 0014 0v-1M12 19v3"/></svg><b>Support français réactif</b><p class="small" style="margin-top:4px">Une équipe basée en France répond à vos questions, avant et après chaque transaction.</p></div>
+<div class="vs-item" onclick="showSupportContact()" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5z"/><path d="M5 11v1a7 7 0 0014 0v-1M12 19v3"/></svg><b>Support français réactif</b><p class="small" style="margin-top:4px">Une équipe basée en France répond à vos questions, avant et après chaque transaction.</p></div>
 </div>
 </section>
 
@@ -2463,6 +2463,9 @@ document.addEventListener('keydown', e=>{
     if(e.key==='ArrowRight') adGalleryStep(1);
   }
 });
+function showSupportContact(){
+  alert("Support téléphonique Moretvia.fr\n\n07 64 15 07 77\nDe 10h00 à 20h00");
+}
 function showToast(msg){
   const el = document.createElement('div'); el.className='toast'; el.textContent = msg;
   document.getElementById('toast-container').appendChild(el);
