@@ -416,6 +416,32 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
             <option value="">Choisir une marque</option>
           </select>
         </div>
+        <div id="immo-box" style="display:none">
+          <label>Type de bien</label>
+          <select id="typeBien">
+            <option value="">Choisir</option>
+            <option value="Maison">Maison</option>
+            <option value="Appartement">Appartement</option>
+            <option value="Terrain">Terrain</option>
+            <option value="Local commercial">Local commercial</option>
+            <option value="Parking / Garage">Parking / Garage</option>
+            <option value="Autre">Autre</option>
+          </select>
+          <label>Surface (m2)</label>
+          <input type="number" id="surface" min="0" placeholder="Ex: 75">
+          <label>Pieces</label>
+          <input type="number" id="pieces" min="0" placeholder="Ex: 4">
+          <label>Chambres</label>
+          <input type="number" id="chambres" min="0" placeholder="Ex: 2">
+          <label>Etage</label>
+          <input type="text" id="etage" placeholder="Ex: 3 ou RDC">
+          <label>Garage / Parking</label>
+          <select id="garage">
+            <option value="">Choisir</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+          </select>
+        </div>
         <label>Ville *</label>
         <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
         <datalist id="ville-suggestions"></datalist>
@@ -670,6 +696,32 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <option value="">Choisir une marque</option>
       </select>
     </div>
+    <div id="edit-immo-box" style="display:none">
+      <label>Type de bien</label>
+      <select id="edit-typeBien">
+        <option value="">Choisir</option>
+        <option value="Maison">Maison</option>
+        <option value="Appartement">Appartement</option>
+        <option value="Terrain">Terrain</option>
+        <option value="Local commercial">Local commercial</option>
+        <option value="Parking / Garage">Parking / Garage</option>
+        <option value="Autre">Autre</option>
+      </select>
+      <label>Surface (m2)</label>
+      <input type="number" id="edit-surface" min="0" placeholder="Ex: 75">
+      <label>Pieces</label>
+      <input type="number" id="edit-pieces" min="0" placeholder="Ex: 4">
+      <label>Chambres</label>
+      <input type="number" id="edit-chambres" min="0" placeholder="Ex: 2">
+      <label>Etage</label>
+      <input type="text" id="edit-etage" placeholder="Ex: 3 ou RDC">
+      <label>Garage / Parking</label>
+      <select id="edit-garage">
+        <option value="">Choisir</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
+    </div>
     <label>Ville</label>
     <input id="edit-ville" name="edit-ville" autocomplete="address-level2" list="ville-suggestions">
     <label>État du produit</label>
@@ -895,6 +947,12 @@ function backendToFrontend(l){
     prix: l.prix,
     categorie: l.categorie,
     marque: l.marque || '',
+    typeBien: l.typeBien || '',
+    surface: l.surface || '',
+    pieces: l.pieces || '',
+    chambres: l.chambres || '',
+    etage: l.etage || '',
+    garage: l.garage || '',
     ville: l.ville || '',
     nom: l.nom || '',
     email: l.email || '',
@@ -919,6 +977,12 @@ function frontendToBackend(l){
     prix: l.prix,
     categorie: l.categorie || '',
     marque: l.marque || '',
+    typeBien: l.typeBien || '',
+    surface: l.surface || '',
+    pieces: l.pieces || '',
+    chambres: l.chambres || '',
+    etage: l.etage || '',
+    garage: l.garage || '',
     images: l.images || [],
     contact: l.telephone || l.email || '',
     ville: l.ville || '',
@@ -947,9 +1011,10 @@ const MOTO_BRANDS = ["Aprilia","Beta","BMW","Cagiva","Derbi","Ducati","Fantic","
 function onCategorieChange(){
   const catEl = document.getElementById('categorie');
   const box = document.getElementById('marque-box');
-  if(!catEl || !box) return;
-  if(catEl.value === 'Véhicules'){ box.style.display='block'; updateMarqueOptions(); }
-  else { box.style.display='none'; }
+  const immoBox = document.getElementById('immo-box');
+  if(!catEl) return;
+  if(box){ if(catEl.value === 'Véhicules'){ box.style.display='block'; updateMarqueOptions(); } else { box.style.display='none'; } }
+  if(immoBox){ immoBox.style.display = (catEl.value === 'Immobilier') ? 'block' : 'none'; }
 }
 function updateMarqueOptions(){
   const typeEl = document.getElementById('vehicule-type');
@@ -963,9 +1028,10 @@ function updateMarqueOptions(){
 function onEditCategorieChange(){
   const catEl = document.getElementById('edit-categorie');
   const box = document.getElementById('edit-marque-box');
-  if(!catEl || !box) return;
-  if(catEl.value === 'Véhicules'){ box.style.display='block'; updateEditMarqueOptions(); }
-  else { box.style.display='none'; }
+  const immoBox = document.getElementById('edit-immo-box');
+  if(!catEl) return;
+  if(box){ if(catEl.value === 'Véhicules'){ box.style.display='block'; updateEditMarqueOptions(); } else { box.style.display='none'; } }
+  if(immoBox){ immoBox.style.display = (catEl.value === 'Immobilier') ? 'block' : 'none'; }
 }
 function updateEditMarqueOptions(){
   const typeEl = document.getElementById('edit-vehicule-type');
@@ -1675,6 +1741,17 @@ function openEditPhotos(){
   } else {
     document.getElementById('edit-marque-box').style.display = 'none';
   }
+  if(l.categorie === 'Immobilier'){
+    document.getElementById('edit-immo-box').style.display = 'block';
+    document.getElementById('edit-typeBien').value = l.typeBien || '';
+    document.getElementById('edit-surface').value = l.surface || '';
+    document.getElementById('edit-pieces').value = l.pieces || '';
+    document.getElementById('edit-chambres').value = l.chambres || '';
+    document.getElementById('edit-etage').value = l.etage || '';
+    document.getElementById('edit-garage').value = l.garage || '';
+  } else {
+    document.getElementById('edit-immo-box').style.display = 'none';
+  }
   closeModal('modal-ad');
   renderEditPhotosGrid();
   openModal('modal-edit-photos');
@@ -1727,6 +1804,12 @@ async function saveEditedPhotos(){
   l.prix = prix;
   l.categorie = document.getElementById('edit-categorie').value;
   l.marque = (l.categorie === 'Véhicules') ? document.getElementById('edit-marque').value : '';
+  l.typeBien = (l.categorie === 'Immobilier') ? document.getElementById('edit-typeBien').value : '';
+  l.surface = (l.categorie === 'Immobilier') ? document.getElementById('edit-surface').value : '';
+  l.pieces = (l.categorie === 'Immobilier') ? document.getElementById('edit-pieces').value : '';
+  l.chambres = (l.categorie === 'Immobilier') ? document.getElementById('edit-chambres').value : '';
+  l.etage = (l.categorie === 'Immobilier') ? document.getElementById('edit-etage').value : '';
+  l.garage = (l.categorie === 'Immobilier') ? document.getElementById('edit-garage').value : '';
   l.ville = ville;
   const geo = await geocodeVille(ville);
   if(geo){ l.lat = geo.lat; l.lon = geo.lon; }
@@ -1816,8 +1899,14 @@ async function publishAd(e){
   const telephone = document.getElementById('telephone').value.trim();
   const etat = document.getElementById('etat').value;
   const marque = document.getElementById('marque') ? document.getElementById('marque').value : '';
-  if(!titre||!prix||!categorie||!ville||!nom||!email)
-  if(categorie==='Véhicules' && !marque){ showToast("Merci de choisir la marque du véhicule"); return; }{ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
+  const typeBien = (categorie === 'Immobilier') ? document.getElementById('typeBien').value : '';
+  const surface = (categorie === 'Immobilier') ? document.getElementById('surface').value : '';
+  const pieces = (categorie === 'Immobilier') ? document.getElementById('pieces').value : '';
+  const chambres = (categorie === 'Immobilier') ? document.getElementById('chambres').value : '';
+  const etage = (categorie === 'Immobilier') ? document.getElementById('etage').value : '';
+  const garage = (categorie === 'Immobilier') ? document.getElementById('garage').value : '';
+  if(!titre||!prix||!categorie||!ville||!nom||!email){ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
+  if(categorie==='Véhicules' && !marque){ showToast("Merci de choisir la marque du véhicule"); return; }
   if(isNaN(prix) || prix<=0){ showToast("Merci d'indiquer un prix valide"); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast("Merci d'indiquer une adresse e-mail valide"); return; }
 
@@ -1832,7 +1921,7 @@ async function publishAd(e){
 
   const livraison = collectPubLivraison();
   const geo = await geocodeVille(ville);
-  const draft = {titre, prix, categorie, marque, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
+  const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
   if(LISTINGS_API_BASE){
     try{
       const res = await fetch(LISTINGS_API_BASE+'/api/listings', {
