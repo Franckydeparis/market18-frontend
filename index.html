@@ -1372,6 +1372,7 @@ async function syncFavoritesFromBackend(){
 
 /* ---------- NAVIGATION ---------- */
 async function showPage(page){
+  if(!currentUser && page !== 'accueil'){ openAccountArea(); return; }
   document.querySelectorAll('.page').forEach(p=>p.style.display='none');
   document.getElementById('page-'+page).style.display='block';
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('active', a.dataset.page===page));
@@ -1662,6 +1663,10 @@ function updateAccountNav(){
   nav.textContent = (currentUser ? (currentUser.nom || currentUser.email) : 'Connexion') + (currentUser && currentUser.isPro ? ' ✓ Pro' : '');
   const navLogout = document.getElementById('nav-logout');
   if(navLogout) navLogout.style.display = currentUser ? '' : 'none';
+  document.querySelectorAll('#nav a').forEach(function(a){
+    if(a.id === 'nav-account' || a.id === 'nav-logout' || a.id === 'pwa-install-btn') return;
+    a.style.display = currentUser ? '' : 'none';
+  });
 }
 function openAccountArea(){
   if(currentUser){
