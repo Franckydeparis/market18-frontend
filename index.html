@@ -651,6 +651,14 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
       <div id="register-siret-wrap" style="display:none;margin-top:8px">
         <label for="register-siret">Numéro SIRET (14 chiffres)</label>
         <input id="register-siret" name="register-siret" type="text" inputmode="numeric" maxlength="14" placeholder="12345678900012">
+        <label for="register-raison-sociale">Raison sociale (nom de l'entreprise)</label>
+        <input id="register-raison-sociale" name="register-raison-sociale" type="text" placeholder="Ex: Dupont SARL">
+        <label for="register-adresse-siege">Adresse du siege social</label>
+        <input id="register-adresse-siege" name="register-adresse-siege" type="text" placeholder="12 rue de la Paix, 75002 Paris">
+        <label for="register-rcs">Numero RCS ou RM</label>
+        <input id="register-rcs" name="register-rcs" type="text" placeholder="Ex: RCS Paris 123 456 789">
+        <label for="register-tva">Numero de TVA intracommunautaire</label>
+        <input id="register-tva" name="register-tva" type="text" placeholder="Ex: FR12345678901">
       </div>
       <button class="btn" style="margin-top:16px;width:100%" onclick="doRegister()">Créer mon compte</button>
     </div>
@@ -1589,6 +1597,11 @@ async function doRegister(){
   const isPro = document.getElementById('register-pro').checked;
   const siret = document.getElementById('register-siret').value.replace(/\s/g,'').trim();
   if(isPro && !/^\d{14}$/.test(siret)){ showToast("Le numéro SIRET doit contenir exactement 14 chiffres"); return; }
+  const raisonSociale = document.getElementById('register-raison-sociale').value.trim();
+  const adresseSiege = document.getElementById('register-adresse-siege').value.trim();
+  const rcs = document.getElementById('register-rcs').value.trim();
+  const tva = document.getElementById('register-tva').value.trim();
+  if(isPro && (!raisonSociale || !adresseSiege || !rcs || !tva)){ showToast("Pour un compte professionnel, merci de renseigner la raison sociale, l'adresse du siège, le n° RCS/RM et le n° de TVA intracommunautaire"); return; }
 
   if(!email || !password){ showToast("Merci de remplir l'e-mail et le mot de passe"); return; }
   if(password.length < 8){ showToast("Le mot de passe doit contenir au moins 8 caractères"); return; }
@@ -1606,7 +1619,7 @@ async function doRegister(){
   }
   try{
     const res = await fetch(LISTINGS_API_BASE+'/api/auth/register', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom, isPro, siret})
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom, isPro, siret, raisonSociale, adresseSiege, rcs, tva})
     });
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur lors de l'inscription"); return; }
