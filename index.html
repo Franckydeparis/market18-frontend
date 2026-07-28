@@ -441,6 +441,30 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
             <option value="Oui">Oui</option>
             <option value="Non">Non</option>
           </select>
+          <label>Baignoire</label>
+          <select id="baignoire">
+            <option value="">Choisir</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+          </select>
+          <label>WC separes</label>
+          <select id="wc">
+            <option value="">Choisir</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+          </select>
+          <label>Balcon</label>
+          <select id="balcon">
+            <option value="">Choisir</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+          </select>
+          <label>Jardin</label>
+          <select id="jardin">
+            <option value="">Choisir</option>
+            <option value="Oui">Oui</option>
+            <option value="Non">Non</option>
+          </select>
         </div>
         <label>Ville *</label>
         <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
@@ -730,6 +754,30 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <option value="Oui">Oui</option>
         <option value="Non">Non</option>
       </select>
+      <label>Baignoire</label>
+      <select id="edit-baignoire">
+        <option value="">Choisir</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
+      <label>WC separes</label>
+      <select id="edit-wc">
+        <option value="">Choisir</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
+      <label>Balcon</label>
+      <select id="edit-balcon">
+        <option value="">Choisir</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
+      <label>Jardin</label>
+      <select id="edit-jardin">
+        <option value="">Choisir</option>
+        <option value="Oui">Oui</option>
+        <option value="Non">Non</option>
+      </select>
     </div>
     <label>Ville</label>
     <input id="edit-ville" name="edit-ville" autocomplete="address-level2" list="ville-suggestions">
@@ -958,6 +1006,10 @@ function backendToFrontend(l){
     chambres: l.chambres || '',
     etage: l.etage || '',
     garage: l.garage || '',
+    baignoire: l.baignoire || '',
+    wc: l.wc || '',
+    balcon: l.balcon || '',
+    jardin: l.jardin || '',
     ville: l.ville || '',
     nom: l.nom || '',
     email: l.email || '',
@@ -988,6 +1040,10 @@ function frontendToBackend(l){
     chambres: l.chambres || '',
     etage: l.etage || '',
     garage: l.garage || '',
+    baignoire: l.baignoire || '',
+    wc: l.wc || '',
+    balcon: l.balcon || '',
+    jardin: l.jardin || '',
     images: l.images || [],
     contact: l.telephone || l.email || '',
     ville: l.ville || '',
@@ -1514,6 +1570,14 @@ function renderAdImmoDetails(l){
   if(l.etage) rows.push(['Etage', l.etage]);
   if(l.garage===true||l.garage==='Oui') rows.push(['Garage', 'Oui']);
   else if(l.garage===false||l.garage==='Non') rows.push(['Garage', 'Non']);
+if(l.baignoire===true||l.baignoire==='Oui') rows.push(['Baignoire', 'Oui']);
+else if(l.baignoire===false||l.baignoire==='Non') rows.push(['Baignoire', 'Non']);
+if(l.wc===true||l.wc==='Oui') rows.push(['WC separes', 'Oui']);
+else if(l.wc===false||l.wc==='Non') rows.push(['WC separes', 'Non']);
+if(l.balcon===true||l.balcon==='Oui') rows.push(['Balcon', 'Oui']);
+else if(l.balcon===false||l.balcon==='Non') rows.push(['Balcon', 'Non']);
+if(l.jardin===true||l.jardin==='Oui') rows.push(['Jardin', 'Oui']);
+else if(l.jardin===false||l.jardin==='Non') rows.push(['Jardin', 'Non']);
   if(!rows.length){ box.style.display='none'; box.innerHTML=''; return; }
   box.style.display='block';
   box.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px">' + rows.map(r=>'<span style="background:#5b21b6;color:#fff;padding:6px 12px;border-radius:20px;font-size:.85rem">'+r[0]+' : <b>'+r[1]+'</b></span>').join('') + '</div>';
@@ -1776,6 +1840,10 @@ function openEditPhotos(){
     document.getElementById('edit-chambres').value = l.chambres || '';
     document.getElementById('edit-etage').value = l.etage || '';
     document.getElementById('edit-garage').value = (l.garage===true||l.garage==='Oui')?'Oui':((l.garage===false||l.garage==='Non')?'Non':'');
+document.getElementById('edit-baignoire').value = (l.baignoire===true||l.baignoire==='Oui')?'Oui':((l.baignoire===false||l.baignoire==='Non')?'Non':'');
+document.getElementById('edit-wc').value = (l.wc===true||l.wc==='Oui')?'Oui':((l.wc===false||l.wc==='Non')?'Non':'');
+document.getElementById('edit-balcon').value = (l.balcon===true||l.balcon==='Oui')?'Oui':((l.balcon===false||l.balcon==='Non')?'Non':'');
+document.getElementById('edit-jardin').value = (l.jardin===true||l.jardin==='Oui')?'Oui':((l.jardin===false||l.jardin==='Non')?'Non':'');
   } else {
     document.getElementById('edit-immo-box').style.display = 'none';
   }
@@ -1837,6 +1905,10 @@ async function saveEditedPhotos(){
   l.chambres = (l.categorie === 'Immobilier') ? document.getElementById('edit-chambres').value : '';
   l.etage = (l.categorie === 'Immobilier') ? document.getElementById('edit-etage').value : '';
   l.garage = (l.categorie === 'Immobilier') ? document.getElementById('edit-garage').value : '';
+l.baignoire = (l.categorie === 'Immobilier') ? document.getElementById('edit-baignoire').value : '';
+l.wc = (l.categorie === 'Immobilier') ? document.getElementById('edit-wc').value : '';
+l.balcon = (l.categorie === 'Immobilier') ? document.getElementById('edit-balcon').value : '';
+l.jardin = (l.categorie === 'Immobilier') ? document.getElementById('edit-jardin').value : '';
   l.ville = ville;
   const geo = await geocodeVille(ville);
   if(geo){ l.lat = geo.lat; l.lon = geo.lon; }
@@ -1932,6 +2004,10 @@ async function publishAd(e){
   const chambres = (categorie === 'Immobilier') ? document.getElementById('chambres').value : '';
   const etage = (categorie === 'Immobilier') ? document.getElementById('etage').value : '';
   const garage = (categorie === 'Immobilier') ? document.getElementById('garage').value : '';
+const baignoire = (categorie === 'Immobilier') ? document.getElementById('baignoire').value : '';
+const wc = (categorie === 'Immobilier') ? document.getElementById('wc').value : '';
+const balcon = (categorie === 'Immobilier') ? document.getElementById('balcon').value : '';
+const jardin = (categorie === 'Immobilier') ? document.getElementById('jardin').value : '';
   if(!titre||!prix||!categorie||!ville||!nom||!email){ showToast("Merci de remplir tous les champs obligatoires (*), y compris la catégorie"); return; }
   if(categorie==='Véhicules' && !marque){ showToast("Merci de choisir la marque du véhicule"); return; }
   if(isNaN(prix) || prix<=0){ showToast("Merci d'indiquer un prix valide"); return; }
@@ -1948,7 +2024,7 @@ async function publishAd(e){
 
   const livraison = collectPubLivraison();
   const geo = await geocodeVille(ville);
-  const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
+  const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, baignoire, wc, balcon, jardin, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
   if(LISTINGS_API_BASE){
     try{
       const res = await fetch(LISTINGS_API_BASE+'/api/listings', {
