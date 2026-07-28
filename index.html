@@ -1748,7 +1748,7 @@ function openEditPhotos(){
     document.getElementById('edit-pieces').value = l.pieces || '';
     document.getElementById('edit-chambres').value = l.chambres || '';
     document.getElementById('edit-etage').value = l.etage || '';
-    document.getElementById('edit-garage').value = l.garage || '';
+    document.getElementById('edit-garage').value = (l.garage===true||l.garage==='Oui')?'Oui':((l.garage===false||l.garage==='Non')?'Non':'');
   } else {
     document.getElementById('edit-immo-box').style.display = 'none';
   }
