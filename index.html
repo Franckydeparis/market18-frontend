@@ -1174,7 +1174,7 @@ async function showPage(page){
 /* ---------- CATEGORIES ---------- */
 function initCategories(){
   document.getElementById('cat-grid').innerHTML = CATEGORIES.map(c=>
-    `<div class="cat" onclick="filterByCategory('${c.replace(/'/g,"\\'")}')"><div class="cat-badge">${CATEGORIES_SHORT[c]}</div><strong>${c}</strong></div>`).join('');
+    `<div class="cat" onclick="filterByCategory('${escapeAttr(c)}')"><div class="cat-badge">${CATEGORIES_SHORT[c]}</div><strong>${c}</strong></div>`).join('');
   const sel = document.getElementById('f-cat');
   sel.innerHTML = '<option value="">Toutes catégories</option>' + CATEGORIES.map(c=>`<option>${c}</option>`).join('');
 }
@@ -2048,8 +2048,8 @@ function renderMessagesPage(){
     return;
   }
   el.innerHTML = '<div class="thread-list">' + myThreads.map(t=>{
-    const lid = String(t.listingId).replace(/'/g,"\\'");
-    const be = String(t.buyerEmail).replace(/'/g,"\\'");
+    const lid = escapeAttr(t.listingId);
+    const be = escapeAttr(t.buyerEmail);
     return `<div class="thread-item" onclick="openThreadFromInbox('${lid}','${be}')">
       <div class="thread-item-title">${escapeHtml(t.listingTitre)}${t.role==='vendeur' ? ' <span class="mini-tag">Vendeur</span>' : ''}</div>
       <div class="thread-item-last">${escapeHtml(t.lastMessage)}</div>
@@ -2530,7 +2530,7 @@ async function renderAdminDac7(){
           <label style="display:flex;align-items:center;gap:5px;font-size:.8rem;font-weight:normal;margin:0">
             <input type="checkbox" id="dac7-verifie-${idSafe}" style="width:auto" ${ann.verifie?'checked':''}> Identité vérifiée
           </label>
-          <button class="iconbtn" onclick="saveSellerNote('${key.replace(/'/g,"\\'")}','${idSafe}')">Enregistrer</button>
+          <button class="iconbtn" onclick="saveSellerNote('${escapeAttr(key)}','${idSafe}')">Enregistrer</button>
         </div>
       </div>
       <span style="background:${statutColor[v.statut]};color:#fff;font-weight:bold;font-size:.75rem;padding:5px 10px;border-radius:8px;white-space:nowrap">${statutLabel[v.statut]}</span>
@@ -2610,7 +2610,7 @@ function renderAdminSellers(){
     const t = computeTrust(key);
     return `<div class="admin-item">
       <div class="info"><div class="t">${escapeHtml(listing?listing.nom:key)} · Score ${t.score}</div><div class="small">${escapeHtml(key)} · ${t.salesCount} vente(s) · ${t.reviewCount} avis</div></div>
-      <label class="admin-verify-toggle"><input type="checkbox" ${t.verified?'checked':''} onchange="toggleSellerVerified('${key.replace(/'/g,"\\'")}', this.checked)"> Identité vérifiée</label>
+      <label class="admin-verify-toggle"><input type="checkbox" ${t.verified?'checked':''} onchange="toggleSellerVerified('${escapeAttr(key)}', this.checked)"> Identité vérifiée</label>
     </div>`;
   }).join('');
 }
@@ -2818,7 +2818,7 @@ function renderAdminMessagesList(){
   if(!adminThreads.length){ el.innerHTML = '<p class="empty">Aucune conversation.</p>'; return; }
   el.innerHTML = '<div class="admin-msgs-toolbar"><label><input type="checkbox" onchange="toggleSelectAllMsgs(this.checked)" '+(selectedMsgIds.length===adminThreads.length?'checked':'')+'> Tout sélectionner</label><button class="btn small" onclick="deleteSelectedThreads()">Supprimer la sélection</button></div>' +
     adminThreads.map(function(t){
-      const safeKey = t.key.replace(/'/g,"\\'");
+      const safeKey = escapeAttr(t.key);
       const expanded = expandedMsgThreads.has(t.key);
       const last = t.msgs[t.msgs.length-1];
       const previewRaw = last ? last.text : 'Pas encore de message.';
