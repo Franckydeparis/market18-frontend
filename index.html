@@ -3097,7 +3097,7 @@ async function deleteSelectedListings(){
   if(!confirm(`Supprimer les ${selectedAdIds.length} annonce(s) sélectionnée(s) ?`)) return;
   if(LISTINGS_API_BASE){
     await Promise.all(selectedAdIds.map(id=>
-      fetch(LISTINGS_API_BASE+'/api/listings/'+id, {method:'DELETE'}).catch(()=>{})
+      fetch(LISTINGS_API_BASE+'/api/admin/listings/'+id, {method:'DELETE', headers:{'Authorization':'Bearer '+window.__adminToken}}).catch(()=>{})
     ));
     await loadListings();
   } else {
@@ -3246,7 +3246,7 @@ async function deleteListing(id){
   if(!confirm("Supprimer cette annonce ?")) return;
   listings = listings.filter(l=>l.id!==id);
   if(LISTINGS_API_BASE){
-    try{ await fetch(LISTINGS_API_BASE+'/api/listings/'+id, { method:'DELETE', headers:{'Authorization':'Bearer '+window.__adminToken} }); }catch(e){}
+    try{ await fetch(LISTINGS_API_BASE+'/api/admin/listings/'+id, { method:'DELETE', headers:{'Authorization':'Bearer '+window.__adminToken} }); }catch(e){}
   }
   await saveListings();
   cleanupCart(); cleanupFavorites(); updateCartBadge(); updateStats();
