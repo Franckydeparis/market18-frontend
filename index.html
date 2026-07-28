@@ -2336,7 +2336,9 @@ function renderMessagesPage(){
     const box = document.getElementById('thread-msgs-current');
     if(box) box.scrollTop = box.scrollHeight;
     const __lastTs = currentThreadMsgs.length ? currentThreadMsgs[currentThreadMsgs.length-1].ts : Date.now();
-    markThreadSeen(openThreadId, openThreadBuyerEmail, __lastTs);
+    const __threadInputEl = document.getElementById('thread-input-current');
+if(__threadInputEl && document.activeElement !== __threadInputEl){ __threadInputEl.focus(); }
+markThreadSeen(openThreadId, openThreadBuyerEmail, __lastTs);
     return;
   }
   if(!myThreads.length){
