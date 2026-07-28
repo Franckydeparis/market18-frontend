@@ -564,6 +564,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <p class="small" id="ad-tel-row"><span id="ad-tel"></span></p>
         <p style="margin-top:16px;line-height:1.6" id="ad-desc"></p>
         <div id="ad-livraison" style="margin-top:14px"></div>
+        <div id="ad-immo-details" style="margin-top:14px"></div>
         <p id="ad-sold-banner" style="display:none;margin-top:16px;background:#1e0a45;color:#fff;font-weight:900;padding:10px 14px;border-radius:10px;text-align:center">Cette annonce a été vendue</p>
         <div class="row" style="margin-top:20px" id="ad-actions">
           <button class="btn" id="ad-addcart-btn" onclick="addCartCurrent()">Ajouter au panier</button>
@@ -1465,6 +1466,7 @@ function openAd(id){
   if(l.telephone){ telRow.style.display='block'; document.getElementById('ad-tel').textContent = l.telephone; } else { telRow.style.display='none'; }
   document.getElementById('ad-desc').textContent = l.desc||'';
   renderAdLivraison(l);
+  renderAdImmoDetails(l);
   renderAdEtatCarte(l);
   const sold = !!l.vendu;
   document.getElementById('ad-sold-banner').style.display = sold ? 'block' : 'none';
@@ -1499,6 +1501,22 @@ function renderAdEtatCarte(l){
   } else {
     mapWrap.innerHTML = '';
   }
+}
+function renderAdImmoDetails(l){
+  const box = document.getElementById('ad-immo-details');
+  if(!box) return;
+  if(l.categorie !== 'Immobilier'){ box.style.display='none'; box.innerHTML=''; return; }
+  const rows = [];
+  if(l.typeBien) rows.push(['Type de bien', l.typeBien]);
+  if(l.surface) rows.push(['Surface', l.surface + ' m2']);
+  if(l.pieces) rows.push(['Pieces', l.pieces]);
+  if(l.chambres) rows.push(['Chambres', l.chambres]);
+  if(l.etage) rows.push(['Etage', l.etage]);
+  if(l.garage===true||l.garage==='Oui') rows.push(['Garage', 'Oui']);
+  else if(l.garage===false||l.garage==='Non') rows.push(['Garage', 'Non']);
+  if(!rows.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='block';
+  box.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:8px">' + rows.map(r=>'<span style="background:#5b21b6;color:#fff;padding:6px 12px;border-radius:20px;font-size:.85rem">'+r[0]+' : <b>'+r[1]+'</b></span>').join('') + '</div>';
 }
 function addCartCurrent(){
   if(!currentAdId) return;
