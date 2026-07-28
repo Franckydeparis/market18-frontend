@@ -490,7 +490,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <label>Description</label>
         <textarea id="description" placeholder="État, caractéristiques, raison de la vente..."></textarea>
         <label>Photos (jusqu'à 4)</label>
-        <div class="upload-zone" onclick="document.getElementById('photos').click()">Choisir des photos</div>
+        <label class="upload-zone" for="photos">Choisir des photos</label>
         <input type="file" id="photos" accept="image/*" multiple style="display:none" onchange="handlePhotos(event)">
         <div id="preview"></div>
         <label style="margin-top:18px">Modes de livraison proposés</label>
@@ -805,7 +805,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     <textarea id="edit-desc" rows="4"></textarea>
     <p class="small" style="margin-top:16px">Photos (4 maximum)</p>
     <div id="edit-photos-grid" style="display:flex;flex-wrap:wrap;gap:10px;margin:10px 0"></div>
-    <div class="upload-zone" id="edit-upload-zone" onclick="document.getElementById('edit-photos-input').click()">Ajouter des photos</div>
+    <label class="upload-zone" id="edit-upload-zone" for="edit-photos-input">Ajouter des photos</label>
     <input type="file" id="edit-photos-input" accept="image/*" multiple style="display:none" onchange="handleEditPhotoUpload(event)">
     <button class="btn" id="edit-photos-save-btn" style="margin-top:18px;width:100%" onclick="saveEditedPhotos()">Enregistrer les modifications</button>
   </div>
@@ -1886,11 +1886,13 @@ function handleEditPhotoUpload(e){
         canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
         resolve(canvas.toDataURL('image/jpeg',0.75));
       };
+      img.onerror = () => { resolve(null); };
       img.src = ev.target.result;
     };
+    reader.onerror = () => { resolve(null); };
     reader.readAsDataURL(file);
   }))).then(images=>{
-    editPhotosDraft = editPhotosDraft.concat(images);
+    const validImages = images.filter(Boolean); if(validImages.length < images.length){ showToast("Certaines photos n'ont pas pu être chargées (format non supporté)"); } editPhotosDraft = editPhotosDraft.concat(validImages);
     renderEditPhotosGrid();
     saveBtn.disabled = false; saveBtn.textContent = 'Enregistrer les modifications';
     e.target.value='';
@@ -1967,12 +1969,14 @@ function handlePhotos(e){
         canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
         resolve(canvas.toDataURL('image/jpeg',0.75));
       };
+      img.onerror = () => { resolve(null); };
       img.src = ev.target.result;
     };
+    reader.onerror = () => { resolve(null); };
     reader.readAsDataURL(file);
   })));
   photosProcessing = processing.then(newImages=>{
-    uploadedImages = uploadedImages.concat(newImages).slice(0,4);
+    const validNewImages = newImages.filter(Boolean); if(validNewImages.length < newImages.length){ showToast("Certaines photos n'ont pas pu être chargées (format non supporté)"); } uploadedImages = uploadedImages.concat(validNewImages).slice(0,4);
     renderPhotoPreview();
     if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = "Publier l'annonce"; }
     e.target.value = '';
