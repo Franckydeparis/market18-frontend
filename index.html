@@ -275,6 +275,8 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 .card:hover::after{left:130%}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
+<script>window.fbAsyncInit=function(){FB.init({appId:'2061708997887473',cookie:true,xfbml:false,version:'v21.0'});};</script>
+<script async defer src="https://connect.facebook.net/fr_FR/sdk.js"></script>
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#5b21b6">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
@@ -666,6 +668,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     </div>
     <div id="auth-tab-login">
       <div id="google-signin-btn-login" style="margin-bottom:12px;display:flex;justify-content:center"></div>
+      <button type="button" onclick="facebookLogin()" style="margin-bottom:12px;width:100%;background:#1877F2;color:#fff;border:none;border-radius:8px;padding:10px;font-weight:700;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">Continuer avec Facebook</button>
       <div style="text-align:center;color:#ccc;font-size:13px;margin-bottom:12px">&mdash; ou &mdash;</div>
       <label>Adresse e-mail</label>
       <input id="login-email" name="login-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
@@ -676,6 +679,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     </div>
     <div id="auth-tab-register" style="display:none">
       <div id="google-signin-btn-register" style="margin-bottom:12px;display:flex;justify-content:center"></div>
+      <button type="button" onclick="facebookLogin()" style="margin-bottom:12px;width:100%;background:#1877F2;color:#fff;border:none;border-radius:8px;padding:10px;font-weight:700;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">Continuer avec Facebook</button>
       <div style="text-align:center;color:#ccc;font-size:13px;margin-bottom:12px">&mdash; ou &mdash;</div>
       <label>Nom</label>
       <input id="register-nom" name="register-nom" autocomplete="name" placeholder="Votre nom">
@@ -3341,6 +3345,27 @@ function initGoogleSignIn(){
   if(elRegister){ elRegister.innerHTML=''; google.accounts.id.renderButton(elRegister, { theme:'outline', size:'large', width:280, locale:'fr' }); }
 }
 window.initGoogleSignIn = initGoogleSignIn;
+function handleFacebookLoginResponse(response){
+  if(!response || !response.authResponse || !response.authResponse.accessToken){ return; }
+  fetch(LISTINGS_API_BASE+'/api/auth/facebook', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({accessToken: response.authResponse.accessToken}) })
+    .then(function(r){ return r.json().then(function(data){ return {ok:r.ok, data:data}; }); })
+    .then(function(res){
+      if(!res.ok){ showToast(res.data.error || 'Erreur de connexion Facebook'); return; }
+      return saveAuthToken(res.data.token).then(function(){
+        currentUser = res.data.user;
+        syncFavoritesFromBackend();
+        updateAccountNav();
+        closeModal('modal-auth');
+        showToast('Connecte avec Facebook, bienvenue !');
+      });
+    })
+    .catch(function(){ showToast('Impossible de contacter le serveur'); });
+}
+function facebookLogin(){
+  if(!window.FB){ showToast("Facebook n'est pas encore charge, reessaie dans un instant"); return; }
+  FB.login(handleFacebookLoginResponse, {scope:'email,public_profile'});
+}
+
 function attachVilleAutocomplete(inputId){
   var input = document.getElementById(inputId);
   if(!input) return;
