@@ -385,6 +385,10 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <span class="hero-pill c-orange">🚚 Livraison partout en France</span>
         <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer">🎧 Support français</span>
       </div>
+      <div id="campagne-18e-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:14px 20px;text-align:center;color:#fff">
+        <strong style="font-size:1.05rem">📍 Moretvia arrive dans le 18e arrondissement de Paris !</strong>
+        <p class="small" style="margin:6px 0 0;opacity:.9">Commerçants et habitants du 18e, rejoignez les premiers vendeurs et acheteurs du quartier. Indiquez "Paris 18e" comme ville pour être trouvé facilement par vos voisins.</p>
+      </div>
       
 <div style="max-width:640px;margin:24px auto">
 <input id="hero-search" autocomplete="off" placeholder="Rechercher un produit, une marque, une ville..." onkeydown="if(event.key==='Enter')heroSearch()" style="width:100%;padding:16px 20px;border:none;border-radius:18px;font-size:1rem;box-shadow:0 12px 28px rgba(0,0,0,.28);background:#7c3aed;color:#fff">
@@ -509,7 +513,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
           </select>
         </div>
         <label>Ville *</label>
-        <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Lyon" required>
+        <input id="ville" name="ville" autocomplete="address-level2" list="ville-suggestions" placeholder="Ex : Paris 18e" required>
         <datalist id="ville-suggestions"></datalist>
         <label>État du produit</label>
         <select id="etat">
@@ -1202,7 +1206,7 @@ const TITRE_SUGGESTIONS = [
 ];
 
 const VILLE_SUGGESTIONS = [
-  "Paris","Marseille","Lyon","Toulouse","Nice","Nantes","Montpellier","Strasbourg","Bordeaux","Lille",
+  "Paris","Paris 1e","Paris 2e","Paris 3e","Paris 4e","Paris 5e","Paris 6e","Paris 7e","Paris 8e","Paris 9e","Paris 10e","Paris 11e","Paris 12e","Paris 13e","Paris 14e","Paris 15e","Paris 16e","Paris 17e","Paris 18e","Paris 19e","Paris 20e","Marseille","Lyon","Toulouse","Nice","Nantes","Montpellier","Strasbourg","Bordeaux","Lille",
   "Rennes","Reims","Le Havre","Saint-Étienne","Toulon","Grenoble","Dijon","Angers","Nîmes","Villeurbanne",
   "Le Mans","Aix-en-Provence","Clermont-Ferrand","Brest","Tours","Limoges","Amiens","Perpignan","Metz","Besançon",
   "Boulogne-Billancourt","Orléans","Mulhouse","Rouen","Caen","Nancy","Saint-Denis","Argenteuil","Montreuil","Roubaix",
