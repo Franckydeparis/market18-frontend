@@ -656,6 +656,8 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 <div class="modal-overlay" id="modal-seller">
   <div class="modal-box wide">
     <button class="modal-close" onclick="closeModal('modal-seller')">×</button>
+    <div id="seller-avatar" style="width:64px;height:64px;border-radius:50%;background:#7c3aed;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.4rem;margin-bottom:10px"></div>
+    <button type="button" id="favori-vendeur-btn" onclick="toggleFavoriVendeur()" style="display:none;background:#fff3cd;color:#7c3aed;border:1px solid #7c3aed;border-radius:999px;padding:6px 16px;font-weight:700;cursor:pointer;margin-bottom:10px;font-size:.85rem">☆ Suivre ce vendeur</button>
     <h2 id="seller-name" style="margin:0 0 8px"></h2>
     <div id="seller-badge" style="margin-bottom:6px"></div>
     <p class="small" id="seller-label" style="margin:0 0 4px;opacity:.85"></p>
@@ -2359,6 +2361,11 @@ function renderSellerProfile(){
   const nom = listing ? listing.nom : email;
   const t = computeTrust(email);
   document.getElementById('seller-name').textContent = nom || 'Vendeur';
+  applyAvatarToEl(document.getElementById('seller-avatar'), null, nom);
+  fetch(PAYMENT_API_BASE+'/api/seller-info?email='+encodeURIComponent(email)).then(function(r){return r.json();}).then(function(info){
+    applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom);
+  }).catch(function(){});
+  renderFavoriVendeurBtn(email);
   document.getElementById('seller-badge').innerHTML = trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '');
   document.getElementById('seller-label').textContent = t.label;
   document.getElementById('seller-stars').innerHTML = starsHtml(t.avgRating) + ` <span class="small">(${t.reviewCount} avis)</span>`;
@@ -2376,6 +2383,36 @@ function renderSellerProfile(){
   document.getElementById('review-comment').value='';
   document.getElementById('review-rating').value='5';
 }
+async function renderFavoriVendeurBtn(email){
+  const btn = document.getElementById('favori-vendeur-btn');
+  if(!btn) return;
+  if(!currentUser || !authToken){ btn.style.display='none'; return; }
+  btn.style.display='inline-block';
+  btn.disabled = true;
+  try{
+    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
+    const data = await res.json();
+    const suivi = (data.vendeurs||[]).some(function(v){ return sellerKey(v.email)===sellerKey(email); });
+    btn.textContent = suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur';
+  }catch(e){}
+  btn.disabled = false;
+}
+async function toggleFavoriVendeur(){
+  if(!currentUser || !authToken){ showToast('Connectez-vous pour suivre un vendeur'); return; }
+  const email = currentAdSellerEmail;
+  if(!email) return;
+  const btn = document.getElementById('favori-vendeur-btn');
+  if(btn) btn.disabled = true;
+  try{
+    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ sellerEmail: email }) });
+    const data = await res.json();
+    if(!res.ok){ showToast(data.error||'Erreur'); if(btn) btn.disabled=false; return; }
+    if(btn){ btn.textContent = data.suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur'; }
+    showToast(data.suivi ? 'Vendeur ajoute a vos favoris' : 'Vendeur retire de vos favoris');
+  }catch(e){ showToast('Impossible de contacter le serveur'); }
+  if(btn) btn.disabled = false;
+}
+
 async function submitReview(){
   if(!currentUser || !authToken){ showToast("Connectez-vous pour laisser un avis"); return; }
   const rating = parseInt(document.getElementById('review-rating').value,10);
