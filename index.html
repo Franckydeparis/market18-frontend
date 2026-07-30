@@ -3374,7 +3374,8 @@ function isInAppBrowser(){
   var isAndroidWebView = /Android/.test(ua) && /; wv\)/.test(ua);
   var isIOSWebView = /iPhone|iPad|iPod/.test(ua) && /AppleWebKit/.test(ua) && !/Safari/.test(ua);
   var isKnownInApp = /FBAN|FBAV|Instagram|Line\/|MicroMessenger|TikTok|Snapchat/i.test(ua);
-  return isAndroidWebView || isIOSWebView || isKnownInApp;
+  var isStandalonePWA = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  return isAndroidWebView || isIOSWebView || isKnownInApp || isStandalonePWA;
 }
 function openInExternalBrowser(){
   var ua = navigator.userAgent || "";
