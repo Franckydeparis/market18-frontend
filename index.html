@@ -295,15 +295,60 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 <script>
 function initGoogleMapsAutocomplete(){
   var input = document.getElementById('register-adresse-siege');
-  if(!input || !window.google || !google.maps || !google.maps.places) return;
-  var autocomplete = new google.maps.places.Autocomplete(input, { types: ['address'], componentRestrictions: {country: 'fr'} });
-  autocomplete.addListener('place_changed', function(){
-    var place = autocomplete.getPlace();
-    if(!place || !place.address_components) return;
-    var postal = '';
-    place.address_components.forEach(function(c){ if(c.types.indexOf('postal_code') !== -1) postal = c.long_name; });
-    var cpInput = document.getElementById('register-code-postal');
-    if(cpInput && postal) cpInput.value = postal;
+  if (!input || !window.google || !google.maps || !google.maps.places) return;
+  var wrap = input.parentNode;
+  wrap.style.position = 'relative';
+  var dropdown = document.createElement('div');
+  dropdown.id = 'register-adresse-siege-suggestions';
+  dropdown.style.cssText = 'position:absolute;left:0;right:0;top:100%;z-index:9999;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:220px;overflow:auto;box-shadow:0 6px 16px rgba(0,0,0,.18);display:none;margin-top:4px';
+  wrap.appendChild(dropdown);
+  var sessionToken = null;
+  var debounceTimer = null;
+  function hideDropdown(){ dropdown.style.display = 'none'; dropdown.innerHTML = ''; }
+  input.addEventListener('input', function(){
+    clearTimeout(debounceTimer);
+    var query = input.value.trim();
+    if (query.length < 3) { hideDropdown(); return; }
+    debounceTimer = setTimeout(function(){
+      if (!sessionToken) sessionToken = new google.maps.places.AutocompleteSessionToken();
+      google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+        input: query,
+        includedRegionCodes: ['fr'],
+        sessionToken: sessionToken
+      }).then(function(result){
+        var suggestions = result.suggestions || [];
+        dropdown.innerHTML = '';
+        if (!suggestions.length) { hideDropdown(); return; }
+        suggestions.forEach(function(s){
+          var pred = s.placePrediction;
+          if (!pred) return;
+          var item = document.createElement('div');
+          item.textContent = pred.text ? pred.text.text : '';
+          item.style.cssText = 'padding:9px 12px;cursor:pointer;font-size:.92rem;border-bottom:1px solid #f0f0f0;color:#333';
+          item.addEventListener('mousedown', function(evt){
+            evt.preventDefault();
+            input.value = pred.text ? pred.text.text : '';
+            hideDropdown();
+            var place = pred.toPlace();
+            place.fetchFields({ fields: ['formattedAddress', 'addressComponents'] }).then(function(){
+              if (place.formattedAddress) input.value = place.formattedAddress;
+              var postal = '';
+              (place.addressComponents || []).forEach(function(c){
+                if (c.types && c.types.indexOf('postal_code') !== -1) postal = c.longText || c.long_name || '';
+              });
+              var cpInput = document.getElementById('register-code-postal');
+              if (cpInput && postal) cpInput.value = postal;
+            }).catch(function(){});
+            sessionToken = null;
+          });
+          dropdown.appendChild(item);
+        });
+        dropdown.style.display = 'block';
+      }).catch(function(){ hideDropdown(); });
+    }, 250);
+  });
+  document.addEventListener('click', function(evt){
+    if (evt.target !== input && !dropdown.contains(evt.target)) hideDropdown();
   });
 }
 </script>
