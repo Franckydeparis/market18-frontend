@@ -748,7 +748,11 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
   <div class="modal-box" style="max-width:420px">
     <button class="modal-close" onclick="closeModal('modal-my-account')">×</button>
     <h2 style="margin-top:0">Mon compte</h2>
-    <p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
+    <div style="text-align:center;margin-bottom:14px">
+  <div id="account-avatar-preview" style="width:84px;height:84px;border-radius:50%;margin:0 auto 8px;background:#7c3aed;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.7rem;overflow:hidden"></div>
+  <label style="display:inline-block;background:#7c3aed;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;cursor:pointer;font-weight:700">Changer ma photo<input type="file" accept="image/*" id="account-avatar-input" style="display:none" onchange="handleAvatarUpload(event)"></label>
+</div>
+<p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
     <h4 style="margin-bottom:6px">Changer mon mot de passe</h4>
     <label>Mot de passe actuel</label>
     <div style="position:relative"><input id="change-current-password" name="change-current-password" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-current-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
@@ -1723,17 +1727,53 @@ function updateAccountNav(){
     a.style.display = currentUser ? '' : 'none';
   });
 }
+function applyAvatarToEl(el, avatarUrl, nom){
+  if(!el) return;
+  if(avatarUrl){ el.style.backgroundImage = "url('"+avatarUrl+"')"; el.textContent = ''; }
+  else { el.style.backgroundImage = 'none'; el.textContent = (nom||'?').trim().charAt(0).toUpperCase() || '?'; }
+}
 function openAccountArea(){
   if(currentUser){
     document.getElementById('account-nom').textContent = currentUser.nom || '-';
     document.getElementById('account-email').textContent = currentUser.email;
     document.getElementById('change-current-password').value='';
     document.getElementById('change-new-password').value='';
+    applyAvatarToEl(document.getElementById('account-avatar-preview'), currentUser.avatarUrl, currentUser.nom);
     openModal('modal-my-account');
   } else {
     setAuthTab('login');
     openModal('modal-auth');
   }
+}
+function handleAvatarUpload(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  if(!currentUser || !authToken){ showToast('Connectez-vous pour changer votre photo'); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = async function(){
+      const size = 240;
+      const canvas = document.createElement('canvas');
+      canvas.width = size; canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(size/img.width, size/img.height);
+      const w = img.width*scale, h = img.height*scale;
+      ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+      try{
+        const res = await fetch(PAYMENT_API_BASE+'/api/auth/avatar', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ avatarUrl: dataUrl }) });
+        const data = await res.json();
+        if(!res.ok){ showToast(data.error || 'Erreur lors de l\'envoi de la photo'); return; }
+        currentUser.avatarUrl = data.user.avatarUrl;
+        applyAvatarToEl(document.getElementById('account-avatar-preview'), currentUser.avatarUrl, currentUser.nom);
+        showToast('Photo de profil mise a jour');
+      }catch(e){ showToast('Impossible de contacter le serveur'); }
+    };
+    img.onerror = function(){ showToast('Image invalide'); };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 function setAuthTab(tab){
   document.getElementById('auth-tab-btn-login').classList.toggle('active', tab==='login');
