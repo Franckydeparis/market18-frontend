@@ -296,12 +296,16 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 function initGoogleMapsAutocomplete(){
   var input = document.getElementById('register-adresse-siege');
   if (!input || !window.google || !google.maps || !google.maps.places) return;
-  var wrap = input.parentNode;
-  wrap.style.position = 'relative';
   var dropdown = document.createElement('div');
   dropdown.id = 'register-adresse-siege-suggestions';
-  dropdown.style.cssText = 'position:absolute;left:0;right:0;top:100%;z-index:9999;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:220px;overflow:auto;box-shadow:0 6px 16px rgba(0,0,0,.18);display:none;margin-top:4px';
-  wrap.appendChild(dropdown);
+  dropdown.style.cssText = 'position:fixed;z-index:99999;background:#fff;border:1px solid #ddd;border-radius:8px;max-height:220px;overflow:auto;box-shadow:0 6px 16px rgba(0,0,0,.25);display:none';
+  document.body.appendChild(dropdown);
+  function positionDropdown(){
+    var r = input.getBoundingClientRect();
+    dropdown.style.left = r.left + 'px';
+    dropdown.style.top = (r.bottom + 4) + 'px';
+    dropdown.style.width = r.width + 'px';
+  }
   var sessionToken = null;
   var debounceTimer = null;
   function hideDropdown(){ dropdown.style.display = 'none'; dropdown.innerHTML = ''; }
@@ -343,11 +347,14 @@ function initGoogleMapsAutocomplete(){
           });
           dropdown.appendChild(item);
         });
+        positionDropdown();
         dropdown.style.display = 'block';
       }).catch(function(){ hideDropdown(); });
     }, 250);
   });
-  document.addEventListener('click', function(evt){
+  window.addEventListener('scroll', function(){ if (dropdown.style.display === 'block') positionDropdown(); }, true);
+  window.addEventListener('resize', function(){ if (dropdown.style.display === 'block') positionDropdown(); });
+  document.addEventListener('mousedown', function(evt){
     if (evt.target !== input && !dropdown.contains(evt.target)) hideDropdown();
   });
 }
