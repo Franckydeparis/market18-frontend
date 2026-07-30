@@ -292,6 +292,22 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Moretvia">
+<script>
+function initGoogleMapsAutocomplete(){
+  var input = document.getElementById('register-adresse-siege');
+  if(!input || !window.google || !google.maps || !google.maps.places) return;
+  var autocomplete = new google.maps.places.Autocomplete(input, { types: ['address'], componentRestrictions: {country: 'fr'} });
+  autocomplete.addListener('place_changed', function(){
+    var place = autocomplete.getPlace();
+    if(!place || !place.address_components) return;
+    var postal = '';
+    place.address_components.forEach(function(c){ if(c.types.indexOf('postal_code') !== -1) postal = c.long_name; });
+    var cpInput = document.getElementById('register-code-postal');
+    if(cpInput && postal) cpInput.value = postal;
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxV3cLCmsmdZkNj9pEWP39KCzY66E7Xww&libraries=places&language=fr&region=FR&callback=initGoogleMapsAutocomplete" async defer></script>
 </head>
 <body>
 <script>
