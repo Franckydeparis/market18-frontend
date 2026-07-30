@@ -530,7 +530,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
         <p class="small" style="margin:2px 0 8px">Cochez les options que vous acceptez. Indiquez un prix pour les modes payants (frais à votre charge ou à ajouter, à vous de voir avec l'acheteur).</p>
         <div id="pub-livraison-options" style="display:flex;flex-direction:column;gap:8px"></div>
         <hr style="border-color:rgba(255,255,255,.2);margin:22px 0">
-        <label>Vos coordonnées (visibles par les acheteurs intéressés)</label>
+        <label>Vos coordonnées (non affichées publiquement, contact via la messagerie)</label>
         <input id="nom" name="nom" autocomplete="name" placeholder="Nom et prénom *" required style="margin-bottom:8px">
         <input id="email" name="email" type="email" autocomplete="email" placeholder="Adresse e-mail *" required style="margin-bottom:8px">
         <input id="telephone" name="telephone" type="tel" autocomplete="tel" placeholder="Téléphone (optionnel)">
@@ -1600,7 +1600,7 @@ function openAd(id){
   currentAdSellerEmail = l.email||'';
   document.getElementById('ad-nom').innerHTML = `<button type="button" class="seller-chip" onclick="openSellerProfile()">${escapeHtml(l.nom||'-')}</button> ${trustBadgeHtml(l.email)} ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;vertical-align:middle">Vendeur professionnel</span>' : ''}`;
   const telRow = document.getElementById('ad-tel-row');
-  if(l.telephone){ telRow.style.display='block'; document.getElementById('ad-tel').textContent = l.telephone; } else { telRow.style.display='none'; }
+  telRow.style.display='none';
   document.getElementById('ad-desc').textContent = l.desc||'';
   renderAdLivraison(l);
   renderAdImmoDetails(l);
