@@ -2391,7 +2391,7 @@ function renderSellerProfile(){
   const t = computeTrust(email);
   document.getElementById('seller-name').textContent = nom || 'Vendeur';
   applyAvatarToEl(document.getElementById('seller-avatar'), null, nom);
-  fetch(PAYMENT_API_BASE+'/api/seller-info?email='+encodeURIComponent(email)).then(function(r){return r.json();}).then(function(info){
+  fetch(LISTINGS_API_BASE+'/api/seller-info?email='+encodeURIComponent(email)).then(function(r){return r.json();}).then(function(info){
     applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom);
   }).catch(function(){});
   renderFavoriVendeurBtn(email);
@@ -2419,7 +2419,7 @@ async function renderFavoriVendeurBtn(email){
   btn.style.display='inline-block';
   btn.disabled = true;
   try{
-    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
+    const res = await fetch(LISTINGS_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
     const data = await res.json();
     const suivi = (data.vendeurs||[]).some(function(v){ return sellerKey(v.email)===sellerKey(email); });
     btn.textContent = suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur';
@@ -2433,7 +2433,7 @@ async function toggleFavoriVendeur(){
   const btn = document.getElementById('favori-vendeur-btn');
   if(btn) btn.disabled = true;
   try{
-    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ sellerEmail: email }) });
+    const res = await fetch(LISTINGS_API_BASE+'/api/favoris-vendeur', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ sellerEmail: email }) });
     const data = await res.json();
     if(!res.ok){ showToast(data.error||'Erreur'); if(btn) btn.disabled=false; return; }
     if(btn){ btn.textContent = data.suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur'; }
