@@ -363,6 +363,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
   <a onclick="showPage('annonces')" data-page="annonces">Explorer</a>
   <a onclick="showPage('messages')" data-page="messages">Messages<span id="messages-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('favoris')" data-page="favoris">Favoris</a>
+  <a onclick="showPage('vendeurs-favoris'); renderVendeursFavoris();" data-page="vendeurs-favoris">Vendeurs favoris</a>
   <a onclick="showPage('mes-annonces')" data-page="mes-annonces">Mes annonces</a>
   <a onclick="showPage('soldes')" data-page="soldes">🏷️ Soldes</a>
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
@@ -558,6 +559,13 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
     <h3 style="margin-top:0">Mes favoris</h3>
     <p class="small" style="margin-bottom:18px">Vos favoris sont conservés le temps de votre visite.</p>
     <div id="fav-grid" class="grid"></div>
+  </section>
+
+  <!-- VENDEURS FAVORIS -->
+  <section class="page" id="page-vendeurs-favoris">
+    <h3 style="margin-top:0">Vendeurs favoris</h3>
+    <p class="small" style="margin-bottom:18px">Les vendeurs que vous suivez. Retrouvez facilement leurs annonces.</p>
+    <div id="vendeurs-favoris-grid" class="grid"></div>
   </section>
 
   <!-- MES ANNONCES -->
@@ -2193,6 +2201,27 @@ function renderFavPage(){
   const list = listings.filter(l=>favorites.includes(l.id));
   const el = document.getElementById('fav-grid');
   el.innerHTML = list.length ? list.map(cardHtml).join('') : '<p class="empty">Vous n\u2019avez pas encore de favoris.</p>';
+}
+async function renderVendeursFavoris(){
+  const el = document.getElementById('vendeurs-favoris-grid');
+  if(!el) return;
+  if(!currentUser || !authToken){ el.innerHTML = '<p class="empty">Connectez-vous pour voir vos vendeurs favoris.</p>'; return; }
+  el.innerHTML = '<p class="small">Chargement...</p>';
+  try{
+    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
+    const data = await res.json();
+    const vendeurs = data.vendeurs || [];
+    if(!vendeurs.length){ el.innerHTML = '<p class="empty">Vous ne suivez aucun vendeur pour le moment.</p>'; return; }
+    el.innerHTML = vendeurs.map(function(v){
+      const initiale = (v.nom||'?').trim().charAt(0).toUpperCase() || '?';
+      const avatarStyle = v.avatarUrl ? "background-image:url('"+v.avatarUrl+"');background-size:cover;background-position:center" : '';
+      return '<div class="card" style="text-align:center;padding:18px;cursor:pointer" onclick="openSellerProfileFromCard(\''+escapeAttr(v.email)+'\')">'+
+        '<div style="width:56px;height:56px;border-radius:50%;background:#7c3aed;'+avatarStyle+';margin:0 auto 10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem">'+(v.avatarUrl?'':initiale)+'</div>'+
+        '<div style="font-weight:700">'+escapeHtml(v.nom||v.email)+'</div>'+
+        (v.isPro ? '<div class="small" style="opacity:.8">Vendeur professionnel</div>' : '')+
+      '</div>';
+    }).join('');
+  }catch(e){ el.innerHTML = '<p class="empty">Impossible de charger vos vendeurs favoris.</p>'; }
 }
 
 /* ---------- PANIER ---------- */
