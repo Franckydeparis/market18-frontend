@@ -1772,7 +1772,7 @@ function handleAvatarUpload(event){
       ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
       const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
       try{
-        const res = await fetch(PAYMENT_API_BASE+'/api/auth/avatar', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ avatarUrl: dataUrl }) });
+        const res = await fetch(LISTINGS_API_BASE+'/api/auth/avatar', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ avatarUrl: dataUrl }) });
         const data = await res.json();
         if(!res.ok){ showToast(data.error || 'Erreur lors de l\'envoi de la photo'); return; }
         currentUser.avatarUrl = data.user.avatarUrl;
@@ -2208,7 +2208,7 @@ async function renderVendeursFavoris(){
   if(!currentUser || !authToken){ el.innerHTML = '<p class="empty">Connectez-vous pour voir vos vendeurs favoris.</p>'; return; }
   el.innerHTML = '<p class="small">Chargement...</p>';
   try{
-    const res = await fetch(PAYMENT_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
+    const res = await fetch(LISTINGS_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
     const data = await res.json();
     const vendeurs = data.vendeurs || [];
     if(!vendeurs.length){ el.innerHTML = '<p class="empty">Vous ne suivez aucun vendeur pour le moment.</p>'; return; }
@@ -2274,7 +2274,7 @@ function renderCartPage(){
 async function simulatePayment(){
   if(!cart.length){ showToast("Votre panier est vide"); return; }
   const items = cart.map(id=>listings.find(l=>l.id===id)).filter(Boolean);
-  if(PAYMENT_API_BASE){ await realCheckout(items); return; }
+  if(LISTINGS_API_BASE){ await realCheckout(items); return; }
   const total = items.reduce((s,l)=>s+effectivePrice(l),0);
   const newSellers = new Set();
   items.forEach(l=>{
