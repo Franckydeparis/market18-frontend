@@ -3255,6 +3255,7 @@ function renderMesAnnonces(){
         <h4>${escapeHtml(l.titre)}</h4>
         <div class="price">${fmtPrice(l.prix)}</div>
         <div class="city">${escapeHtml(l.ville||'-')}</div>
+        ${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-top:6px;border:1px solid #ddd" title="Ton avatar">' : ''}
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
           <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openAd(${l.id})">Voir</button>
           <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openEditPhotos(${l.id})">Modifier</button>
