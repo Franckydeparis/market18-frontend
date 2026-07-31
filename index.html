@@ -2003,7 +2003,7 @@ async function doChangePassword(){
 let editPhotosListingId = null;
 let editPhotosDraft = [];
 let editPhotosProcessing = Promise.resolve();
-function openEditPhotos(){
+function openEditPhotos(id){if(id!==undefined&&id!==null)currentAdId=id;
   const l = listings.find(x=>x.id===currentAdId); if(!l) return;
   const isOwnerLoggedIn = currentUser && currentUser.email && currentUser.email.toLowerCase() === (l.email||'').toLowerCase().trim();
   if(!isOwnerLoggedIn){
