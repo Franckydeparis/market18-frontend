@@ -1625,8 +1625,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#f
       <div class="card-meta-row">
         ${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
         ${trust.hasRating ? '<span class="mini-tag trustscore">'+ICON_STAR+' '+trust.score+'/100</span>' : ''}
-        <span class="mini-tag c-blue">${ICON_SHIELD} Paiement sécurisé</span>
-        ${hasDelivery ? '<span class="mini-tag c-orange">'+ICON_TRUCK+' Livraison possible</span>' : ''}
+        
         ${l.marque ? '<span class="mini-tag" style="background:#0f766e;color:#fff">'+escapeHtml(l.marque)+'</span>' : ''}
         ${l.etat ? '<span class="mini-tag" style="background:#5b21b6;color:#fff">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
