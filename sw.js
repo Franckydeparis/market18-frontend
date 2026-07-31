@@ -1,4 +1,4 @@
-const CACHE_NAME = 'moretvia-cache-v2';
+const CACHE_NAME = 'market18-cache-v2';
 const CORE_ASSETS = ['/', '/manifest.json'];
 
 self.addEventListener('install', (event) => {
