@@ -744,6 +744,8 @@ function initGoogleMapsAutocomplete(){
     <p class="small" id="seller-label" style="margin:0 0 4px;opacity:.85"></p>
     <div id="seller-stars" style="margin-bottom:10px"></div>
     <div class="trust-breakdown" id="seller-breakdown"></div>
+    <h3 style="margin:22px 0 10px">Ses annonces</h3>
+    <div id="seller-listings-grid" class="grid"></div>
     <h3 style="margin:22px 0 10px">Avis des acheteurs</h3>
     <div id="seller-reviews"></div>
     <h3 style="margin:22px 0 10px">Laisser un avis</h3>
@@ -2477,6 +2479,11 @@ function renderSellerProfile(){
     <div class="trust-item"><b>${t.memberSince ? t.memberSince.toLocaleDateString('fr-FR') : '–'}</b>Membre depuis</div>
     <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div>
   `;
+  var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
+  var sellerListingsGrid = document.getElementById('seller-listings-grid');
+  if (sellerListingsGrid) {
+    sellerListingsGrid.innerHTML = sellerListings.length ? sellerListings.map(cardHtml).join('') : '<p class="empty">Ce vendeur n\'a aucune annonce en ligne pour le moment.</p>';
+  }
   const revList = reviews.filter(r=>sellerKey(r.sellerEmail)===key).sort((a,b)=>b.ts-a.ts);
   document.getElementById('seller-reviews').innerHTML = revList.length
     ? revList.map(r=>`<div class="review"><div class="rhead"><strong>${escapeHtml(r.authorNom||'Acheteur')}</strong><span>${starsHtml(r.rating)} · ${new Date(r.ts).toLocaleDateString('fr-FR')}</span></div><div>${escapeHtml(r.comment||'')}</div></div>`).join('')
