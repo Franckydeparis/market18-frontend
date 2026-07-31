@@ -60,9 +60,9 @@ nav a .badge{position:absolute;top:-6px;right:-2px;background:#f43f5e;color:#fff
 .nav-top-row{display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px}
 #nav-menu-toggle{background:none;border:none;color:#fff;font-weight:bold;font-size:1rem;cursor:pointer;padding:8px 14px;border-radius:10px}
 #nav-menu-toggle:hover,#nav-menu-toggle.active{background:rgba(255,255,255,.18)}
-#nav-menu-panel{display:none;flex-direction:column;width:100%;gap:2px;margin-top:10px;border-top:1px solid rgba(255,255,255,.25);padding-top:10px}
+#nav-menu-panel{display:none;flex-direction:row;flex-wrap:wrap;width:100%;gap:8px 14px;margin-top:10px;border-top:1px solid rgba(255,255,255,.25);padding-top:10px}
 #nav-menu-panel.open{display:flex}
-#nav-menu-panel a{width:100%;text-align:left}
+#nav-menu-panel a{width:auto;text-align:left}
 main{max-width:1200px;margin:auto;padding:34px 20px 60px}
 .hero{text-align:center;padding:30px;border-radius:26px;background:rgba(255,255,255,.08);box-shadow:0 18px 40px rgba(0,0,0,.25)}
 .hero h2{font-size:2.4rem;margin:0 0 12px}
@@ -171,7 +171,7 @@ footer hr{margin:26px 0;border-color:rgba(255,255,255,.2)}
   .nav-toggle{background:rgba(255,255,255,.15);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-weight:bold;font-size:1rem;cursor:pointer;width:100%;max-width:420px}
   nav#nav{display:none;flex-direction:column;align-items:stretch;gap:2px;position:sticky;top:54px}
   nav#nav.nav-open{display:flex}
-  nav#nav a{width:100%;text-align:center;box-sizing:border-box;padding:12px 10px;font-size:.95rem}
+  nav#nav a{width:auto;text-align:center;box-sizing:border-box;padding:10px 12px;font-size:.9rem}
 }
 
 html{scroll-behavior:smooth}
