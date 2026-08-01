@@ -2796,7 +2796,7 @@ async function openAdmin(){
   openModal('modal-admin');
   if(adminUnlocked){ document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); checkSecurityBadge(); return; }
 
-if(currentUser && authToken && LISTINGS_API_BASE){ try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin/whoami', { headers:{ Authorization:'Bearer '+authToken } }); if(res.ok){ window.__adminToken = authToken; adminUnlocked = true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } }catch(e){} }
+
 }
 function checkAdminPinLegacyDisabled(){
   const v = document.getElementById('admin-pin-input').value;
