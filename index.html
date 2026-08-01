@@ -1552,7 +1552,7 @@ async function syncFavoritesFromBackend(){
 
 /* ---------- NAVIGATION ---------- */
 async function showPage(page){
-  if(!currentUser && page !== 'accueil'){ openAccountArea(); return; }
+  if(!currentUser && !['accueil','annonces','soldes','apropos'].includes(page)){ openAccountArea(); return; }
   document.querySelectorAll('.page').forEach(p=>p.style.display='none');
   document.getElementById('page-'+page).style.display='block';
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('active', a.dataset.page===page));
