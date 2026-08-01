@@ -538,7 +538,7 @@ function initGoogleMapsAutocomplete(){
         <datalist id="titre-suggestions"></datalist>
         <label>Prix (€) *</label>
         <input id="prix" type="number" min="0" step="1" placeholder="350" required>
-        <p class="small" style="margin-top:4px">Jusqu'au 25/07/2027, Market18.fr est entièrement gratuit pour tous les vendeurs (particuliers et professionnels) — aucune commission ne s'applique.</p>
+        <p class="small" style="margin-top:4px">Market18.fr est actuellement entièrement gratuit pour tous les vendeurs (particuliers et professionnels) — aucune commission n'est prélevée.</p>
         <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px">
           <input type="checkbox" id="pub-solde-toggle" style="width:auto" onchange="togglePubSoldeField()"> 🏷️ Article à solder
         </label>
@@ -708,7 +708,7 @@ function initGoogleMapsAutocomplete(){
     <h3 style="margin-top:0">À propos de Market18.fr</h3>
     <p>Market18.fr est une marketplace généraliste qui permet à toute personne d'acheter et de vendre facilement des objets d'occasion ou neufs, partout en France.</p>
     <p style="margin-top:16px">Que vous cherchiez à vider vos placards, trouver une bonne affaire ou vendre un objet dont vous n'avez plus besoin, Market18.fr vous met en relation directe avec des acheteurs et vendeurs de votre région, dans un cadre pensé pour la confiance : messagerie intégrée, fiches d'annonces détaillées, et un paiement simplifié.</p>
-    <p style="margin-top:16px">Jusqu'au 25/07/2027, la plateforme est gratuite pour les particuliers et les professionnels — aucune commission n'est prélevée. Passé cette date, une commission de 10% s'appliquera sur chaque vente réalisée. L'acheteur, lui, ne paie jamais plus que le prix affiché sur l'annonce.</p>
+    <p style="margin-top:16px">Market18.fr est actuellement entièrement gratuite pour les particuliers et les professionnels — aucune commission n'est prélevée sur les ventes. L'acheteur, lui, ne paie jamais plus que le prix affiché sur l'annonce.</p>
     <p style="margin-top:16px" class="small">Pour en savoir plus sur l'équipe derrière le projet, consultez la page <button type="button" class="linklike" style="color:#fff;text-decoration:underline;display:inline;padding:0" onclick="openLegal('qui')">Qui sommes-nous ?</button> en bas de page.</p>
   </section>
 
@@ -1035,7 +1035,7 @@ function initGoogleMapsAutocomplete(){
       <div id="admin-tab-revenue" style="display:none">
         <div class="statbar" style="margin-bottom:20px">
           <div class="stat"><b id="rev-total">0 €</b>Chiffre d'affaires</div>
-          <div class="stat"><b id="rev-commission">0 €</b>Commission (0%, gratuit jusqu'au 25/07/2027)</div>
+          <div class="stat"><b id="rev-commission">0 €</b>Commission (0%, gratuit pour le moment)</div>
           <div class="stat"><b id="rev-sellers">0 €</b>Reversé vendeurs</div>
           <div class="stat"><b id="rev-count">0</b>Ventes</div>
         </div>
@@ -1176,7 +1176,7 @@ const CART_KEY = "market18-v1-cart";
 const FAVORITES_KEY = "market18-v1-favorites";
 const TRANSACTIONS_KEY = "market18-v1-transactions";
 const FIRST_SALE_KEY = "market18-v1-first-sale-used";
-const COMMISSION_RATE = (new Date() < new Date('2027-07-25T23:59:59')) ? 0 : 0.10;
+const COMMISSION_RATE = 0; // Gratuit pour le moment, modele de monetisation a definir ulterieurement
 const SELLER_ACCOUNTS_KEY = "market18-v1-seller-stripe-accounts";
 const REVIEWS_KEY = "market18-v1-reviews";
 const VERIFIED_SELLERS_KEY = "market18-v1-verified-sellers";
@@ -2816,7 +2816,7 @@ const LEGAL_CONTENT = {
   confidentialite:["Politique de confidentialité","<p><i>Dernière mise à jour : à compléter.</i></p><p><b>1. Responsable du traitement :</b> Franck Moret, micro-entrepreneur (immatriculation en cours) — gofranckygo@gmail.com.</p><p><b>2. Données collectées :</b> données de compte (nom, e-mail, mot de passe chiffré), données des annonces (titre, description, prix, photos, localisation), messages échangés via la messagerie interne, favoris, données de navigation via Google Analytics (GA4), et données de paiement traitées directement par Stripe (jamais stockées sur nos serveurs).</p><p><b>3. Finalités :</b> gestion des comptes, des annonces et de la messagerie ; envoi d'e-mails transactionnels (confirmation, réinitialisation de mot de passe, notifications) ; mesure d'audience ; gestion des paiements le cas échéant ; sécurité et lutte contre la fraude.</p><p><b>4. Destinataires :</b> Railway (hébergement), Cloudflare (hébergement du site), Resend (envoi d'e-mails), Stripe (paiements), Google Analytics (mesure d'audience). Market18.fr ne vend ni ne loue les données de ses utilisateurs. Certains prestataires étant situés hors de l'Union européenne, les transferts sont encadrés par les garanties prévues par le RGPD.</p><p><b>5. Conservation :</b> les données de compte sont conservées tant que le compte est actif, puis supprimées ou anonymisées sous un délai raisonnable après suppression du compte, sous réserve des obligations légales de conservation.</p><p><b>6. Vos droits :</b> accès, rectification, effacement, limitation, portabilité, opposition, et directives post-mortem, conformément au RGPD. Pour les exercer : gofranckygo@gmail.com. Vous pouvez aussi introduire une réclamation auprès de la CNIL (www.cnil.fr).</p><p><b>7. Cookies :</b> cookies nécessaires au fonctionnement du site (session) et cookies de mesure d'audience (Google Analytics), soumis à votre consentement. Vous pouvez gérer vos préférences via votre navigateur.</p><p><b>8. Sécurité :</b> mots de passe chiffrés, connexions sécurisées (HTTPS).</p><p>Contact : gofranckygo@gmail.com</p>"],
   cookies:["Politique des cookies","<p>Market18.fr utilise uniquement des cookies necessaires au fonctionnement du site (connexion, panier, preferences d'affichage) et, si vous l'acceptez, des cookies de mesure d'audience (Google Analytics) permettant de comprendre la frequentation du site.</p><p>Les cookies de mesure d'audience ne sont deposes qu'apres votre accord explicite, donne via le bandeau affiche lors de votre premiere visite sur le site. Sans votre accord, aucun cookie Google Analytics n'est depose.</p><p>Vous pouvez a tout moment revenir sur votre choix : <button type='button' class='linklike' style='color:#5b21b6;text-decoration:underline;display:inline;padding:0' onclick='mvResetCookieChoice()'>gerer mes cookies</button>.</p><p>Aucun cookie publicitaire ni de tracage tiers a but commercial n'est utilise sur ce site.</p>"],
   contact:["Contact","Une question ? Contactez-nous à l'adresse gofranckygo@gmail.com (adresse professionnelle contact@market18.fr bientôt disponible)."],
-  faq:["Foire aux questions","Comment publier une annonce ? Rendez-vous sur \u00abPublier une annonce\u00bb dans le menu. Comment contacter un vendeur ? Ouvrez l\u2019annonce puis cliquez sur \u00abContacter le vendeur\u00bb. Y a-t-il des frais ? Jusqu'au 25/07/2027, Market18.fr est entièrement gratuit pour les particuliers comme pour les professionnels : aucun frais n'est prélevé. Passé cette date, Market18.fr prévoit de prélever une commission de 10% sur le prix de vente lors de la transaction, avant le lancement officiel de cette fonctionnalité."],
+  faq:["Foire aux questions","Comment publier une annonce ? Rendez-vous sur \u00abPublier une annonce\u00bb dans le menu. Comment contacter un vendeur ? Ouvrez l\u2019annonce puis cliquez sur \u00abContacter le vendeur\u00bb. Y a-t-il des frais ? Market18.fr est actuellement entièrement gratuit pour les particuliers comme pour les professionnels : aucun frais n'est prélevé, ni sur la publication d'annonces ni sur les transactions."],
   apropos2:["À propos de nous","Market18.fr est une marketplace généraliste qui permet à toute personne d'acheter et de vendre facilement des objets d'occasion ou neufs, partout en France. Notre mission est simple : rendre la vente entre particuliers rapide, sûre et sans complication. Que vous cherchiez à vider vos placards, trouver une bonne affaire ou vendre un objet dont vous n'avez plus besoin, Market18.fr vous met en relation directe avec des acheteurs et vendeurs de votre région, dans un cadre pensé pour la confiance : messagerie intégrée, fiches d'annonces détaillées, et un système de paiement en cours de finalisation. Le site est actuellement en phase de test avant son lancement officiel."],
   qui:["Qui sommes-nous ?","Market18.fr est un projet porté par Franck Moret, actuellement en phase de test avant la création officielle d'une micro-entreprise dédiée à cette activité. L'objectif : proposer un site clair, honnête et agréable à utiliser pour vendre et acheter d'occasion, sans publicité intrusive ni fausses promesses. La plateforme évolue progressivement à partir des retours des premiers utilisateurs. Pour toute question, suggestion ou signalement, la page Contact reste le meilleur moyen de nous joindre."],
   securite:["Conseils de sécurité","Privilégiez une remise en main propre dans un lieu public et fréquenté. Vérifiez l'objet avant de payer. Ne communiquez jamais de coordonnées bancaires par message. Méfiez-vous des prix anormalement bas."],
@@ -3189,7 +3189,7 @@ function exportStatsCsv(){
   if(!listings.length){ showToast("Aucune annonce à exporter"); return; }
   const ventes = listings.filter(l=>l.vendu);
   if(!ventes.length){ showToast("Aucune vente à exporter pour le moment"); return; }
-  const header = ['Date','Titre','Categorie','Ville','Vendeur','Email','Prix','Prix soldé','Montant retenu','Commission (0%, gratuit jusqu\'au 25/07/2027)'];
+  const header = ['Date','Titre','Categorie','Ville','Vendeur','Email','Prix','Prix soldé','Montant retenu','Commission (0%, gratuit pour le moment)'];
   const rows = ventes.map(l=>{
     const montant = (l.soldePrix!==undefined && l.soldePrix!==null) ? l.soldePrix : l.prix;
     const date = new Date(l.ts||Date.now()).toLocaleDateString('fr-FR');
