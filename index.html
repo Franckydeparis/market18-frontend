@@ -510,7 +510,20 @@ function initGoogleMapsAutocomplete(){
       <h3>Catégories populaires</h3>
       <div class="categories" id="cat-grid"></div>
     </div>
-  </section>
+  
+      <div class="section" id="home-promos-section" style="display:none">
+        <h3>🔥 Promotions</h3>
+        <div class="grid" id="home-promos"></div>
+      </div>
+      <div class="section" id="home-nouveautes-section" style="display:none">
+        <h3>🆕 Nouveautés</h3>
+        <div class="grid" id="home-nouveautes"></div>
+      </div>
+      <div class="section" id="home-paris-section" style="display:none">
+        <h3>📍 Made in Paris</h3>
+        <div class="grid" id="home-paris"></div>
+      </div>
+    </section>
 
   <!-- ANNONCES / EXPLORER -->
   <section class="page" id="page-annonces">
@@ -1560,7 +1573,7 @@ async function showPage(page){
   if(page==='messages'){ await loadMessages(); renderMessagesPage(); }
   if(page==='favoris') renderFavPage();
   if(page==='mes-annonces') renderMesAnnonces();
-  if(page==='soldes') renderSoldesPage();
+  if(page==='soldes') renderSoldesPage(); if(page==='accueil') renderHomeZones();
   if(page==='panier') renderCartPage();
   if(page==='deposer' && currentUser){
     const emailEl = document.getElementById('email'); const nomEl = document.getElementById('nom');
@@ -1646,6 +1659,17 @@ function sellerPremiumBadgeHtml(l, trust){
   if(trust && trust.verified) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">🏆 Vendeur Vérifié</span>';
   if(isParis) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">🇫🇷 Commerce Parisien</span>';
   return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">✔️ Entreprise Certifiée</span>';
+}
+function renderHomeZones(){
+  var promos = listings.filter(function(l){ return !l.vendu && isOnSale(l); }).sort(function(a,b){return b.ts-a.ts;}).slice(0,4);
+  var nouveautes = listings.filter(function(l){ return !l.vendu; }).sort(function(a,b){return b.ts-a.ts;}).slice(0,4);
+  var paris = listings.filter(function(l){ return !l.vendu && (l.departement==='75' || /paris/i.test(l.ville||'')); }).sort(function(a,b){return b.ts-a.ts;}).slice(0,4);
+  var pSec = document.getElementById('home-promos-section');
+  var nSec = document.getElementById('home-nouveautes-section');
+  var paSec = document.getElementById('home-paris-section');
+  if(pSec){ if(promos.length){ document.getElementById('home-promos').innerHTML = promos.map(cardHtml).join(''); pSec.style.display='block'; } else { pSec.style.display='none'; } }
+  if(nSec){ if(nouveautes.length){ document.getElementById('home-nouveautes').innerHTML = nouveautes.map(cardHtml).join(''); nSec.style.display='block'; } else { nSec.style.display='none'; } }
+  if(paSec){ if(paris.length){ document.getElementById('home-paris').innerHTML = paris.map(cardHtml).join(''); paSec.style.display='block'; } else { paSec.style.display='none'; } }
 }
 function cardHtml(l){
   const isFav = favorites.includes(l.id);
