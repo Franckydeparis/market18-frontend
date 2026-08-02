@@ -794,7 +794,7 @@ function initGoogleMapsAutocomplete(){
     <div id="seller-badge" style="margin-bottom:6px"></div>
     <p class="small" id="seller-label" style="margin:0 0 4px;opacity:.85"></p>
     <div id="seller-stars" style="margin-bottom:10px"></div>
-    <div class="trust-breakdown" id="seller-breakdown"></div>
+    <div class="trust-breakdown" id="seller-breakdown"></div> <div id="seller-address-block" style="margin:6px 0 10px"></div>
     <h3 style="margin:22px 0 10px">Ses annonces</h3>
     <div id="seller-listings-grid" class="grid"></div>
     <h3 style="margin:22px 0 10px">Avis des acheteurs</h3>
@@ -864,7 +864,7 @@ function initGoogleMapsAutocomplete(){
         <label for="register-raison-sociale">Raison sociale (nom de l'entreprise)</label>
         <input id="register-raison-sociale" name="register-raison-sociale" type="text" placeholder="Ex: Dupont SARL">
         <label for="register-adresse-siege">Adresse du siege social</label>
-        <input id="register-adresse-siege" name="register-adresse-siege" type="text" placeholder="12 rue de la Paix, 75002 Paris">
+        <input id="register-adresse-siege" name="register-adresse-siege" type="text" placeholder="12 rue de la Paix, 75002 Paris"> <label style="display:flex;align-items:center;gap:8px;font-weight:400;margin-top:6px;font-size:.9rem"><input type="checkbox" id="register-adresse-publique" style="width:auto"> Afficher mon adresse publiquement (visible sur Google Maps pour que les clients me trouvent facilement)</label>
         <label for="register-code-postal">Code postal</label>
         <input id="register-code-postal" name="register-code-postal" type="text" inputmode="numeric" maxlength="5" placeholder="75002">
         <label for="register-telephone">Telephone</label>
@@ -1942,7 +1942,7 @@ async function doRegister(){
   if(isPro && !/^\d{14}$/.test(siret)){ showToast("Le numéro SIRET doit contenir exactement 14 chiffres"); return; }
   const prenom = document.getElementById('register-prenom').value.trim();
   const raisonSociale = document.getElementById('register-raison-sociale').value.trim();
-  const adresseSiege = document.getElementById('register-adresse-siege').value.trim();
+  const adresseSiege = document.getElementById('register-adresse-siege').value.trim(); const adressePublique = document.getElementById('register-adresse-publique') ? document.getElementById('register-adresse-publique').checked : false;
   const codePostal = document.getElementById('register-code-postal').value.trim();
   const telephone = document.getElementById('register-telephone').value.trim();
   const rcs = document.getElementById('register-rcs').value.trim();
@@ -1965,7 +1965,7 @@ async function doRegister(){
   }
   try{
     const res = await fetch(LISTINGS_API_BASE+'/api/auth/register', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom, prenom, telephone, codePostal, isPro, siret, raisonSociale, adresseSiege, rcs, tva})
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, password, nom, prenom, telephone, codePostal, isPro, siret, raisonSociale, adresseSiege, adressePublique, rcs, tva})
     });
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Erreur lors de l'inscription"); return; }
@@ -2496,7 +2496,7 @@ function renderSellerProfile(){
   document.getElementById('seller-name').textContent = nom || 'Vendeur';
   applyAvatarToEl(document.getElementById('seller-avatar'), null, nom);
   fetch(LISTINGS_API_BASE+'/api/seller-info?email='+encodeURIComponent(email)).then(function(r){return r.json();}).then(function(info){
-    applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom);
+    applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom); var addrBlock = document.getElementById('seller-address-block'); if(addrBlock){ if(info.adressePublique && info.adresseSiege){ addrBlock.innerHTML = '<div class="trust-item" style="width:100%;text-align:left"><b>\uD83D\uDCCD Adresse :</b> '+escapeHtml(info.adresseSiege)+' <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(info.adresseSiege)+'" target="_blank" rel="noopener" style="margin-left:8px;color:#2563eb;font-weight:700;text-decoration:none">Voir sur Google Maps \u2192</a></div>'; } else { addrBlock.innerHTML=''; } }
   }).catch(function(){});
   renderFavoriVendeurBtn(email);
   document.getElementById('seller-badge').innerHTML = sellerPremiumBadgeHtml(listing, t) + trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '');
