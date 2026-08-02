@@ -1100,6 +1100,10 @@ function initGoogleMapsAutocomplete(){
         <div id="dac7-content"></div>
         <button class="btn outline" style="margin-top:12px" onclick="exportDac7Csv()">Exporter DAC7 (Excel/CSV)</button>
         <button class="btn" style="margin-top:12px;margin-left:8px" onclick="downloadDac7Xml()">Generer le fichier XML DAC7 (depot DGFiP)</button>
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid #e5e7eb">
+          <p class="small" style="opacity:.8">Maintenance : corrige en une fois les coordonnees des annonces dont la ville est un arrondissement de Paris (bug corrige qui pointait certaines vers Cormeilles-en-Parisis).</p>
+          <button class="btn outline" onclick="fixGeocodeParis()">Corriger la geolocalisation des annonces Paris (bug carte)</button>
+        </div>
       </div>
       <div id="admin-tab-clients" style="display:none"></div>
       <div id="admin-tab-securite" style="display:none"></div>
@@ -3266,6 +3270,19 @@ async function downloadDac7Xml(){
     if(Number(incomplets) > 0){ msg += ' '+incomplets+' vendeur(s) exclu(s) : donnees fiscales incompletes (a completer avant depot).'; }
     showToast(msg);
   }catch(e){ showToast("Erreur lors du telechargement du fichier XML DAC7"); }
+}
+
+async function fixGeocodeParis(){
+  if(!LISTINGS_API_BASE){ showToast("Backend indisponible"); return; }
+  if(!window.__adminToken){ showToast("Session admin expiree, reconnectez-vous"); return; }
+  showToast("Correction en cours...");
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/fix-geocode-paris', { method:'POST', headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ showToast("Erreur lors de la correction"); return; }
+    const data = await res.json();
+    showToast('Corrige : '+data.updated+'/'+data.matched+' annonce(s) Paris mise(s) a jour sur '+data.total+' annonces au total.');
+    if(typeof loadListings === 'function'){ loadListings(); }
+  }catch(e){ showToast("Erreur lors de la correction de geolocalisation"); }
 }
 
 function updateAdminRevenue(){
