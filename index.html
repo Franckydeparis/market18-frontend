@@ -2469,7 +2469,7 @@ function computeTrust(email){ const key = sellerKey(email); if(!key) return {sco
 }
 function trustBadgeHtml(email, big){
   const t = computeTrust(email);
-  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
+  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   if(!t.hasRating){ return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
   }
   return `<span class="trust-badge${big?' lg':''}" title="${title}">${badgeStarsHtml(t.avgRating, big)}</span>`;
 }
