@@ -816,7 +816,7 @@ function initGoogleMapsAutocomplete(){
         </select>
       </div>
     </div>
-    <label>Commentaire</label>
+    <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="review-livraison" checked style="width:auto"> 📦 J'ai bien reçu ma commande</label><label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:8px"><input type="checkbox" id="review-litige" style="width:auto"> ⚠️ Signaler un problème avec cette vente (litige)</label><label>Commentaire</label>
     <textarea id="review-comment" placeholder="Décrivez votre expérience avec ce vendeur..."></textarea>
     <button class="btn" style="margin-top:20px;width:100%" onclick="submitReview()">Publier mon avis</button>
   </div>
@@ -2456,43 +2456,7 @@ async function simulatePayment(){
 
 /* ---------- CONFIANCE / AVIS ---------- */
 function sellerKey(email){ return (email||'').toLowerCase().trim(); }
-function computeTrust(email){
-  const key = sellerKey(email);
-  if(!key) return {score:0,avgRating:0,reviewCount:0,salesCount:0,memberSince:null,verified:false,reactivityPct:null,label:'Nouveau vendeur'};
-  const sellerReviews = reviews.filter(r=>sellerKey(r.sellerEmail)===key);
-  const reviewCount = sellerReviews.length;
-  const avgRating = reviewCount ? sellerReviews.reduce((s,r)=>s+r.rating,0)/reviewCount : 0;
-  const sellerListings = listings.filter(l=>sellerKey(l.email)===key);
-  const salesCount = sellerListings.filter(l=>l.vendu).length;
-  const firstTs = sellerListings.length ? Math.min(...sellerListings.map(l=>l.ts)) : null;
-  const memberSince = firstTs ? new Date(firstTs) : null;
-  const daysSince = firstTs ? (Date.now()-firstTs)/86400000 : 0;
-  const verified = !!verifiedSellers[key];
-  const sellerListingIds = sellerListings.map(l=>l.id);
-  const threadsWithMsg = sellerListingIds.filter(id=>(messages[id]||[]).some(m=>m.from==='visiteur'));
-  const threadsWithReply = threadsWithMsg.filter(id=>(messages[id]||[]).some(m=>m.from==='vendeur'));
-  const reactivityPct = threadsWithMsg.length ? threadsWithReply.length/threadsWithMsg.length : null;
-
-  const ratingScore = reviewCount ? (avgRating/5)*40 : 20;
-  const salesScore = Math.min(salesCount,10)/10*25;
-  const ageScore = Math.min(daysSince/180,1)*15;
-  const verifiedScore = verified?10:0;
-  const reactivityScore = (reactivityPct===null ? 0.7 : reactivityPct)*10;
-
-  let score = Math.round(ratingScore+salesScore+ageScore+verifiedScore+reactivityScore);
-  score = Math.max(0, Math.min(100, score));
-
-  let label = 'Historique limité';
-  if(score>=80) label='Excellente confiance';
-  else if(score>=60) label='Bonne confiance';
-  else if(score>=40) label='Confiance correcte';
-
-  const hasRating = reviewCount > 0;
-  if(!hasRating) label = 'Vendeur non encore noté';
-
-  return {score, avgRating, reviewCount, salesCount, memberSince, verified, reactivityPct, label, hasRating};
-}
-function badgeStarsHtml(rating, big){
+function computeTrust(email){ const key = sellerKey(email); if(!key) return {score:0,avgRating:0,reviewCount:0,salesCount:0,memberSince:null,verified:false,reactivityPct:null,label:'Nouveau vendeur'}; const sellerReviews = reviews.filter(r=>sellerKey(r.sellerEmail)===key); const reviewCount = sellerReviews.length; const avgRating = reviewCount ? sellerReviews.reduce((s,r)=>s+r.rating,0)/reviewCount : 0; const sellerListings = listings.filter(l=>sellerKey(l.email)===key); const salesCount = sellerListings.filter(l=>l.vendu).length; const firstTs = sellerListings.length ? Math.min(...sellerListings.map(l=>l.ts)) : null; const memberSince = firstTs ? new Date(firstTs) : null; const daysSince = firstTs ? (Date.now()-firstTs)/86400000 : 0; const verified = !!verifiedSellers[key]; const sellerListingIds = sellerListings.map(l=>l.id); const threadsWithMsg = sellerListingIds.filter(id=>(messages[id]||[]).some(m=>m.from==='visiteur')); const threadsWithReply = threadsWithMsg.filter(id=>(messages[id]||[]).some(m=>m.from==='vendeur')); const reactivityPct = threadsWithMsg.length ? threadsWithReply.length/threadsWithMsg.length : null; const deliveryReviews = sellerReviews.filter(r=>typeof r.livraisonRecue === 'boolean'); const deliveryRate = deliveryReviews.length ? deliveryReviews.filter(r=>r.livraisonRecue).length/deliveryReviews.length : 0.85; const litigeReviews = sellerReviews.filter(r=>typeof r.litige === 'boolean'); const litigeCount = litigeReviews.filter(r=>r.litige).length; const litigeRate = litigeReviews.length ? litigeCount/litigeReviews.length : 0; const ratingScore = reviewCount ? (avgRating/5)*30 : 15; const salesScore = Math.min(salesCount,10)/10*20; const ageScore = Math.min(daysSince/180,1)*10; const verifiedScore = verified?10:0; const reactivityScore = (reactivityPct===null ? 0.7 : reactivityPct)*10; const livraisonScore = deliveryRate*15; const litigeScore = (1-litigeRate)*5; let score = Math.round(ratingScore+salesScore+ageScore+verifiedScore+reactivityScore+livraisonScore+litigeScore); score = Math.max(0, Math.min(100, score)); let label = 'Historique limité'; if(score>=80) label='Excellente confiance'; else if(score>=60) label='Bonne confiance'; else if(score>=40) label='Confiance correcte'; const hasRating = reviewCount > 0; if(!hasRating) label = 'Vendeur non encore noté'; return {score, avgRating, reviewCount, salesCount, memberSince, verified, reactivityPct, label, hasRating, deliveryRate, litigeRate, litigeCount}; } function badgeStarsHtml(rating, big){
   const full = Math.round(rating);
   const size = big ? '1.3em' : '1.05em';
   let out = '';
@@ -2505,9 +2469,7 @@ function badgeStarsHtml(rating, big){
 }
 function trustBadgeHtml(email, big){
   const t = computeTrust(email);
-  const title = t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur";
-  if(!t.hasRating){
-    return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
+  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
   }
   return `<span class="trust-badge${big?' lg':''}" title="${title}">${badgeStarsHtml(t.avgRating, big)}</span>`;
 }
@@ -2544,7 +2506,7 @@ function renderSellerProfile(){
     <div class="trust-item"><b>${t.salesCount}</b>Ventes réussies</div>
     <div class="trust-item"><b>${t.reviewCount ? t.avgRating.toFixed(1) : '–'}</b>Note moyenne</div>
     <div class="trust-item"><b>${t.memberSince ? t.memberSince.toLocaleDateString('fr-FR') : '–'}</b>Membre depuis</div>
-    <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${(t.score>=80?'🟢':t.score>=50?'🟡':'🔴')+' '+t.score}</b>Indice Market18</div>
+    <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${t.reviewCount ? Math.round(t.deliveryRate*100)+'%' : '–'}</b>Livraisons confirmées</div><div class="trust-item"><b>${t.litigeCount||0}</b>Litige(s) signalé(s)</div><div class="trust-item"><b>${(t.score>=80?'🟢':t.score>=50?'🟡':'🔴')+' '+t.score}</b>Indice Market18</div>
   `;
   if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">💬 WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📞 Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📍 Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
   var sellerListingsGrid = document.getElementById('seller-listings-grid');
@@ -2598,7 +2560,7 @@ async function submitReview(){
     const res = await fetch(LISTINGS_API_BASE+'/api/reviews', {
       method: 'POST',
       headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+authToken },
-      body: JSON.stringify({ listingId: currentAdId, rating, comment })
+      body: JSON.stringify({ listingId: currentAdId, rating, comment, livraisonRecue: document.getElementById('review-livraison').checked, litige: document.getElementById('review-litige').checked })
     });
     const data = await res.json();
     if(!res.ok){ showToast(data.error || "Impossible d'envoyer l'avis"); return; }
