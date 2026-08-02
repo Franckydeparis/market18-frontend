@@ -1747,7 +1747,7 @@ function openAd(id){
     : fmtPrice(l.prix);
   document.getElementById('ad-ville').textContent = l.ville||'-';
   currentAdSellerEmail = l.email||'';
-  document.getElementById('ad-nom').innerHTML = `<button type="button" class="seller-chip" onclick="openSellerProfile()">${escapeHtml(l.nom||'-')}</button> ${trustBadgeHtml(l.email)} ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;vertical-align:middle">Vendeur professionnel</span>' : ''}`;
+  document.getElementById('ad-nom').innerHTML = `<button type="button" class="seller-chip" onclick="openSellerProfile()">${escapeHtml(l.nom||'-')}</button> ${trustBadgeHtml(l.email)} ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#fff;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:4px;vertical-align:middle">Vendeur professionnel</span>' : ''}`;
   const telRow = document.getElementById('ad-tel-row');
   telRow.style.display='none';
   document.getElementById('ad-desc').textContent = l.desc||'';
