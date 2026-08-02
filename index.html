@@ -1099,6 +1099,7 @@ function initGoogleMapsAutocomplete(){
         <p id="dac7-loading" class="empty">Chargement…</p>
         <div id="dac7-content"></div>
         <button class="btn outline" style="margin-top:12px" onclick="exportDac7Csv()">Exporter DAC7 (Excel/CSV)</button>
+        <button class="btn" style="margin-top:12px;margin-left:8px" onclick="downloadDac7Xml()">Generer le fichier XML DAC7 (depot DGFiP)</button>
       </div>
       <div id="admin-tab-clients" style="display:none"></div>
       <div id="admin-tab-securite" style="display:none"></div>
@@ -3229,6 +3230,30 @@ async function exportDac7Csv(){
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 }
+async function downloadDac7Xml(){
+  if(!LISTINGS_API_BASE){ showToast("Backend indisponible"); return; }
+  if(!window.__adminToken){ showToast("Session admin expiree, reconnectez-vous"); return; }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/dac7-xml', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ showToast("Erreur lors de la generation du fichier XML DAC7"); return; }
+    const total = res.headers.get('X-DAC7-Vendeurs-Total')||'0';
+    const inclus = res.headers.get('X-DAC7-Vendeurs-Inclus')||'0';
+    const incomplets = res.headers.get('X-DAC7-Vendeurs-Incomplets')||'0';
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DAC7_Market18_'+(new Date().getFullYear())+'.xml';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    let msg = 'Fichier XML DAC7 genere ('+inclus+'/'+total+' vendeurs inclus).';
+    if(Number(incomplets) > 0){ msg += ' '+incomplets+' vendeur(s) exclu(s) : donnees fiscales incompletes (a completer avant depot).'; }
+    showToast(msg);
+  }catch(e){ showToast("Erreur lors du telechargement du fichier XML DAC7"); }
+}
+
 function updateAdminRevenue(){
   const revTotalEl = document.getElementById('rev-total');
   if(!revTotalEl) return;
