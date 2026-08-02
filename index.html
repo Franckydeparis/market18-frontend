@@ -2251,7 +2251,21 @@ function togglePubSoldeField(){
 async function geocodeVille(nom){
   if(!nom) return null;
   try{
-    const r = await fetch('https://geo.api.gouv.fr/communes?nom='+encodeURIComponent(nom)+'&fields=centre&boost=population&limit=1');
+    const q = String(nom).trim();
+    const arrM = q.match(/paris[\s-]*(\d{1,2})\s*(?:e|er|eme|\u00e8me)?\b/i);
+    if(arrM){
+      const arr = parseInt(arrM[1], 10);
+      if(arr >= 1 && arr <= 20){
+        const cp = '750' + String(arr).padStart(2, '0');
+        const rArr = await fetch('https://geo.api.gouv.fr/communes?codePostal='+cp+'&fields=centre&type=arrondissement-municipal&limit=1');
+        const listArr = await rArr.json();
+        if(Array.isArray(listArr) && listArr.length && listArr[0].centre && listArr[0].centre.coordinates){
+          const cArr = listArr[0].centre.coordinates;
+          return {lat:cArr[1], lon:cArr[0]};
+        }
+      }
+    }
+    const r = await fetch('https://geo.api.gouv.fr/communes?nom='+encodeURIComponent(q)+'&fields=centre&boost=population&limit=1');
     const list = await r.json();
     if(Array.isArray(list) && list.length && list[0].centre && list[0].centre.coordinates){
       const c = list[0].centre.coordinates;
