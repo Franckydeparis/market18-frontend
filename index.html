@@ -1660,8 +1660,8 @@ function cardHtml(l){
 ${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
       <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:16px;height:16px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:3px">' : ''}${trustBadgeHtml(l.email)}</span></div>
       <div class="card-meta-row">
-        ${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
-        ${trust.hasRating ? '<span class="mini-tag trustscore">'+ICON_STAR+' '+trust.score+'/100</span>' : ''}
+        ${l.sellerIsPro ? '<span class="mini-tag" style="background:#f59e0b;color:#fff">🏆 Vendeur Pro</span>' : ''}${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
+        ${trust.hasRating ? '<span class="mini-tag trustscore">'+(trust.score>=80?'🟢':trust.score>=50?'🟡':'🔴')+' '+trust.score+'/100</span>' : ''}
         
         ${l.marque ? '<span class="mini-tag" style="background:#0f766e;color:#fff">'+escapeHtml(l.marque)+'</span>' : ''}
         ${l.etat ? '<span class="mini-tag" style="background:#5b21b6;color:#fff">'+escapeHtml(l.etat)+'</span>' : ''}
@@ -2505,7 +2505,7 @@ function renderSellerProfile(){
     applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom);
   }).catch(function(){});
   renderFavoriVendeurBtn(email);
-  document.getElementById('seller-badge').innerHTML = trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '');
+  document.getElementById('seller-badge').innerHTML = (listing && listing.sellerIsPro ? '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">🏆 Vendeur Professionnel</span>' : '') + trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '');
   document.getElementById('seller-label').textContent = t.label;
   document.getElementById('seller-stars').innerHTML = starsHtml(t.avgRating) + ` <span class="small">(${t.reviewCount} avis)</span>`;
   document.getElementById('seller-breakdown').innerHTML = `
