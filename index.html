@@ -1696,7 +1696,7 @@ function cardHtml(l){
     <div class="body">
       <div class="cat-tag"><span class="cat-badge-sm">${CATEGORIES_SHORT[l.categorie]||'?'}</span>${escapeHtml(l.categorie||'')}</div>
       <h4>${escapeHtml(l.titre)}</h4>
-${l.sellerIsPro ? '<span style="display:inline-block;background:#5b21b6;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
+${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
       <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:16px;height:16px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:3px">' : ''}${trustBadgeHtml(l.email)}</span></div>
       <div class="card-meta-row">
         ${sellerPremiumBadgeHtml(l, trust)}${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
