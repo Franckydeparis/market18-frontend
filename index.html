@@ -897,6 +897,14 @@ function initGoogleMapsAutocomplete(){
   <div id="account-avatar-preview" style="width:84px;height:84px;border-radius:50%;margin:0 auto 8px;background:#7c3aed;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.7rem;overflow:hidden"></div>
   <label style="display:inline-block;background:#7c3aed;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;cursor:pointer;font-weight:700">Changer ma photo<input type="file" accept="image/*" id="account-avatar-input" style="display:none" onchange="handleAvatarUpload(event)"></label>
 </div>
+<div id="account-qr-boutique" style="margin-top:10px;padding:10px;background:#f5f3ff;border-radius:10px;text-align:center">
+  <button type="button" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer" onclick="genererQrBoutique()">Générer mon QR code boutique</button>
+  <div id="qr-boutique-result" style="display:none;margin-top:10px">
+    <img id="qr-boutique-img" src="" alt="QR code boutique" style="width:180px;height:180px;border-radius:8px;border:1px solid #ddd">
+    <p class="small" style="margin-top:6px;word-break:break-all"><a id="qr-boutique-link" href="#" target="_blank" rel="noopener"></a></p>
+    <button type="button" class="linklike" onclick="copierLienBoutique()">Copier le lien</button>
+  </div>
+</div>
 <p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
     <h4 style="margin-bottom:6px">Changer mon mot de passe</h4>
     <label>Mot de passe actuel</label>
@@ -2505,6 +2513,18 @@ function starsHtml(rating){
   const full = Math.round(rating);
   return `<span class="stars">${'★'.repeat(full)}${'☆'.repeat(5-full)}</span>`;
 }
+function genererQrBoutique(){
+  if(!currentUser){ showToast('Connectez-vous'); return; }
+  const url = 'https://market18.fr/?vendeur='+encodeURIComponent(currentUser.email);
+  document.getElementById('qr-boutique-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(url);
+  document.getElementById('qr-boutique-link').textContent = url;
+  document.getElementById('qr-boutique-link').href = url;
+  document.getElementById('qr-boutique-result').style.display = 'block';
+}
+function copierLienBoutique(){
+  const url = document.getElementById('qr-boutique-link').href;
+  navigator.clipboard.writeText(url).then(()=>showToast('Lien copié')).catch(()=>{});
+}
 function openSellerProfile(){
   if(!currentAdSellerEmail){ showToast("Vendeur inconnu"); return; }
   closeModal('modal-ad');
@@ -3878,6 +3898,11 @@ async function init(){
   if(__adId){
     if(!currentUser){ openAccountArea(); }
     else { const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
+  }
+  const __vendeurParam = __urlParams.get('vendeur');
+  if(__vendeurParam){
+    currentAdSellerEmail = __vendeurParam;
+    openSellerProfile();
   }
   function __unv(s){ return (s && s.charAt(0)==='v') ? s.slice(1) : s; }
   const __msgListing = __unv(__urlParams.get('msgListing'));
