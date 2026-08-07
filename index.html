@@ -456,6 +456,48 @@ nav{z-index:15!important;}
 .nav-toggle-bar{z-index:16!important;}
 #campagne-18e-banner{z-index:10!important;}
 
+
+@keyframes slideText {
+  0% { transform: translateX(100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
+}
+#video-banner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: linear-gradient(135deg, #6d28d9, #3b0764);
+  padding: 30px 20px;
+  text-align: center;
+  margin: 20px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+#video-banner > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+#video-banner .banner-logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  animation: fadeinScale 1s ease-out;
+}
+#video-banner .banner-tagline {
+  font-size: 1.2rem;
+  color: #e9d5ff;
+  font-weight: 600;
+  animation: slideText 8s linear infinite;
+  white-space: nowrap;
+}
+@keyframes fadeinScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
 <script>window.fbAsyncInit=function(){FB.init({appId:'2061708997887473',cookie:true,xfbml:false,version:'v21.0'});};</script>
@@ -645,6 +687,13 @@ function initGoogleMapsAutocomplete(){
         <span class="hero-pill c-orange">🚚 Livraison partout en France</span>
         <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer">🎧 Support français</span>
       </div>
+<div id="video-banner">
+  <div>
+    <div class="banner-logo">Market18.fr</div>
+    <div class="banner-tagline">Achetez, vendez et échangez en toute simplicité</div>
+  </div>
+</div>
+
       <div id="promo-gratuit-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 20px;text-align:center;color:#fff"> <strong style="font-size:1.15rem">100% GRATUIT pour les particuliers et les professionnels jusqu'au 31/07/2027 !</strong> <div style="margin-top:8px;background:rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;display:inline-block;font-size:.85rem;font-weight:600">100% sans pub</div> </div> <div id="campagne-18e-banner" style="max-width:900px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 0 18px;text-align:center;color:#fff;overflow:hidden">
 <strong style="font-size:1.05rem;display:block;margin-bottom:12px">📍 Market18 arrive dans le 18e arrondissement de Paris !</strong>
 <div id="campagne-carousel-viewport"><div id="campagne-carousel-track"><div style="padding:20px;opacity:.7;font-size:.85rem">Chargement des annonces...</div></div></div>
