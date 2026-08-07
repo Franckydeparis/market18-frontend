@@ -1721,6 +1721,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
         ${l.etat ? '<span class="mini-tag" style="background:#5b21b6;color:#fff">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
+      <div class="card-time" style="opacity:.55">${(l.vues||0)} vue${(l.vues||0)>1?'s':''} · ${(l.favCount||0)} favori${(l.favCount||0)>1?'s':''}</div>
       <div class="row">
         <button class="iconbtn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})">Favori</button>
         ${sold ? '' : `<button class="iconbtn" onclick="event.stopPropagation();addCart(${l.id})">Ajouter</button>
@@ -1752,6 +1753,7 @@ function openPhotoZoom(){
 function openAd(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   currentAdId = id;
+  fetch(LISTINGS_API_BASE+'/api/listings/'+id+'/vue', {method:'POST'}).catch(()=>{});
   currentAdImages = (l.images && l.images.length) ? l.images : [thumb(l)];
   currentAdImgIndex = 0;
   renderAdGallery();
