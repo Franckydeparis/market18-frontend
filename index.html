@@ -4119,7 +4119,7 @@ async function init(){
   initLivraisonOptions();
   initMobileNav();
   await loadListings();
-  const __adId = __urlParams.get('ad');
+  const __adId = __urlParams.get('ad') || __urlParams.get('annonce');
   if(__adId){
     if(!currentUser){ openAccountArea(); }
     else { const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
