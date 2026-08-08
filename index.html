@@ -2693,11 +2693,7 @@ function renderSellerQr(email){
   }catch(e){ block.style.display='none'; return; }
   if(urlEl) urlEl.textContent = boutiqueUrl;
 }
-function renderCarousels(){
-if(typeof listings==="undefined"||!listings.length)return;
-document.getElementById("carousel-promos").innerHTML=listings.filter(l=>l.soldePrix&&l.soldePrix<l.prix).slice(0,10).map(l=>"<div class='carousel-card' onclick='openAd("+JSON.stringify(l.id)+")' style='cursor:pointer'><img class='carousel-card-image' src='"+(l.images&&l.images[0]||l.thumb||"")+`' onerror="this.style.background='#ddd'"><div class='carousel-card-info'><div class='carousel-card-title'>${(l.titre||"").substring(0,15)}</div><div class='carousel-card-price'>${"€"}${l.soldePrix||l.prix}</div></div></div>`).join("")||"<p style='color:#fff;padding:20px'>Pas de promos</p>";
-document.getElementById("carousel-nouveautes").innerHTML=listings.slice(0,10).map(l=>"<div class='carousel-card' onclick='openAd("+JSON.stringify(l.id)+")' style='cursor:pointer'><img class='carousel-card-image' src='"+(l.images&&l.images[0]||l.thumb||"")+`' onerror="this.style.background='#ddd'"><div class='carousel-card-info'><div class='carousel-card-title'>${(l.titre||"").substring(0,15)}</div><div class='carousel-card-price'>${"€"}${l.prix}</div></div></div>`).join("")||"<p style='color:#fff;padding:20px'>Pas d'annonces</p>";
-}
+function renderCarousels(){if(!window.listings)return;var p=document.getElementById("carousel-promos"),n=document.getElementById("carousel-nouveautes");if(p)p.innerHTML=window.listings.slice(0,10).map(function(l){return'<div class="carousel-card"><img class="carousel-card-image" src="'+(l.images&&l.images[0]||"")+'" style="width:100%;height:100px"><div class="carousel-card-info"><div class="carousel-card-title">'+(l.titre||"").substring(0,15)+'</div><div class="carousel-card-price">€'+l.prix+'</div></div></div>'}).join("");if(n)n.innerHTML=window.listings.slice(0,10).map(function(l){return'<div class="carousel-card"><img class="carousel-card-image" src="'+(l.images&&l.images[0]||"")+'" style="width:100%;height:100px"><div class="carousel-card-info"><div class="carousel-card-title">'+(l.titre||"").substring(0,15)+'</div><div class="carousel-card-price">€'+l.prix+'</div></div></div>'}).join("");}
 function downloadSellerQr(){
   if(!__sellerQrCanvas) return;
   const link = document.createElement('a');
