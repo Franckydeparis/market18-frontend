@@ -3304,7 +3304,7 @@ async function init(){
   initFormSuggestions();
   initLivraisonOptions();
   initMobileNav();
-  await loadListings();
+  await loadListings();setTimeout(renderCarousels,500);
   const __adId = __urlParams.get('ad');
   if(__adId){
     if(!currentUser){ openAccountArea(); }
