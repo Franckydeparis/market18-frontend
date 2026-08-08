@@ -1471,9 +1471,7 @@ function backendToFrontend(l){
     etat: l.etat || '',
     lat: (typeof l.lat === 'number') ? l.lat : null,
     lon: (typeof l.lon === 'number') ? l.lon : null
-    vues: l.vues || 0,
-    favCount: l.favCount || 0,
-  };
+      };
 }
 function frontendToBackend(l){
   return {
