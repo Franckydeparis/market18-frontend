@@ -73,7 +73,7 @@
     .card:nth-child(6){animation-delay:.18s}
     @keyframes mvFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
   }
-
+  
 *{box-sizing:border-box}
 html{background:#fff;overflow-x:hidden}
 #hero-search::placeholder{color:#fff;opacity:.85}
@@ -204,6 +204,7 @@ footer hr{margin:26px 0;border-color:rgba(255,255,255,.2)}
   nav#nav.nav-open{display:flex}
   nav#nav a{width:auto;text-align:center;box-sizing:border-box;padding:10px 12px;font-size:.9rem}
 }
+
 html{scroll-behavior:smooth}
 body:before{
 content:"";
@@ -250,6 +251,7 @@ footer .cols{justify-content:space-between!important;gap:24px!important;flex-wra
 .admin-verify-toggle{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:normal}
 .construction-ribbon{position:fixed;top:76px;left:-20px;width:230px;transform:rotate(-45deg);background:#fff;color:#5b21b6;text-align:center;font-family:'Fraunces',serif;font-style:italic;font-weight:700;font-size:1rem;letter-spacing:.02em;text-transform:uppercase;padding:7px 0;box-shadow:0 4px 14px rgba(0,0,0,.35);z-index:9999;pointer-events:none;border:2px solid #5b21b6;border-radius:10px}
 @media (max-width:480px){.construction-ribbon{font-size:.8rem;width:170px;top:56px;left:-15px;padding:5px 0;border-radius:8px;font-family:'Fraunces',serif;font-style:italic}}
+
 /* ===== Refonte premium ===== */
 :root{--mv-shadow-soft:0 10px 28px rgba(59,7,100,.18);--mv-shadow-lift:0 24px 48px rgba(59,7,100,.38)}
 body{font-family:'Inter',Arial,Helvetica,sans-serif}
@@ -280,6 +282,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 .confiance-vs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px}
 .confiance-vs .vs-item{background:rgba(255,255,255,.08);border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.14)}
 .confiance-vs .vs-item svg{width:24px;height:24px;color:#22c55e;margin-bottom:8px}
+
 .thread-list{display:flex;flex-direction:column;gap:10px;}
 .thread-item{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px 16px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .15s ease,box-shadow .15s ease;}
 .thread-item:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.10);}
@@ -299,14 +302,203 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 .admin-msg-expanded{padding:0 14px 14px;border-top:1px solid #ede9fe;margin-top:8px;}
 .msgs-box{max-height:280px;overflow-y:auto;padding-right:4px;}
 @keyframes admin-alert-blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+
 .admin-msg-select{margin-bottom:6px;display:inline-block;}
+
 /* Effets modernes : sweep + spotlight au survol des cartes */
 .card{position:relative}
 .card::before{content:"";position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 65%);opacity:0;transition:opacity .35s ease;pointer-events:none;z-index:2}
 .card:hover::before{opacity:1}
 .card::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(115deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none;z-index:3}
 .card:hover::after{left:130%}
-.carousel-section{margin:30px auto;max-width:1200px}.carousel-title{font-size:1.4rem;font-weight:bold;margin-bottom:16px;color:#fff}.carousel-wrapper{background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:16px;padding:20px;overflow:hidden}.carousel-track{display:flex;gap:12px;overflow-x:auto}.carousel-card{flex:0 0 140px;cursor:pointer;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1)}.carousel-card:hover{transform:translateY(-4px)}.carousel-card-image{width:100%;height:100px;object-fit:cover}.carousel-card-info{padding:8px;color:#fff;font-size:.8rem}.carousel-card-title{font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.carousel-card-price{font-weight:bold;color:#fbbf24}</style>
+/* PARTIE 1/4 (fond violet corrige) */
+:root{--primary:#6C3CF0;--primary-light:#8A6DFF;--primary-dark:#4B1FD4;--secondary:#8A6DFF;--success:#7c3aed;--warning:#a78bfa;--danger:#6d28d9;--bg:#3b0764;--bg2:#4c1d95;--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.13);--white:#ffffff;--text:#f4f5fb;--text2:#d6d8e8;--border:rgba(255,255,255,.10);--shadow-small:0 10px 30px rgba(0,0,0,.20);--shadow:0 18px 45px rgba(0,0,0,.30);--shadow-big:0 35px 80px rgba(0,0,0,.40);--radius:24px;--radius-small:16px;--transition:.35s cubic-bezier(.2,.8,.2,1);}
+html{scroll-behavior:smooth;background:linear-gradient(145deg,#3b0764,#5b21b6,#4c1d95);}
+body{font-family:"Inter",sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(196,181,253,.30),transparent 40%),radial-gradient(circle at bottom right,rgba(139,92,246,.30),transparent 40%),linear-gradient(145deg,#3b0764,#5b21b6,#4c1d95);background-attachment:fixed;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:-30%;z-index:-2;background:radial-gradient(circle,rgba(196,181,253,.22),transparent 60%);filter:blur(120px);animation:auroraOne 18s infinite alternate ease-in-out;}
+body::after{content:"";position:fixed;inset:-30%;z-index:-3;background:radial-gradient(circle,rgba(139,92,246,.25),transparent 60%);filter:blur(150px);animation:auroraTwo 24s infinite alternate ease-in-out;}
+@keyframes auroraOne{0%{transform:translate(-10%,-5%) scale(1);}100%{transform:translate(20%,10%) scale(1.4);}}
+@keyframes auroraTwo{0%{transform:translate(15%,20%) scale(1);}100%{transform:translate(-20%,-15%) scale(1.35);}}
+::selection{background:#8A6DFF;color:white;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:#2e1065;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#8A6DFF,#5B3CF5);border-radius:100px;}
+::-webkit-scrollbar-thumb:hover{background:#a78bff;}
+.card,.hero,.form-box,.filters,.modal-box,.thread{background:rgba(255,255,255,.10)!important;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);box-shadow:var(--shadow);border-radius:var(--radius);transition:var(--transition);}
+.card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 35px 70px rgba(0,0,0,.40),0 0 0 1px rgba(255,255,255,.12);}
+h1,h2,h3{letter-spacing:-1px;font-weight:800;}
+p{color:var(--text2);line-height:1.7;}
+img{transition:var(--transition);}
+.card:hover img{transform:scale(1.08);}
+button{transition:var(--transition);}
+/* PARTIE 2/4 */
+header{position:relative;overflow:hidden;padding:35px 25px;background:linear-gradient(135deg,rgba(90,45,220,.95),rgba(60,25,170,.95));border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 20px 50px rgba(0,0,0,.25);}
+header::before{content:"";position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);top:-350px;right:-250px;animation:headerGlow 14s infinite alternate;}
+@keyframes headerGlow{0%{transform:scale(1) rotate(0deg);}100%{transform:scale(1.3) rotate(35deg);}}
+.header-logo{transition:.5s;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35));}
+.header-logo:hover{transform:rotate(-8deg) scale(1.08);}
+header h1{font-size:3rem;font-weight:900;letter-spacing:-2px;background:linear-gradient(90deg,#ffffff,#dad8ff,#ffffff);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientTitle 10s infinite linear;}
+@keyframes gradientTitle{0%{background-position:0%;}100%{background-position:300%;}}
+header p{font-size:1.05rem;opacity:.92;margin-top:10px;}
+nav{position:sticky;top:18px;z-index:15;margin:15px auto;width:95%;max-width:1200px;border-radius:25px;background:rgba(74,29,149,.75);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.10);box-shadow:0 15px 35px rgba(0,0,0,.28);transition:.4s;}
+nav:hover{box-shadow:0 22px 45px rgba(0,0,0,.35);}
+nav a{position:relative;padding:12px 18px;border-radius:14px;transition:.35s;font-weight:700;}
+nav a:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);}
+nav a::after{content:"";position:absolute;left:20%;bottom:5px;width:0;height:2px;background:linear-gradient(90deg,#8d6fff,#ffffff);transition:.35s;}
+nav a:hover::after{width:60%;}
+.hero{position:relative;overflow:hidden;padding:70px 45px;margin-top:30px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.06));}
+.hero::before{content:"";position:absolute;width:450px;height:450px;border-radius:50%;background:radial-gradient(circle,rgba(196,181,253,.28),transparent);top:-180px;left:-120px;filter:blur(20px);animation:heroBlob 12s infinite alternate;}
+@keyframes heroBlob{0%{transform:translateX(0) translateY(0);}100%{transform:translateX(90px) translateY(40px);}}
+.hero h2{font-size:3rem;line-height:1.2;margin-bottom:25px;max-width:900px;margin-left:auto;margin-right:auto;}
+.hero p{font-size:1.15rem;max-width:800px;margin:auto;opacity:.90;}
+.hero-pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 24px rgba(0,0,0,.20);padding:12px 22px;transition:.35s;}
+.hero-pill:hover{transform:translateY(-5px) scale(1.05);background:rgba(255,255,255,.20);}
+#hero-search{background:rgba(255,255,255,.14)!important;border:1px solid rgba(255,255,255,.14);border-radius:20px;padding:18px 25px;font-size:1.05rem;box-shadow:0 15px 35px rgba(0,0,0,.25);transition:.35s;}
+#hero-search:focus{outline:none;transform:scale(1.02);box-shadow:0 0 0 4px rgba(196,181,253,.30),0 20px 45px rgba(0,0,0,.30);}
+.actions{margin-top:45px;gap:25px;}
+.action{padding:24px;font-size:1.15rem;border-radius:22px;font-weight:800;background:linear-gradient(135deg,#7c5dff,#5d38ff);box-shadow:0 18px 35px rgba(0,0,0,.28);}
+.action:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 30px 55px rgba(0,0,0,.35);}
+/* PARTIE 3/4 */
+.grid{gap:28px;align-items:start;}
+.card{position:relative;overflow:hidden;cursor:pointer;border-radius:28px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.12);box-shadow:0 20px 45px rgba(0,0,0,.28);transition:.45s;transform-style:preserve-3d;}
+.card::before{content:"";position:absolute;top:0;left:-120%;width:70%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-25deg);transition:1.1s;z-index:5;}
+.card:hover::before{left:180%;}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,255,255,.18),transparent 70%);opacity:0;transition:.45s;pointer-events:none;}
+.card:hover::after{opacity:1;}
+.card:hover{transform:translateY(-12px) rotateX(4deg) rotateY(-4deg) scale(1.03);box-shadow:0 45px 80px rgba(0,0,0,.45);}
+.card img{transition:1s;}
+.card:hover img{transform:scale(1.12);filter:brightness(1.08) contrast(1.05);}
+.price{font-size:1.6rem;font-weight:900;background:linear-gradient(90deg,#ffffff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.city{opacity:.75;font-size:.90rem;}
+.mini-tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(12px);transition:.3s;}
+.mini-tag:hover{transform:scale(1.06);}
+.iconbtn{border-radius:14px;background:linear-gradient(135deg,#6a43ff,#4f2cff);transition:.35s;}
+.iconbtn:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 18px 35px rgba(70,40,255,.35);}
+.grid .card{opacity:0;transform:translateY(35px);animation:cardAppear .8s forwards;}
+.grid .card:nth-child(2){animation-delay:.05s;}
+.grid .card:nth-child(3){animation-delay:.10s;}
+.grid .card:nth-child(4){animation-delay:.15s;}
+.grid .card:nth-child(5){animation-delay:.20s;}
+.grid .card:nth-child(6){animation-delay:.25s;}
+@keyframes cardAppear{to{opacity:1;transform:translateY(0);}}
+.section h3{font-size:2rem;margin-bottom:28px;position:relative;display:inline-block;}
+.section h3::after{content:"";position:absolute;bottom:-10px;left:0;width:70px;height:5px;border-radius:50px;background:linear-gradient(90deg,#8a6dff,#c4b5fd);}
+.cat{border-radius:20px;transition:.4s;background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.08));}
+.cat:hover{transform:translateY(-8px) scale(1.04);box-shadow:0 25px 40px rgba(0,0,0,.30);}
+.cat-badge{box-shadow:0 12px 22px rgba(0,0,0,.25);}
+.stat{transition:.4s;}
+.stat:hover{transform:translateY(-8px);box-shadow:0 25px 40px rgba(0,0,0,.35);}
+/* PARTIE 4/4 */
+.btn,.action,.iconbtn{position:relative;overflow:hidden;transition:.35s;}
+.btn::before,.action::before{content:"";position:absolute;left:-120%;top:0;width:60%;height:100%;background:linear-gradient(110deg,transparent,rgba(255,255,255,.45),transparent);transition:1s;}
+.btn:hover::before,.action:hover::before{left:170%;}
+.btn:hover,.action:hover{transform:translateY(-5px) scale(1.03);}
+input,textarea,select{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.12);border-radius:18px;transition:.35s;}
+input:focus,textarea:focus,select:focus{outline:none;background:rgba(255,255,255,.16);box-shadow:0 0 0 4px rgba(196,181,253,.25);transform:scale(1.01);}
+.modal-box{border-radius:30px;box-shadow:0 40px 90px rgba(0,0,0,.45);animation:modalPop .35s;}
+@keyframes modalPop{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+footer{background:linear-gradient(180deg,#3b0764,#2e1065);border-top:1px solid rgba(255,255,255,.08);}
+footer a{transition:.3s;}
+footer a:hover{color:#ffffff;padding-left:6px;}
+.toast{border-radius:18px;animation:toastIn .4s;}
+@keyframes toastIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.loading{animation:spin 1s linear infinite;}
+@keyframes spin{100%{transform:rotate(360deg);}}
+@media(max-width:900px){.hero h2{font-size:2.2rem;}header h1{font-size:2.2rem;}.card{border-radius:22px;}}
+@media(max-width:650px){.hero{padding:40px 25px;}.actions{grid-template-columns:1fr;}.hero-pill{width:100%;justify-content:center;}nav{width:97%;}}
+.fade-up{animation:fadeUp .7s forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.zoom{animation:zoomIn .6s forwards;}
+@keyframes zoomIn{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+img{image-rendering:auto;backface-visibility:hidden;}
+.hero,.card,.filters,.form-box,.modal-box{box-shadow:0 25px 70px rgba(0,0,0,.30);}
+*{cursor:default;}
+button,a,.card{cursor:pointer;}
+body{animation:pageFade .6s;}
+@keyframes pageFade{from{opacity:0;}to{opacity:1;}}
+/* PARTIE 5/5 - TOUT VIOLET */
+.sold-badge{background:linear-gradient(135deg,#7c3aed,#3b0764)!important;box-shadow:0 8px 20px rgba(90,30,180,.45)!important;}
+.mini-tag.verified{background:#7c3aed!important;color:#fff!important;}
+.mini-tag.trustscore{background:#c4b5fd!important;color:#3b0764!important;}
+.iconbtn.fav.active{background:linear-gradient(135deg,#8b5cf6,#5b21b6)!important;}
+.hero-pill.c-blue,.mini-tag.c-blue{color:#6d28d9!important;}
+.hero-pill.c-green{color:#7c3aed!important;}
+.hero-pill.c-orange,.mini-tag.c-orange{color:#8b5cf6!important;}
+.hero-pill.c-violet{color:#5b21b6!important;}
+.stars{color:#c4b5fd!important;}
+.verified-tag{background:#7c3aed!important;color:#fff!important;}
+.confiance-vs .vs-item svg{color:#8b5cf6!important;}
+.trust-badge{background:#f3e8ff!important;color:#5b21b6!important;}
+.badge,.trust-badge,.verified-tag{box-shadow:0 8px 20px rgba(90,30,180,.25);animation:badgePulse 4s infinite;}
+@keyframes badgePulse{50%{transform:scale(1.05);}}
+.card-time,.small{color:#e8e4fb!important;}
+.stat b{color:#c4b5fd!important;}
+a{color:#c4b5fd;}
+::marker{color:#8b5cf6;}
+html,body{background-color:#3b0764!important;}
+/* PARTIE 6 - Carrousel defilement annonces */
+#campagne-carousel-viewport{overflow:hidden;width:100%;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+#campagne-carousel-track{display:flex;gap:14px;width:max-content;animation:campagneScroll 28s linear infinite;padding:0 14px;}
+#campagne-carousel-viewport:hover #campagne-carousel-track{animation-play-state:paused;}
+@keyframes campagneScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.campagne-card{flex:0 0 auto;width:120px;background:rgba(255,255,255,.14);border-radius:12px;overflow:hidden;text-align:left;box-shadow:0 8px 18px rgba(0,0,0,.28);cursor:pointer;transition:.25s;}
+.campagne-card:hover{transform:translateY(-4px);box-shadow:0 14px 26px rgba(0,0,0,.35);}
+.campagne-card img{width:120px;height:84px;object-fit:cover;display:block;}
+.campagne-card .cc-body{padding:6px 9px 9px;}
+.campagne-card .cc-title{font-size:.7rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
+.campagne-card .cc-price{font-size:.74rem;font-weight:800;color:#e9d5ff;margin-top:2px;}
+#campagne-18e-banner{position:relative;z-index:20;}
+/* PARTIE 7 - Fix superposition fenetre connexion */
+.modal-overlay{z-index:999999!important;}
+.modal-overlay.show{z-index:999999!important;display:flex!important;}
+.modal-box{z-index:1000000!important;position:relative!important;}
+nav{z-index:15!important;}
+.nav-toggle-bar{z-index:16!important;}
+#campagne-18e-banner{z-index:10!important;}
+
+
+@keyframes slideText {
+  0% { transform: translateX(100%); opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
+}
+#video-banner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: linear-gradient(135deg, #6d28d9, #3b0764);
+  padding: 30px 20px;
+  text-align: center;
+  margin: 20px 0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+#video-banner > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+#video-banner .banner-logo {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -1px;
+  animation: fadeinScale 1s ease-out;
+}
+#video-banner .banner-tagline {
+  font-size: 1.2rem;
+  color: #e9d5ff;
+  font-weight: 600;
+  animation: slideText 8s linear infinite;
+  white-space: nowrap;
+}
+@keyframes fadeinScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
 <script>window.fbAsyncInit=function(){FB.init({appId:'2061708997887473',cookie:true,xfbml:false,version:'v21.0'});};</script>
 <script async defer src="https://connect.facebook.net/fr_FR/sdk.js"></script>
@@ -386,22 +578,9 @@ function initGoogleMapsAutocomplete(){
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxV3cLCmsmdZkNj9pEWP39KCzY66E7Xww&libraries=places&language=fr&region=FR&callback=initGoogleMapsAutocomplete" async defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-<!-- Bandeau maintenance retire pour test local uniquement -->
-<div id="debug-error-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:999999;background:red;color:#fff;padding:10px;font-family:monospace;font-size:12px;white-space:pre-wrap"></div>
-<script>
-window.addEventListener('error', function(e){
-  var b = document.getElementById('debug-error-banner');
-  if(b){ b.style.display='block'; b.textContent += 'ERROR: '+e.message+' @ '+e.filename+':'+e.lineno+':'+e.colno+'\n'; }
-});
-window.addEventListener('unhandledrejection', function(e){
-  var b = document.getElementById('debug-error-banner');
-  var msg = (e.reason && (e.reason.stack || e.reason.message)) || String(e.reason);
-  if(b){ b.style.display='block'; b.textContent += 'PROMISE REJECTION: '+msg+'\n'; }
-});
-</script>
+  
 <script>
 (function(){
   var ua = navigator.userAgent || "";
@@ -422,6 +601,7 @@ window.addEventListener('unhandledrejection', function(e){
   }
 })();
 </script>
+
 <div id="cookie-consent-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#2e1065;color:#fff;padding:16px 20px;box-shadow:0 -4px 18px rgba(0,0,0,.35);flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;text-align:center">
   <p style='margin:0;font-size:.9rem;max-width:620px;flex:1;min-width:240px'>Nous utilisons Google Analytics pour mesurer l'audience du site. Ces cookies de mesure ne sont deposes qu'avec votre accord. <button type='button' class='linklike' style='color:#fff;text-decoration:underline;display:inline;padding:0' onclick="openLegal('cookies')">En savoir plus</button></p>
   <div style='display:flex;gap:10px;flex-wrap:wrap'>
@@ -430,6 +610,8 @@ window.addEventListener('unhandledrejection', function(e){
   </div>
 </div>
 <div class="construction-ribbon">100% sans pub</div>
+
+
 <header>
   <div class="header-inner">
     <svg class="header-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo Market18.fr">
@@ -460,6 +642,7 @@ window.addEventListener('unhandledrejection', function(e){
     </svg>
   </div>
 </header>
+
 <div class="nav-toggle-bar">
   <button type="button" class="nav-toggle" id="nav-toggle" onclick="toggleMobileNav()" aria-label="Menu" aria-expanded="false" aria-controls="nav">&#9776; Menu</button>
 </div>
@@ -480,13 +663,13 @@ window.addEventListener('unhandledrejection', function(e){
   <a onclick="showPage('mes-annonces')" data-page="mes-annonces">Mes annonces</a>
   <a onclick="showPage('soldes')" data-page="soldes">🏷️ Soldes</a>
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
-  <a onclick="showPage('mes-achats')" data-page="mes-achats">Mes achats<span id="mes-achats-badge" class="badge" style="display:none">0</span></a>
-  <a onclick="showPage('mes-ventes')" data-page="mes-ventes">Mes ventes<span id="mes-ventes-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('apropos')" data-page="apropos">À propos</a>
 <a onclick="installPwa()" id="pwa-install-btn" style="display:none">Installer l'application</a>
 </div>
 </nav>
+
 <main>
+
   <!-- ACCUEIL -->
   <section class="page" id="page-accueil">
     <div class="hero">
@@ -498,16 +681,55 @@ window.addEventListener('unhandledrejection', function(e){
         <span class="hero-pill c-orange">🚚 Livraison partout en France</span>
         <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer">🎧 Support français</span>
       </div>
-      <div id="promo-gratuit-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 20px;text-align:center;color:#fff"> <strong style="font-size:1.15rem">100% GRATUIT pour les particuliers et les professionnels jusqu'au 31/07/2027 !</strong> <div style="margin-top:8px;background:rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;display:inline-block;font-size:.85rem;font-weight:600">100% sans pub</div> </div> <div id="campagne-18e-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:14px 20px;text-align:center;color:#fff">
-        <strong style="font-size:1.05rem">📍 Market18 arrive dans le 18e arrondissement de Paris !</strong>
-        <p class="small" style="margin:6px 0 0;opacity:.9">Commerçants et habitants du 18e, rejoignez les premiers vendeurs et acheteurs du quartier. Indiquez "Paris 18e" comme ville pour être trouvé facilement par vos voisins.</p>
-      </div>
+<div id="video-banner">
+  <div>
+    <div class="banner-tagline">Achetez, vendez et échangez en toute simplicité</div>
+  </div>
+</div>
 
+      <div id="promo-gratuit-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 20px;text-align:center;color:#fff"> <strong style="font-size:1.15rem">100% GRATUIT pour les particuliers et les professionnels jusqu'au 31/07/2027 !</strong> <div style="margin-top:8px;background:rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;display:inline-block;font-size:.85rem;font-weight:600">100% sans pub</div> </div> <div id="campagne-18e-banner" style="max-width:900px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 0 18px;text-align:center;color:#fff;overflow:hidden">
+<strong style="font-size:1.05rem;display:block;margin-bottom:12px">📍 Market18 arrive dans le 18e arrondissement de Paris !</strong>
+<div id="campagne-carousel-viewport"><div id="campagne-carousel-track"><div style="padding:20px;opacity:.7;font-size:.85rem">Chargement des annonces...</div></div></div>
+<p class="small" style="margin:12px 20px 0;opacity:.9">Commerçants donnez votre QR code à vos clients pour retrouver votre boutique sans effort.</p>
+</div>
+<script>
+(function(){
+  function renderCampagneCarousel(){
+    try{
+      if (typeof listings === "undefined" || !listings || !listings.length) return false;
+      var track = document.getElementById("campagne-carousel-track");
+      if (!track) return false;
+      var list = listings.slice(0, 12);
+      if (!list.length) return false;
+      var html = list.map(function(l){
+        var img = (typeof thumb === "function") ? thumb(l) : ((l.images && l.images[0]) || "");
+        var price = (typeof fmtPrice === "function") ? fmtPrice(l.prix) : (l.prix + " €");
+        var titre = (typeof escapeHtml === "function") ? escapeHtml(l.titre||"") : (l.titre||"");
+        return '<div class="campagne-card" data-id="'+l.id+'"><img src="'+img+'" loading="lazy"><div class="cc-body"><div class="cc-title">'+titre+'</div><div class="cc-price">'+price+'</div></div></div>';
+      }).join("");
+      track.innerHTML = html + html;
+      Array.from(track.querySelectorAll(".campagne-card")).forEach(function(el){
+        el.addEventListener("click", function(){
+          var id = Number(el.getAttribute("data-id"));
+          if (typeof openAd === "function") openAd(id);
+        });
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  var tries = 0;
+  var iv = setInterval(function(){
+    tries++;
+    if (renderCampagneCarousel() || tries > 40) clearInterval(iv);
+  }, 500);
+})();
+</script>
+      
 <div style="max-width:640px;margin:24px auto">
 <input id="hero-search" autocomplete="off" placeholder="Rechercher un produit, une marque, une ville..." onkeydown="if(event.key==='Enter')heroSearch()" style="width:100%;padding:16px 20px;border:none;border-radius:18px;font-size:1rem;box-shadow:0 12px 28px rgba(0,0,0,.28);background:#7c3aed;color:#fff">
 </div>
 <div class="actions">
-
+        
         <button class="action" onclick="showPage('annonces')">Explorer les annonces</button>
         <button class="action" onclick="showPage('deposer')">Déposer une annonce</button>
         <button class="action" onclick="showPage('favoris')">Favoris</button>
@@ -517,15 +739,8 @@ window.addEventListener('unhandledrejection', function(e){
       <h3>Catégories populaires</h3>
       <div class="categories" id="cat-grid"></div>
     </div>
-    <div class="carousel-section">
-      <div class="carousel-title">🔥 Promotions</div>
-      <div class="carousel-wrapper"><div class="carousel-track" id="carousel-promos"></div></div>
-    </div>
-    <div class="carousel-section">
-      <div class="carousel-title">🆕 Nouveautés</div>
-      <div class="carousel-wrapper"><div class="carousel-track" id="carousel-nouveautes"></div></div>
-    </div>
-    <div class="section" id="home-promos-section" style="display:none">
+  
+      <div class="section" id="home-promos-section" style="display:none">
         <h3>🔥 Promotions</h3>
         <div class="grid" id="home-promos"></div>
       </div>
@@ -538,6 +753,7 @@ window.addEventListener('unhandledrejection', function(e){
         <div class="grid" id="home-paris"></div>
       </div>
     </section>
+
   <!-- ANNONCES / EXPLORER -->
   <section class="page" id="page-annonces">
     <h3 style="margin-top:0">Annonces</h3>
@@ -549,9 +765,10 @@ window.addEventListener('unhandledrejection', function(e){
       <button class="btn" onclick="renderAnnonces()">Rechercher</button>
       <button class="btn outline" onclick="creerAlerteRecherche()">🔔 Creer une alerte</button>
     </div>
-
+    
     <div id="ads" class="grid"></div>
   </section>
+
   <!-- DEPOSER UNE ANNONCE -->
   <section class="page" id="page-deposer">
     <h3 style="margin-top:0">Déposer une annonce</h3>
@@ -681,6 +898,7 @@ window.addEventListener('unhandledrejection', function(e){
       </form>
     </div>
   </section>
+
   <!-- MESSAGES -->
   <section class="page" id="page-messages">
     <h3 style="margin-top:0">Messages</h3>
@@ -688,30 +906,35 @@ window.addEventListener('unhandledrejection', function(e){
     <div class="small" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:10px 14px;margin-bottom:18px">🛡️ Nous garantissons la sécurité de vos échanges. Nous vous conseillons de rester sur la messagerie pour discuter et de passer par le paiement sécurisé pour vos transactions. Nous vous invitons fortement à ne pas divulguer vos coordonnées téléphoniques ni vos informations personnelles.</div>
     <div id="messages-list"></div>
   </section>
+
   <!-- FAVORIS -->
   <section class="page" id="page-favoris">
     <h3 style="margin-top:0">Mes favoris</h3>
     <p class="small" style="margin-bottom:18px">Vos favoris sont conservés le temps de votre visite.</p>
     <div id="fav-grid" class="grid"></div>
   </section>
+
   <!-- VENDEURS FAVORIS -->
   <section class="page" id="page-vendeurs-favoris">
     <h3 style="margin-top:0">Vendeurs favoris</h3>
     <p class="small" style="margin-bottom:18px">Les vendeurs que vous suivez. Retrouvez facilement leurs annonces.</p>
     <div id="vendeurs-favoris-grid" class="grid"></div>
   </section>
+
   <!-- MES ANNONCES -->
   <section class="page" id="page-mes-annonces">
     <h3 style="margin-top:0">Mes annonces</h3>
     <p class="small" style="margin-bottom:18px">Retrouve ici toutes tes annonces. Marque-les vendues en un clic, modifie-les ou supprime-les quand tu veux.</p>
     <div id="mes-annonces-grid" class="grid"></div>
   </section>
+
   <!-- SOLDES -->
   <section class="page" id="page-soldes">
     <h3 style="margin-top:0">🏷️ Soldes en cours</h3>
     <p class="small" style="margin-bottom:18px">Retrouvez ici toutes les annonces actuellement en promotion, avec le prix d'origine et le prix soldé.</p>
     <div id="soldes-grid" class="grid"></div>
   </section>
+
   <!-- PANIER -->
   <section class="page" id="page-panier">
     <h3 style="margin-top:0">Panier</h3>
@@ -720,18 +943,7 @@ window.addEventListener('unhandledrejection', function(e){
     <div id="cart-trust-badge" class="trust-payment-badge" style="margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.12);font-size:.9rem;line-height:1.4;display:none">🔒 <b>Paiement 100% sécurisé par Stripe</b> — vos données bancaires ne transitent jamais par Market18.fr et ne sont jamais stockées. Vous ne prenez aucun risque.</div>
     <button class="btn" id="pay-btn" style="margin-top:16px;display:none" onclick="simulatePayment()">Valider la commande (paiement test, aucun débit réel)</button>
   </section>
-  <!-- MES ACHATS -->
-  <section class="page" id="page-mes-achats">
-    <h3 style="margin-top:0">Mes achats</h3>
-    <p class="small" style="margin-bottom:18px">Suivez vos commandes, confirmez la réception ou annulez une transaction si besoin. <button type="button" class="linklike" style="color:#fff;text-decoration:underline;display:inline;padding:0" onclick="openLegal('retractation')">Comment ça marche ?</button></p>
-    <div id="mes-achats-list"></div>
-  </section>
-  <!-- MES VENTES -->
-  <section class="page" id="page-mes-ventes">
-    <h3 style="margin-top:0">Mes ventes</h3>
-    <p class="small" style="margin-bottom:18px">Confirmez la disponibilité puis l'expédition de vos ventes dans les délais, pour éviter une annulation automatique. <button type="button" class="linklike" style="color:#fff;text-decoration:underline;display:inline;padding:0" onclick="openLegal('retractation')">Comment ça marche ?</button></p>
-    <div id="mes-ventes-list"></div>
-  </section>
+
   <!-- A PROPOS -->
   <section class="page" id="page-apropos">
     <h3 style="margin-top:0">À propos de Market18.fr</h3>
@@ -740,6 +952,8 @@ window.addEventListener('unhandledrejection', function(e){
     <p style="margin-top:16px">Market18.fr est actuellement entièrement gratuite pour les particuliers et les professionnels — aucune commission n'est prélevée sur les ventes. L'acheteur, lui, ne paie jamais plus que le prix affiché sur l'annonce.</p>
     <p style="margin-top:16px" class="small">Pour en savoir plus sur l'équipe derrière le projet, consultez la page <button type="button" class="linklike" style="color:#fff;text-decoration:underline;display:inline;padding:0" onclick="openLegal('qui')">Qui sommes-nous ?</button> en bas de page.</p>
   </section>
+
+
 <!-- Trust system -->
 <section class="page" id="page-confiance">
 <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg> Indice de confiance</h3>
@@ -751,7 +965,9 @@ window.addEventListener('unhandledrejection', function(e){
 <div class="vs-item" onclick="showSupportContact()" style="cursor:pointer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 015 5v3a5 5 0 01-10 0V7a5 5 0 015-5z"/><path d="M5 11v1a7 7 0 0014 0v-1M12 19v3"/></svg><b>Support français réactif</b><p class="small" style="margin-top:4px">Une équipe basée en France répond à vos questions, avant et après chaque transaction.</p></div>
 </div>
 </section>
+
 </main>
+
 <!-- MODAL DETAIL ANNONCE -->
 <div class="modal-overlay" id="modal-ad">
   <div class="modal-box wide">
@@ -788,6 +1004,7 @@ window.addEventListener('unhandledrejection', function(e){
     </div>
   </div>
 </div>
+
 <!-- MODAL PHOTO AGRANDIE -->
 <div class="modal-overlay" id="modal-photo-zoom">
   <div style="max-width:95vw;max-height:95vh;position:relative;padding:16px;border-radius:26px;background:linear-gradient(135deg,#7c3aed,#5b21b6);box-shadow:0 20px 60px rgba(0,0,0,.5)">
@@ -795,6 +1012,7 @@ window.addEventListener('unhandledrejection', function(e){
     <img id="zoom-img" style="max-width:calc(95vw - 32px - 8px);max-height:calc(90vh - 32px - 8px);object-fit:contain;border-radius:14px;display:block;border:4px solid #ffffff" src="">
   </div>
 </div>
+
 <!-- MODAL PROFIL VENDEUR -->
 <div class="modal-overlay" id="modal-seller">
   <div class="modal-box wide">
@@ -806,13 +1024,6 @@ window.addEventListener('unhandledrejection', function(e){
     <p class="small" id="seller-label" style="margin:0 0 4px;opacity:.85"></p>
     <div id="seller-stars" style="margin-bottom:10px"></div>
     <div class="trust-breakdown" id="seller-breakdown"></div> <div id="seller-address-block" style="margin:6px 0 10px"></div>
-    <div id="seller-qr-block" style="display:none;margin:18px 0;padding:0;text-align:center">
-      <h3 style="margin:0 0 10px">📱 QR code de la boutique</h3>
-      <p class="small" style="margin:0 0 12px;opacity:.8">A donner a vos clients : ils scannent et arrivent directement sur votre boutique Market18.</p>
-      <div id="seller-qr-canvas-wrap" style="display:inline-block;background:#fff;padding:10px;border-radius:8px;line-height:0"></div>
-      <p class="small" id="seller-qr-url" style="margin-top:10px;word-break:break-all;opacity:.7"></p>
-      <button type="button" class="btn" style="margin-top:10px" onclick="downloadSellerQr()">Telecharger le QR code</button>
-    </div>
     <h3 style="margin:22px 0 10px">Ses annonces</h3>
     <div id="seller-listings-grid" class="grid"></div>
     <h3 style="margin:22px 0 10px">Avis des acheteurs</h3>
@@ -839,6 +1050,7 @@ window.addEventListener('unhandledrejection', function(e){
     <button class="btn" style="margin-top:20px;width:100%" onclick="submitReview()">Publier mon avis</button>
   </div>
 </div>
+
 <!-- MODAL COMPTE (connexion / inscription) -->
 <div class="modal-overlay" id="modal-auth">
   <div class="modal-box" style="max-width:420px">
@@ -895,6 +1107,7 @@ window.addEventListener('unhandledrejection', function(e){
     </div>
   </div>
 </div>
+
 <!-- MODAL MON COMPTE (connecté) -->
 <div class="modal-overlay" id="modal-my-account">
   <div class="modal-box" style="max-width:420px">
@@ -903,6 +1116,14 @@ window.addEventListener('unhandledrejection', function(e){
     <div style="text-align:center;margin-bottom:14px">
   <div id="account-avatar-preview" style="width:84px;height:84px;border-radius:50%;margin:0 auto 8px;background:#7c3aed;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.7rem;overflow:hidden"></div>
   <label style="display:inline-block;background:#7c3aed;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;cursor:pointer;font-weight:700">Changer ma photo<input type="file" accept="image/*" id="account-avatar-input" style="display:none" onchange="handleAvatarUpload(event)"></label>
+</div>
+<div id="account-qr-boutique" style="margin-top:10px;padding:10px;background:#f5f3ff;border-radius:10px;text-align:center">
+  <button type="button" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:.85rem;font-weight:700;cursor:pointer" onclick="genererQrBoutique()">Générer mon QR code boutique</button>
+  <div id="qr-boutique-result" style="display:none;margin-top:10px">
+    <img id="qr-boutique-img" src="" alt="QR code boutique" style="width:180px;height:180px;border-radius:8px;border:1px solid #ddd">
+    <p class="small" style="margin-top:6px;word-break:break-all"><a id="qr-boutique-link" href="#" target="_blank" rel="noopener"></a></p>
+    <button type="button" class="linklike" onclick="copierLienBoutique()">Copier le lien</button>
+  </div>
 </div>
 <p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
     <h4 style="margin-bottom:6px">Changer mon mot de passe</h4>
@@ -914,6 +1135,7 @@ window.addEventListener('unhandledrejection', function(e){
     <button class="btn outline" style="margin-top:20px;width:100%" onclick="doLogout()">Se déconnecter</button>
   </div>
 </div>
+
 <!-- MODAL EDIT PHOTOS -->
 <div class="modal-overlay" id="modal-edit-photos">
   <div class="modal-box" style="max-width:520px;max-height:85vh;overflow-y:auto">
@@ -1009,6 +1231,7 @@ window.addEventListener('unhandledrejection', function(e){
     <button class="btn" id="edit-photos-save-btn" style="margin-top:18px;width:100%" onclick="saveEditedPhotos()">Enregistrer les modifications</button>
   </div>
 </div>
+
 <!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
 <div class="modal-overlay" id="modal-contact-info" onclick="if(event.target===this) cancelContactInfo()">
   <div class="modal-box" style="max-width:400px">
@@ -1022,6 +1245,7 @@ window.addEventListener('unhandledrejection', function(e){
     <button class="btn" style="margin-top:16px;width:100%" onclick="submitContactInfo()">Continuer</button>
   </div>
 </div>
+
 <!-- MODAL LEGAL -->
 <div class="modal-overlay" id="modal-legal">
   <div class="modal-box">
@@ -1030,6 +1254,7 @@ window.addEventListener('unhandledrejection', function(e){
     <div class="small" id="legal-body" style="line-height:1.7"></div>
   </div>
 </div>
+
 <!-- MODAL ADMIN -->
 <div class="modal-overlay" id="modal-admin">
   <div class="modal-box wide">
@@ -1120,24 +1345,9 @@ window.addEventListener('unhandledrejection', function(e){
     </div>
   </div>
 </div>
+
 <div class="toast-container" id="toast-container"></div>
-<div class="modal-overlay" id="modal-fiscal-info">
-  <div class="modal-box" style="max-width:460px">
-    <button class="modal-close" onclick="closeModal('modal-fiscal-info')">×</button>
-    <h2 style="margin-top:0">Informations fiscales requises</h2>
-    <p class="small">La loi (DAC7) nous oblige a transmettre certaines informations sur les vendeurs actifs a l'administration fiscale. Merci de completer ces champs (utilises uniquement a cette fin, jamais affiches publiquement).</p>
-    <label>Numero fiscal (13 chiffres, sur votre avis d'imposition)</label>
-    <input type="text" id="fiscal-numero" placeholder="Ex: 1234567890123">
-    <p class="small">Si vous n'avez pas de numero fiscal francais, indiquez votre date et lieu de naissance :</p>
-    <label>Date de naissance</label>
-    <input type="date" id="fiscal-date-naissance">
-    <label>Lieu de naissance</label>
-    <input type="text" id="fiscal-lieu-naissance" placeholder="Ville, pays">
-    <label>Adresse complete (numero, rue, code postal, ville)</label>
-    <input type="text" id="fiscal-adresse" placeholder="12 rue des Lilas, 75018 Paris">
-    <button class="btn" style="width:100%;margin-top:14px" onclick="saveFiscalInfo()">Enregistrer et publier mon annonce</button>
-  </div>
-</div>
+
 <footer>
   <div class="cols">
     <div><h3>Market18.fr</h3>
@@ -1148,9 +1358,8 @@ window.addEventListener('unhandledrejection', function(e){
       <button class="linklike" onclick="openLegal('mentions')">Mentions légales</button>
       <button class="linklike" onclick="openLegal('cgu')">CGU</button>
       <button class="linklike" onclick="openLegal('cgv')">CGV</button>
-      <button class="linklike" onclick="openLegal('retractation')">Annulation &amp; remboursement</button>
       <button class="linklike" onclick="openLegal('confidentialite')">Politique de confidentialité</button>
-      <button class="linklike" onclick="openLegal('cookies')">Politique des cookies</button>      <button class="linklike" onclick="openLegal('obligations')">Vos obligations (vendeurs)</button>
+      <button class="linklike" onclick="openLegal('cookies')">Politique des cookies</button>      <button class="linklike" onclick="openLegal('qrcodes')">Politique des QR Codes</button>      <button class="linklike" onclick="openLegal('cybersecurite')">Politique de cybersécurité</button>      <button class="linklike" onclick="openLegal('gouvernanceia')">Gouvernance de l'IA</button>      <button class="linklike" onclick="openLegal('obligations')">Vos obligations (vendeurs)</button>
     </div>
     <div><h3>Assistance</h3>
       <button class="linklike" onclick="openLegal('contact')">Contact</button>
@@ -1185,7 +1394,11 @@ window.addEventListener('unhandledrejection', function(e){
   <div class="copyright">© 2026 Market18.fr — Tous droits réservés.</div>
   <div class="copyright" style="margin-top:6px;opacity:.7">Site entièrement réalisé par Claude, intelligence artificielle d'Anthropic.</div>
 </footer>
+
 <script>
+/* Compatibilité stockage : si window.storage n'existe pas (site ouvert en local ou hébergé ailleurs
+   que sur la plateforme d'origine), on le remplace par un équivalent basé sur localStorage du
+   navigateur, pour que les annonces/messages/avis ajoutés soient bien conservés d'une visite à l'autre. */
 if(typeof window.storage === 'undefined'){
   window.storage = {
     async get(key){ const v = localStorage.getItem('mv_'+key); return {value: v}; },
@@ -1193,6 +1406,7 @@ if(typeof window.storage === 'undefined'){
     async delete(key){ localStorage.removeItem('mv_'+key); }
   };
 }
+// ADMIN_PIN retiré du frontend : vérification déplacée côté serveur (POST /api/admin-login)
 const LISTINGS_KEY = "market18-v1-listings";
 const MESSAGES_KEY = "market18-v1-messages";
 const THREAD_TITLES_KEY = "market18-v1-thread-titles";
@@ -1213,13 +1427,17 @@ const CART_KEY = "market18-v1-cart";
 const FAVORITES_KEY = "market18-v1-favorites";
 const TRANSACTIONS_KEY = "market18-v1-transactions";
 const FIRST_SALE_KEY = "market18-v1-first-sale-used";
-const COMMISSION_RATE = 0;
+const COMMISSION_RATE = 0; // Gratuit pour le moment, modele de monetisation a definir ulterieurement
 const SELLER_ACCOUNTS_KEY = "market18-v1-seller-stripe-accounts";
 const REVIEWS_KEY = "market18-v1-reviews";
 const VERIFIED_SELLERS_KEY = "market18-v1-verified-sellers";
 const USERS_KEY = "market18-v1-users";
+// URL de votre backend de paiement une fois déployé (voir dossier backend/README.md).
+// Pour retester en local : "http://localhost:4242" (nécessite les 3 terminaux lancés). Laissez vide ("") pour le mode paiement simulé.
 const PAYMENT_API_BASE = "";
-const LISTINGS_API_BASE = "https://market18-backend.railway.app";
+// Backend annonces (Railway) : quand une valeur est renseignée ici, les annonces sont
+// partagées entre tous les visiteurs/appareils via ce serveur, au lieu de rester locales.
+const LISTINGS_API_BASE = "https://market18-backend-production.up.railway.app";
 function backendToFrontend(l){
   return {
     id: Number(l.id),
@@ -1331,6 +1549,7 @@ function updateEditMarqueOptions(){
   sel.innerHTML = '<option value="">Choisir une marque</option>' + list.map(function(m){ return '<option value="'+escapeAttr(m)+'">'+escapeHtml(m)+'</option>'; }).join('');
   if(list.indexOf(current) !== -1) sel.value = current;
 }
+
 const TITRE_SUGGESTIONS = [
   "iPhone 13 Pro","iPhone 14","iPhone 15","iPhone SE","Samsung Galaxy S23","Samsung Galaxy A54","Xiaomi Redmi Note",
   "MacBook Air M1","MacBook Air M2","MacBook Pro","PC portable Gamer","PC de bureau","Écran PC 24 pouces","Clavier mécanique","Souris sans fil","Imprimante",
@@ -1346,6 +1565,7 @@ const TITRE_SUGGESTIONS = [
   "Appartement T2","Appartement T3","Maison avec jardin","Studio meublé",
   "Livres","Bibliothèque","Tableau décoratif","Miroir","Lampe de bureau","Plante d'intérieur"
 ];
+
 const VILLE_SUGGESTIONS = [
   "Paris","Paris 1e","Paris 2e","Paris 3e","Paris 4e","Paris 5e","Paris 6e","Paris 7e","Paris 8e","Paris 9e","Paris 10e","Paris 11e","Paris 12e","Paris 13e","Paris 14e","Paris 15e","Paris 16e","Paris 17e","Paris 18e","Paris 19e","Paris 20e","Marseille","Lyon","Toulouse","Nice","Nantes","Montpellier","Strasbourg","Bordeaux","Lille",
   "Rennes","Reims","Le Havre","Saint-Étienne","Toulon","Grenoble","Dijon","Angers","Nîmes","Villeurbanne",
@@ -1355,6 +1575,7 @@ const VILLE_SUGGESTIONS = [
   "La Rochelle","Antibes","Cannes","Béziers","Bourges","Ajaccio","Annecy","Chambéry","Valence","Quimper",
   "Troyes","Niort","Lorient","Angoulême","Arles","Blois","Vannes","Saint-Nazaire","Chartres","Bayonne"
 ];
+
 function initFormSuggestions(){
   document.getElementById('titre-suggestions').innerHTML = TITRE_SUGGESTIONS.map(t=>`<option value="${t}">`).join('');
   document.getElementById('ville-suggestions').innerHTML = VILLE_SUGGESTIONS.map(v=>`<option value="${v}">`).join('');
@@ -1391,6 +1612,7 @@ function resetPubLivraison(){
   document.querySelectorAll('.pub-livraison-check').forEach(cb=>{ cb.checked=false; });
   document.querySelectorAll('[id^="pub-livraison-prix-"]').forEach(inp=>{ inp.value=''; inp.style.display='none'; });
 }
+
 let listings = [];
 let listingsLoadError = false;
 let messages = {};
@@ -1406,6 +1628,8 @@ let adminTab = 'ads';
 let reviews = [];
 let verifiedSellers = {};
 let currentAdSellerEmail = null;
+
+/* ---------- CHARGEMENT / STOCKAGE ---------- */
 async function loadListings(){
   if(LISTINGS_API_BASE){
     try{
@@ -1417,6 +1641,9 @@ async function loadListings(){
         return;
       }
     }catch(e){}
+    // Le serveur des annonces n'a pas répondu : on n'affiche jamais de fausses
+    // annonces de démonstration à la place. On prévient clairement que le
+    // chargement a échoué (ex : ouverture du fichier en local, pas de réseau).
     listings = [];
     listingsLoadError = true;
     return;
@@ -1479,6 +1706,9 @@ async function loadVerifiedSellers(){
   catch(e){ verifiedSellers = {}; }
 }
 async function saveVerifiedSellers(){ try{ await window.storage.set(VERIFIED_SELLERS_KEY, JSON.stringify(verifiedSellers), true); }catch(e){} }
+/* Comptes utilisateurs en mode test (sans backend) : stockés localement, uniquement pour tester
+   le parcours compte/connexion tant qu'aucun vrai serveur d'authentification n'est branché.
+   Ce n'est pas sécurisé (mot de passe en clair) — à ne pas utiliser tel quel en production. */
 let localUsers = [];
 async function loadLocalUsers(){
   try{ const res = await window.storage.get(USERS_KEY, true); localUsers = res && res.value ? JSON.parse(res.value) : []; }
@@ -1486,6 +1716,8 @@ async function loadLocalUsers(){
 }
 async function saveLocalUsers(){ try{ await window.storage.set(USERS_KEY, JSON.stringify(localUsers), true); }catch(e){} }
 function findLocalUser(email){ return localUsers.find(u=>u.email.toLowerCase()===String(email||'').toLowerCase().trim()); }
+
+/* ---------- PAIEMENT RÉEL (Stripe Connect) ---------- */
 async function connectSellerStripe(){
   if(!PAYMENT_API_BASE){ showToast("Le paiement réel n'est pas encore configuré (voir backend/README.md)"); return; }
   const email = document.getElementById('email').value.trim();
@@ -1572,6 +1804,8 @@ async function syncFavoritesFromBackend(){
     if(changed) saveFavorites();
   }catch(e){}
 }
+
+/* ---------- NAVIGATION ---------- */
 async function showPage(page){
   if(!currentUser && !['accueil','annonces','soldes','apropos'].includes(page)){ openAccountArea(); return; }
   document.querySelectorAll('.page').forEach(p=>p.style.display='none');
@@ -1583,8 +1817,6 @@ async function showPage(page){
   if(page==='mes-annonces') renderMesAnnonces();
   if(page==='soldes') renderSoldesPage(); if(page==='accueil') renderHomeZones();
   if(page==='panier') renderCartPage();
-  if(page==='mes-achats'){ await applyAutoTransitions(); renderMesAchats(); updateTxBadges(); }
-  if(page==='mes-ventes'){ await applyAutoTransitions(); renderMesVentes(); updateTxBadges(); }
   if(page==='deposer' && currentUser){
     const emailEl = document.getElementById('email'); const nomEl = document.getElementById('nom');
     if(emailEl && !emailEl.value) emailEl.value = currentUser.email;
@@ -1592,6 +1824,8 @@ async function showPage(page){
   }
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+/* ---------- CATEGORIES ---------- */
 function initCategories(){
   document.getElementById('cat-grid').innerHTML = CATEGORIES.map(c=>
     `<div class="cat" onclick="filterByCategory('${escapeAttr(c)}')"><div class="cat-badge">${CATEGORIES_SHORT[c]}</div><strong>${c}</strong></div>`).join('');
@@ -1610,7 +1844,12 @@ function heroSearch(){
   document.getElementById('f-search').value = q;
   showPage('annonces');
 }
-function updateStats(){}
+function updateStats(){
+  // Barre de statistiques retirée de la page d'accueil ; fonction conservée
+  // par sécurité pour ne rien casser mais elle ne fait plus rien.
+}
+
+/* ---------- ANNONCES ---------- */
 function placeholderImg(seed){
   return 'data:image/svg+xml;utf8,' + encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#5b21b6"/></linearGradient></defs><rect width="600" height="450" fill="url(#g)"/><g fill="#ffffff" fill-opacity=".9"><rect x="215" y="165" width="170" height="120" rx="12"/><circle cx="300" cy="225" r="30" fill="#7c3aed"/></g></svg>`
@@ -1695,13 +1934,14 @@ function cardHtml(l){
 ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
       <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:16px;height:16px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:3px">' : ''}${trustBadgeHtml(l.email)}</span></div>
       <div class="card-meta-row">
-        ${sellerPremiumBadgeHtml(l, trust)}${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
+        ${(Date.now()-(l.ts||0))<48*3600*1000 ? '<span class="mini-tag" style="background:#22c55e;color:#fff">Nouveau</span>' : ''}${sellerPremiumBadgeHtml(l, trust)}${trust.verified ? '<span class="mini-tag verified">'+ICON_CHECK+' Vérifié</span>' : ''}
         ${trust.hasRating ? '<span class="mini-tag trustscore">'+(trust.score>=80?'🟢':trust.score>=50?'🟡':'🔴')+' '+trust.score+'/100</span>' : ''}
-
+        
         ${l.marque ? '<span class="mini-tag" style="background:#0f766e;color:#fff">'+escapeHtml(l.marque)+'</span>' : ''}
         ${l.etat ? '<span class="mini-tag" style="background:#5b21b6;color:#fff">'+escapeHtml(l.etat)+'</span>' : ''}
       </div>
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
+      <div class="card-time" style="opacity:.55">${(l.vues||0)} vue${(l.vues||0)>1?'s':''} · ${(l.favCount||0)} favori${(l.favCount||0)>1?'s':''}</div>
       <div class="row">
         <button class="iconbtn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})">Favori</button>
         ${sold ? '' : `<button class="iconbtn" onclick="event.stopPropagation();addCart(${l.id})">Ajouter</button>
@@ -1710,6 +1950,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
     </div>
   </div>`;
 }
+
 let currentAdImages = [];
 let currentAdImgIndex = 0;
 function renderAdGallery(){
@@ -1732,6 +1973,7 @@ function openPhotoZoom(){
 function openAd(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   currentAdId = id;
+  fetch(LISTINGS_API_BASE+'/api/listings/'+id+'/vue', {method:'POST'}).catch(()=>{});
   currentAdImages = (l.images && l.images.length) ? l.images : [thumb(l)];
   currentAdImgIndex = 0;
   renderAdGallery();
@@ -1814,6 +2056,7 @@ function addCartCurrent(){
   showPage('panier');
 }
 function toggleFavCurrent(){ if(currentAdId){ toggleFav(currentAdId); document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(currentAdId)); } }
+
 async function shareSMSCurrent(){
   if(!currentAdId) return;
   const l = listings.find(x=>x.id===currentAdId);
@@ -1834,7 +2077,11 @@ async function shareSMSCurrent(){
   const separateur = isIOS ? '&' : '?';
   window.location.href = 'sms:'+separateur+'body='+encodeURIComponent(texte);
 }
+
+/* ---------- PUBLICATION ---------- */
 let photosProcessing = Promise.resolve();
+
+/* ---------- COMPTES CLIENTS ---------- */
 let authToken = null;
 let currentUser = null;
 async function loadAuthToken(){
@@ -1945,6 +2192,7 @@ async function doRegister(){
   const rcs = document.getElementById('register-rcs').value.trim();
   const tva = document.getElementById('register-tva').value.trim();
   if(isPro && (!raisonSociale || !adresseSiege || !rcs || !tva || !prenom || !telephone || !codePostal)){ showToast("Pour un compte professionnel, merci de renseigner le prenom, le telephone, le code postal, la raison sociale, l'adresse du siège, le n° RCS/RM et le n° de TVA intracommunautaire"); return; }
+
   if(!email || !password){ showToast("Merci de remplir l'e-mail et le mot de passe"); return; }
   if(password.length < 8){ showToast("Le mot de passe doit contenir au moins 8 caractères"); return; }
   if(false){
@@ -2061,6 +2309,8 @@ async function doChangePassword(){
     showToast("Mot de passe mis à jour");
   }catch(e){ showToast("Impossible de contacter le serveur de comptes"); }
 }
+
+/* ---------- MODIFICATION DES PHOTOS PAR LE VENDEUR ---------- */
 let editPhotosListingId = null;
 let editPhotosDraft = [];
 let editPhotosProcessing = Promise.resolve();
@@ -2201,6 +2451,9 @@ function removeUploadedImage(i){
   renderPhotoPreview();
 }
 function handlePhotos(e){
+  // On ajoute les nouvelles photos à celles déjà sélectionnées (au lieu de les
+  // remplacer), pour permettre de choisir ses 4 photos une par une sans
+  // perdre les précédentes à chaque nouvelle sélection.
   const remainingSlots = 4 - uploadedImages.length;
   if(remainingSlots <= 0){ showToast("4 photos maximum : retirez-en une pour en ajouter une autre"); e.target.value=''; return; }
   const incoming = [...e.target.files];
@@ -2240,7 +2493,7 @@ async function geocodeVille(nom){
   if(!nom) return null;
   try{
     const q = String(nom).trim();
-    const arrM = q.match(/paris[\s-]*(\d{1,2})\s*(?:e|er|eme|ème)?\b/i);
+    const arrM = q.match(/paris[\s-]*(\d{1,2})\s*(?:e|er|eme|\u00e8me)?\b/i);
     if(arrM){
       const arr = parseInt(arrM[1], 10);
       if(arr >= 1 && arr <= 20){
@@ -2289,6 +2542,7 @@ const jardin = (categorie === 'Immobilier') ? document.getElementById('jardin').
   if(categorie==='Véhicules' && !marque){ showToast("Merci de choisir la marque du véhicule"); return; }
   if(isNaN(prix) || prix<=0){ showToast("Merci d'indiquer un prix valide"); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showToast("Merci d'indiquer une adresse e-mail valide"); return; }
+
   let soldePrix = null, soldeExpire = null;
   const soldeToggle = document.getElementById('pub-solde-toggle');
   if(soldeToggle && soldeToggle.checked){
@@ -2297,6 +2551,7 @@ const jardin = (categorie === 'Immobilier') ? document.getElementById('jardin').
     soldePrix = Math.round(prixSoldeInput*100)/100;
     soldeExpire = Date.now() + 10*24*60*60*1000;
   }
+
   const livraison = collectPubLivraison();
   const geo = await geocodeVille(ville);
   const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, baignoire, wc, balcon, jardin, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
@@ -2327,6 +2582,8 @@ const jardin = (categorie === 'Immobilier') ? document.getElementById('jardin').
   updateStats();
   showPage('annonces');
 }
+
+/* ---------- FAVORIS ---------- */
 function toggleFav(id){
   const i = favorites.indexOf(id);
   if(i>-1) favorites.splice(i,1); else favorites.push(id);
@@ -2343,7 +2600,7 @@ function renderSoldesPage(){
 function renderFavPage(){
   const list = listings.filter(l=>favorites.includes(l.id));
   const el = document.getElementById('fav-grid');
-  el.innerHTML = list.length ? list.map(cardHtml).join('') : '<p class="empty">Vous n’avez pas encore de favoris.</p>';
+  el.innerHTML = list.length ? list.map(cardHtml).join('') : '<p class="empty">Vous n\u2019avez pas encore de favoris.</p>';
 }
 async function renderVendeursFavoris(){
   const el = document.getElementById('vendeurs-favoris-grid');
@@ -2366,6 +2623,8 @@ async function renderVendeursFavoris(){
     }).join('');
   }catch(e){ el.innerHTML = '<p class="empty">Impossible de charger vos vendeurs favoris.</p>'; }
 }
+
+/* ---------- PANIER ---------- */
 function addCart(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   if(cart.includes(id)){ showToast("Déjà dans le panier"); return; }
@@ -2401,6 +2660,7 @@ function updateMessagesBadge(){
   });
   if(unread){ b.style.display='inline-block'; b.textContent = unread; } else { b.style.display='none'; }
 }
+
 function renderCartPage(){
   const el = document.getElementById('cart-content');
   const items = cart.map(id=>listings.find(l=>l.id===id)).filter(Boolean);
@@ -2414,7 +2674,7 @@ function renderCartPage(){
 async function simulatePayment(){
   if(!cart.length){ showToast("Votre panier est vide"); return; }
   const items = cart.map(id=>listings.find(l=>l.id===id)).filter(Boolean);
-  if(PAYMENT_API_BASE){ await realCheckout(items); return; }
+  if(LISTINGS_API_BASE){ await realCheckout(items); return; }
   const total = items.reduce((s,l)=>s+effectivePrice(l),0);
   const newSellers = new Set();
   items.forEach(l=>{
@@ -2428,14 +2688,13 @@ async function simulatePayment(){
     const price = effectivePrice(l);
     const itemCommission = isFreeFirstSale ? 0 : Math.round(price*COMMISSION_RATE*100)/100;
     commission += itemCommission;
-    return {id:l.id, titre:l.titre, prix:price, commission:itemCommission, freeFirstSale:isFreeFirstSale, sellerEmail:key, status:'en_attente_confirmation', statusAt:Date.now()};
+    return {id:l.id, titre:l.titre, prix:price, commission:itemCommission, freeFirstSale:isFreeFirstSale};
   });
   newSellers.forEach(key=>firstSaleUsed.push(key));
   await saveFirstSaleUsed();
   const sellerPayout = total - commission;
-  transactions.push({id:(transactions.length?Math.max(...transactions.map(t=>t.id))+1:1), total, commission, sellerPayout, items: itemDetails, ts:Date.now(), buyerEmail:(currentUser&&currentUser.email)||''});
+  transactions.push({id:(transactions.length?Math.max(...transactions.map(t=>t.id))+1:1), total, commission, sellerPayout, items: itemDetails, ts:Date.now()});
   await saveTransactions();
-  updateTxBadges();
   cart=[]; updateCartBadge(); saveCart();
   updateAdminRevenue();
   const freeCount = itemDetails.filter(i=>i.freeFirstSale).length;
@@ -2452,162 +2711,8 @@ async function simulatePayment(){
   document.getElementById('pay-btn').style.display='none';
   showToast("Commande test enregistrée — aucun paiement réel effectué.");
 }
-// ===== SYSTEME DE STATUTS DE TRANSACTION (annulation / rétractation / remboursement) =====
-const TX_CONFIRM_DEADLINE_H = 48;   // le vendeur doit confirmer la disponibilité sous 48h
-const TX_SHIP_DEADLINE_D = 6;       // puis expédier sous 6 jours
-const TX_AUTO_RELEASE_D = 10;       // puis les fonds sont libérés automatiquement 10 jours après expédition si rien n'est signalé
-const TX_STATUS_INFO = {
-  en_attente_confirmation: {label:"En attente de confirmation vendeur", color:"#f59e0b", icon:"⏳"},
-  confirmee: {label:"Confirmée — en attente d'expédition", color:"#3b82f6", icon:"📦"},
-  expediee: {label:"Expédiée", color:"#8b5cf6", icon:"🚚"},
-  recue: {label:"Terminée — bien reçu", color:"#22c55e", icon:"✅"},
-  annulee: {label:"Annulée et remboursée", color:"#6b7280", icon:"✖️"},
-  litige: {label:"Litige en cours", color:"#ef4444", icon:"⚠️"}
-};
-function txDeadline(item){
-  if(item.status==='en_attente_confirmation') return item.statusAt + TX_CONFIRM_DEADLINE_H*3600*1000;
-  if(item.status==='confirmee') return item.statusAt + TX_SHIP_DEADLINE_D*86400*1000;
-  if(item.status==='expediee') return item.statusAt + TX_AUTO_RELEASE_D*86400*1000;
-  return null;
-}
-function fmtDate(ts){ return new Date(ts).toLocaleString('fr-FR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
-// Applique les transitions automatiques quand un délai est dépassé (comme sur les grandes marketplaces) :
-// - vendeur ne confirme pas la dispo sous 48h -> annulation + remboursement automatique
-// - vendeur ne confirme pas l'expédition sous 6 jours -> idem
-// - acheteur ne signale rien 10 jours après expédition -> réception présumée, fonds libérés au vendeur
-async function applyAutoTransitions(){
-  let changed = false;
-  transactions.forEach(tx=>{
-    tx.items.forEach(item=>{
-      if(!item.status) return;
-      const dl = txDeadline(item);
-      if(dl && Date.now() > dl){
-        if(item.status==='en_attente_confirmation' || item.status==='confirmee'){
-          item.status='annulee'; item.statusAt=Date.now(); item.autoReason='Délai vendeur dépassé — remboursement automatique (simulation)';
-          changed = true;
-        } else if(item.status==='expediee'){
-          item.status='recue'; item.statusAt=Date.now(); item.autoReason='Réception présumée après 10 jours sans signalement';
-          changed = true;
-        }
-      }
-    });
-  });
-  if(changed) await saveTransactions();
-}
-function findTxItem(txId, itemId){
-  const tx = transactions.find(t=>t.id===txId);
-  if(!tx) return null;
-  const item = tx.items.find(i=>i.id===itemId);
-  return item ? {tx,item} : null;
-}
-async function sellerConfirmItem(txId,itemId){
-  const found = findTxItem(txId,itemId); if(!found) return;
-  found.item.status='confirmee'; found.item.statusAt=Date.now(); delete found.item.autoReason;
-  await saveTransactions(); renderMesVentes(); updateTxBadges();
-  showToast("Disponibilité confirmée — vous avez "+TX_SHIP_DEADLINE_D+" jours pour expédier.");
-}
-async function sellerShipItem(txId,itemId){
-  const found = findTxItem(txId,itemId); if(!found) return;
-  found.item.status='expediee'; found.item.statusAt=Date.now(); delete found.item.autoReason;
-  await saveTransactions(); renderMesVentes(); updateTxBadges();
-  showToast("Marqué comme expédié — l'acheteur en est informé.");
-}
-async function buyerConfirmReception(txId,itemId){
-  const found = findTxItem(txId,itemId); if(!found) return;
-  found.item.status='recue'; found.item.statusAt=Date.now(); delete found.item.autoReason;
-  await saveTransactions(); renderMesAchats(); updateTxBadges();
-  showToast("Réception confirmée — les fonds sont reversés au vendeur (simulation, en attente de l'activation de Stripe).");
-}
-async function buyerCancelItem(txId,itemId){
-  const found = findTxItem(txId,itemId); if(!found) return;
-  if(!confirm("Annuler cette transaction et demander le remboursement ?")) return;
-  found.item.status='annulee'; found.item.statusAt=Date.now(); found.item.autoReason="Annulée par l'acheteur";
-  await saveTransactions(); renderMesAchats(); updateTxBadges();
-  showToast("Transaction annulée — remboursement simulé (en production, un vrai remboursement Stripe serait déclenché).");
-}
-async function buyerReportLitigeTx(txId,itemId){
-  const found = findTxItem(txId,itemId); if(!found) return;
-  found.item.status='litige'; found.item.statusAt=Date.now(); delete found.item.autoReason;
-  await saveTransactions(); renderMesAchats(); updateTxBadges();
-  showToast("Litige signalé — notre équipe est notifiée et va vous recontacter (simulation).");
-}
-function updateTxBadges(){
-  const achatsB = document.getElementById('mes-achats-badge');
-  const ventesB = document.getElementById('mes-ventes-badge');
-  if(!currentUser){ if(achatsB) achatsB.style.display='none'; if(ventesB) ventesB.style.display='none'; return; }
-  const email = sellerKey(currentUser.email);
-  let achatsCount = 0, ventesCount = 0;
-  transactions.forEach(tx=>{
-    if(sellerKey(tx.buyerEmail)===email) achatsCount += tx.items.filter(i=>i.status==='expediee').length;
-    tx.items.forEach(i=>{
-      if(sellerKey(i.sellerEmail)===email && (i.status==='en_attente_confirmation' || i.status==='confirmee')) ventesCount++;
-    });
-  });
-  if(achatsB){ if(achatsCount){ achatsB.style.display='inline-block'; achatsB.textContent=achatsCount; } else achatsB.style.display='none'; }
-  if(ventesB){ if(ventesCount){ ventesB.style.display='inline-block'; ventesB.textContent=ventesCount; } else ventesB.style.display='none'; }
-}
-function renderMesAchats(){
-  const el = document.getElementById('mes-achats-list');
-  if(!el) return;
-  if(!currentUser){ el.innerHTML = '<p class="empty">Connectez-vous pour voir vos achats.</p>'; return; }
-  const email = sellerKey(currentUser.email);
-  const mine = transactions.filter(tx=>sellerKey(tx.buyerEmail)===email).slice().sort((a,b)=>b.ts-a.ts);
-  if(!mine.length){ el.innerHTML = '<p class="empty">Vous n\'avez encore rien acheté sur Market18.</p>'; return; }
-  el.innerHTML = mine.map(tx=>tx.items.map(item=>{
-    const st = TX_STATUS_INFO[item.status] || TX_STATUS_INFO.en_attente_confirmation;
-    const dl = txDeadline(item);
-    const dlHtml = dl ? `<div class="small" style="opacity:.75;margin-top:4px">Prochaine échéance : ${fmtDate(dl)}</div>` : '';
-    const reasonHtml = item.autoReason ? `<div class="small" style="opacity:.75;margin-top:4px">${escapeHtml(item.autoReason)}</div>` : '';
-    let actions = '';
-    if(item.status==='en_attente_confirmation' || item.status==='confirmee'){
-      actions = `<button class="btn outline" style="margin-top:8px" onclick="buyerCancelItem(${tx.id},${item.id})">Annuler et être remboursé</button>`;
-    } else if(item.status==='expediee'){
-      actions = `<button class="btn" style="margin-top:8px" onclick="buyerConfirmReception(${tx.id},${item.id})">Confirmer la bonne réception</button>
-      <button class="btn outline" style="margin-top:8px;margin-left:8px" onclick="buyerReportLitigeTx(${tx.id},${item.id})">Signaler un problème</button>`;
-    }
-    return `<div class="admin-item" style="align-items:flex-start;border-left:4px solid ${st.color}">
-      <div class="info">
-        <div class="t">${escapeHtml(item.titre)} — ${fmtPrice(item.prix)}</div>
-        <div class="small" style="margin-top:2px">${st.icon} <b>${st.label}</b></div>
-        ${dlHtml}${reasonHtml}
-        ${actions}
-      </div>
-    </div>`;
-  }).join('')).join('');
-}
-function renderMesVentes(){
-  const el = document.getElementById('mes-ventes-list');
-  if(!el) return;
-  if(!currentUser){ el.innerHTML = '<p class="empty">Connectez-vous pour voir vos ventes.</p>'; return; }
-  const email = sellerKey(currentUser.email);
-  const rows = [];
-  transactions.slice().sort((a,b)=>b.ts-a.ts).forEach(tx=>{
-    tx.items.forEach(item=>{
-      if(sellerKey(item.sellerEmail)===email) rows.push({tx,item});
-    });
-  });
-  if(!rows.length){ el.innerHTML = '<p class="empty">Vous n\'avez encore aucune vente sur Market18.</p>'; return; }
-  el.innerHTML = rows.map(({tx,item})=>{
-    const st = TX_STATUS_INFO[item.status] || TX_STATUS_INFO.en_attente_confirmation;
-    const dl = txDeadline(item);
-    const dlHtml = dl ? `<div class="small" style="opacity:.75;margin-top:4px">À faire avant le : ${fmtDate(dl)}</div>` : '';
-    const reasonHtml = item.autoReason ? `<div class="small" style="opacity:.75;margin-top:4px">${escapeHtml(item.autoReason)}</div>` : '';
-    let actions = '';
-    if(item.status==='en_attente_confirmation'){
-      actions = `<button class="btn" style="margin-top:8px" onclick="sellerConfirmItem(${tx.id},${item.id})">Confirmer la disponibilité</button>`;
-    } else if(item.status==='confirmee'){
-      actions = `<button class="btn" style="margin-top:8px" onclick="sellerShipItem(${tx.id},${item.id})">Marquer comme expédié</button>`;
-    }
-    return `<div class="admin-item" style="align-items:flex-start;border-left:4px solid ${st.color}">
-      <div class="info">
-        <div class="t">${escapeHtml(item.titre)} — ${fmtPrice(item.prix)}</div>
-        <div class="small" style="margin-top:2px">${st.icon} <b>${st.label}</b></div>
-        ${dlHtml}${reasonHtml}
-        ${actions}
-      </div>
-    </div>`;
-  }).join('');
-}
+
+/* ---------- CONFIANCE / AVIS ---------- */
 function sellerKey(email){ return (email||'').toLowerCase().trim(); }
 function computeTrust(email){ const key = sellerKey(email); if(!key) return {score:0,avgRating:0,reviewCount:0,salesCount:0,memberSince:null,verified:false,reactivityPct:null,label:'Nouveau vendeur'}; const sellerReviews = reviews.filter(r=>sellerKey(r.sellerEmail)===key); const reviewCount = sellerReviews.length; const avgRating = reviewCount ? sellerReviews.reduce((s,r)=>s+r.rating,0)/reviewCount : 0; const sellerListings = listings.filter(l=>sellerKey(l.email)===key); const salesCount = sellerListings.filter(l=>l.vendu).length; const firstTs = sellerListings.length ? Math.min(...sellerListings.map(l=>l.ts)) : null; const memberSince = firstTs ? new Date(firstTs) : null; const daysSince = firstTs ? (Date.now()-firstTs)/86400000 : 0; const verified = !!verifiedSellers[key]; const sellerListingIds = sellerListings.map(l=>l.id); const threadsWithMsg = sellerListingIds.filter(id=>(messages[id]||[]).some(m=>m.from==='visiteur')); const threadsWithReply = threadsWithMsg.filter(id=>(messages[id]||[]).some(m=>m.from==='vendeur')); const reactivityPct = threadsWithMsg.length ? threadsWithReply.length/threadsWithMsg.length : null; const deliveryReviews = sellerReviews.filter(r=>typeof r.livraisonRecue === 'boolean'); const deliveryRate = deliveryReviews.length ? deliveryReviews.filter(r=>r.livraisonRecue).length/deliveryReviews.length : 0.85; const litigeReviews = sellerReviews.filter(r=>typeof r.litige === 'boolean'); const litigeCount = litigeReviews.filter(r=>r.litige).length; const litigeRate = litigeReviews.length ? litigeCount/litigeReviews.length : 0; const ratingScore = reviewCount ? (avgRating/5)*30 : 15; const salesScore = Math.min(salesCount,10)/10*20; const ageScore = Math.min(daysSince/180,1)*10; const verifiedScore = verified?10:0; const reactivityScore = (reactivityPct===null ? 0.7 : reactivityPct)*10; const livraisonScore = deliveryRate*15; const litigeScore = (1-litigeRate)*5; let score = Math.round(ratingScore+salesScore+ageScore+verifiedScore+reactivityScore+livraisonScore+litigeScore); score = Math.max(0, Math.min(100, score)); let label = 'Historique limité'; if(score>=80) label='Excellente confiance'; else if(score>=60) label='Bonne confiance'; else if(score>=40) label='Confiance correcte'; const hasRating = reviewCount > 0; if(!hasRating) label = 'Vendeur non encore noté'; return {score, avgRating, reviewCount, salesCount, memberSince, verified, autoTrusted: salesCount >= 3, reactivityPct, label, hasRating, deliveryRate, litigeRate, litigeCount}; } function badgeStarsHtml(rating, big){
   const full = Math.round(rating);
@@ -2620,18 +2725,27 @@ function computeTrust(email){ const key = sellerKey(email); if(!key) return {sco
   }
   return out;
 }
-function sellerQrMiniIconHtml(){
-  return `<span title="QR code boutique disponible" style="display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-left:6px;width:22px;height:22px;background:#fff;border-radius:6px;padding:2px;box-shadow:0 0 0 1px rgba(0,0,0,.08)"><svg width="18" height="18" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><rect x="1" y="1" width="7" height="7" fill="#1a1a1a"/><rect x="3" y="3" width="3" height="3" fill="#fff"/><rect x="16" y="1" width="7" height="7" fill="#1a1a1a"/><rect x="18" y="3" width="3" height="3" fill="#fff"/><rect x="1" y="16" width="7" height="7" fill="#1a1a1a"/><rect x="3" y="18" width="3" height="3" fill="#fff"/><rect x="16" y="16" width="3" height="3" fill="#1a1a1a"/><rect x="20" y="16" width="3" height="3" fill="#1a1a1a"/><rect x="16" y="20" width="3" height="3" fill="#1a1a1a"/><rect x="11" y="1" width="3" height="3" fill="#1a1a1a"/><rect x="11" y="11" width="3" height="3" fill="#1a1a1a"/><rect x="20" y="20" width="3" height="3" fill="#1a1a1a"/></svg></span>`;
-}
 function trustBadgeHtml(email, big){
   const t = computeTrust(email);
-  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   if(!t.hasRating){ return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur${sellerQrMiniIconHtml()}</span>`;
+  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   if(!t.hasRating){ return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
   }
-  return `<span class="trust-badge${big?' lg':''}" title="${title}">${badgeStarsHtml(t.avgRating, big)}${sellerQrMiniIconHtml()}</span>`;
+  return `<span class="trust-badge${big?' lg':''}" title="${title}">${badgeStarsHtml(t.avgRating, big)}</span>`;
 }
 function starsHtml(rating){
   const full = Math.round(rating);
   return `<span class="stars">${'★'.repeat(full)}${'☆'.repeat(5-full)}</span>`;
+}
+function genererQrBoutique(){
+  if(!currentUser){ showToast('Connectez-vous'); return; }
+  const url = 'https://market18.fr/?vendeur='+encodeURIComponent(currentUser.email);
+  document.getElementById('qr-boutique-img').src = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(url);
+  document.getElementById('qr-boutique-link').textContent = url;
+  document.getElementById('qr-boutique-link').href = url;
+  document.getElementById('qr-boutique-result').style.display = 'block';
+}
+function copierLienBoutique(){
+  const url = document.getElementById('qr-boutique-link').href;
+  navigator.clipboard.writeText(url).then(()=>showToast('Lien copié')).catch(()=>{});
 }
 function openSellerProfile(){
   if(!currentAdSellerEmail){ showToast("Vendeur inconnu"); return; }
@@ -2652,7 +2766,7 @@ function renderSellerProfile(){
   document.getElementById('seller-name').textContent = nom || 'Vendeur';
   applyAvatarToEl(document.getElementById('seller-avatar'), null, nom);
   fetch(LISTINGS_API_BASE+'/api/seller-info?email='+encodeURIComponent(email)).then(function(r){return r.json();}).then(function(info){
-    applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom); var addrBlock = document.getElementById('seller-address-block'); if(addrBlock){ if(info.adressePublique && info.adresseSiege){ addrBlock.innerHTML = '<div class="trust-item" style="width:100%;text-align:left"><b>📍 Adresse :</b> '+escapeHtml(info.adresseSiege)+' <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(info.adresseSiege)+'" target="_blank" rel="noopener" style="margin-left:8px;color:#2563eb;font-weight:700;text-decoration:none">Voir sur Google Maps →</a></div>'; } else { addrBlock.innerHTML=''; } }
+    applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom); var addrBlock = document.getElementById('seller-address-block'); if(addrBlock){ if(info.adressePublique && info.adresseSiege){ addrBlock.innerHTML = '<div class="trust-item" style="width:100%;text-align:left"><b>\uD83D\uDCCD Adresse :</b> '+escapeHtml(info.adresseSiege)+' <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(info.adresseSiege)+'" target="_blank" rel="noopener" style="margin-left:8px;color:#2563eb;font-weight:700;text-decoration:none">Voir sur Google Maps \u2192</a></div>'; } else { addrBlock.innerHTML=''; } }
   }).catch(function(){});
   renderFavoriVendeurBtn(email);
   document.getElementById('seller-badge').innerHTML = sellerPremiumBadgeHtml(listing, t) + trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '') + (t.autoTrusted ? ' <span class="verified-tag" style="background:#f59e0b;color:#1a1a1a">🏅 Vendeur confirmé (3+ ventes)</span>' : '');
@@ -2676,30 +2790,6 @@ function renderSellerProfile(){
   document.getElementById('review-nom').value='';
   document.getElementById('review-comment').value='';
   document.getElementById('review-rating').value='5';
-  renderSellerQr(email);
-}
-let __sellerQrCanvas = null;
-function renderSellerQr(email){
-  const block = document.getElementById('seller-qr-block');
-  const wrap = document.getElementById('seller-qr-canvas-wrap');
-  const urlEl = document.getElementById('seller-qr-url');
-  if(!email || !block || !wrap || typeof QRCode === 'undefined'){ if(block) block.style.display='none'; return; }
-  const boutiqueUrl = 'https://market18.fr/?vendeur=' + encodeURIComponent(email);
-  wrap.innerHTML = '';
-  try{
-    new QRCode(wrap, { text: boutiqueUrl, width: 180, height: 180, colorDark: '#1a1a1a', colorLight: '#ffffff' });
-    __sellerQrCanvas = wrap.querySelector('canvas') || wrap.querySelector('img');
-    block.style.display='block';
-  }catch(e){ block.style.display='none'; return; }
-  if(urlEl) urlEl.textContent = boutiqueUrl;
-}
-function renderCarousels(){if(!window.listings)return;var p=document.getElementById("carousel-promos"),n=document.getElementById("carousel-nouveautes");if(p)p.innerHTML=window.listings.slice(0,10).map(function(l){return'<div class="carousel-card"><img class="carousel-card-image" src="'+(l.images&&l.images[0]||"")+'" style="width:100%;height:100px"><div class="carousel-card-info"><div class="carousel-card-title">'+(l.titre||"").substring(0,15)+'</div><div class="carousel-card-price">€'+l.prix+'</div></div></div>'}).join("");if(n)n.innerHTML=window.listings.slice(0,10).map(function(l){return'<div class="carousel-card"><img class="carousel-card-image" src="'+(l.images&&l.images[0]||"")+'" style="width:100%;height:100px"><div class="carousel-card-info"><div class="carousel-card-title">'+(l.titre||"").substring(0,15)+'</div><div class="carousel-card-price">€'+l.prix+'</div></div></div>'}).join("");}
-function downloadSellerQr(){
-  if(!__sellerQrCanvas) return;
-  const link = document.createElement('a');
-  link.download = 'qrcode-boutique-market18.png';
-  link.href = (__sellerQrCanvas.tagName === 'CANVAS') ? __sellerQrCanvas.toDataURL('image/png') : __sellerQrCanvas.src;
-  link.click();
 }
 async function renderFavoriVendeurBtn(email){
   const btn = document.getElementById('favori-vendeur-btn');
@@ -2711,7 +2801,7 @@ async function renderFavoriVendeurBtn(email){
     const res = await fetch(LISTINGS_API_BASE+'/api/favoris-vendeur', { headers:{'Authorization':'Bearer '+authToken} });
     const data = await res.json();
     const suivi = (data.vendeurs||[]).some(function(v){ return sellerKey(v.email)===sellerKey(email); });
-    btn.textContent = suivi ? '★ Vendeur suivi' : '☆ Suivre ce vendeur';
+    btn.textContent = suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur';
   }catch(e){}
   btn.disabled = false;
 }
@@ -2725,11 +2815,12 @@ async function toggleFavoriVendeur(){
     const res = await fetch(LISTINGS_API_BASE+'/api/favoris-vendeur', { method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken}, body: JSON.stringify({ sellerEmail: email }) });
     const data = await res.json();
     if(!res.ok){ showToast(data.error||'Erreur'); if(btn) btn.disabled=false; return; }
-    if(btn){ btn.textContent = data.suivi ? '★ Vendeur suivi' : '☆ Suivre ce vendeur'; }
+    if(btn){ btn.textContent = data.suivi ? '\u2605 Vendeur suivi' : '\u2606 Suivre ce vendeur'; }
     showToast(data.suivi ? 'Vendeur ajoute a vos favoris' : 'Vendeur retire de vos favoris');
   }catch(e){ showToast('Impossible de contacter le serveur'); }
   if(btn) btn.disabled = false;
 }
+
 async function submitReview(){
   if(!currentUser || !authToken){ showToast("Connectez-vous pour laisser un avis"); return; }
   const rating = parseInt(document.getElementById('review-rating').value,10);
@@ -2749,6 +2840,8 @@ async function submitReview(){
     showToast("Avis publié, merci !");
   }catch(e){ showToast("Erreur réseau, réessayez"); }
 }
+
+/* ---------- MESSAGES ---------- */
 let openThreadId = null;
 async function openMessages(listingId){
   const contact = await ensureMyContact();
@@ -2757,17 +2850,20 @@ async function openMessages(listingId){
   openThreadBuyerEmail = contact.email;
   showPage('messages');
 }
+
 async function openThreadFromInbox(listingId, buyerEmail){
   openThreadId = listingId;
   openThreadBuyerEmail = buyerEmail;
   await loadMessages();
   renderMessagesPage();
 }
+
 function closeThread(){
   openThreadId = null;
   openThreadBuyerEmail = null;
   renderMessagesPage();
 }
+
 function renderMessagesPage(){
   const el = document.getElementById('messages-list');
   const myEmail = getMyEmail();
@@ -2883,6 +2979,8 @@ async function sendMessage(){
     input.disabled = false;
   }
 }
+
+/* ---------- MODALS / TOAST ---------- */
 function openModal(id){ document.getElementById(id).classList.add('show'); }
 async function offerSaveCredential(id, password, name){
   try{
@@ -2926,6 +3024,7 @@ function showToast(msg){
   document.getElementById('toast-container').appendChild(el);
   setTimeout(()=>el.remove(), 2400);
 }
+
 async function subscribeNewsletter(){
   const input = document.getElementById('newsletter-email');
   const email = (input.value||'').trim();
@@ -2938,6 +3037,7 @@ async function subscribeNewsletter(){
     else { const d = await res.json().catch(()=>({})); showToast(d.error||"Erreur lors de l'inscription"); }
   }catch(err){ showToast("Erreur reseau, reessayez"); }
 }
+
 async function creerAlerteRecherche(){
   const q = document.getElementById('f-search').value.trim();
   const categorie = document.getElementById('f-cat').value;
@@ -2967,21 +3067,24 @@ async function creerAlerteRecherche(){
     showToast('Erreur reseau, reessayez');
   }
 }
+
+/* ---------- PAGES LEGALES ---------- */
 const LEGAL_CONTENT = {
-  mentions:["Mentions légales","<p>Contenu legal (raccourci pour le test local).</p>"],
-  cgu:["CGU","<p>Contenu legal (raccourci pour le test local).</p>"],
-  cgv:["CGV","<p style=\"background:#fff3cd;color:#664d03;padding:10px 14px;border-radius:8px;font-weight:700\">⚠️ PROJET - en attente de validation par un avocat, non definitif.</p><h3>Article X - Prix et modalites de paiement</h3><p>Les prix des annonces publiees sur Market18.fr sont indiques en euros, toutes taxes comprises (TTC) le cas echeant, par le vendeur.</p><p>Le paiement s'effectue exclusivement en ligne, par carte bancaire, via le prestataire de paiement Stripe. Market18.fr n'a a aucun moment acces aux donnees bancaires de l'acheteur, celles-ci etant traitees directement et de facon securisee par Stripe.</p><p>Au moment de l'achat, l'acheteur regle le prix affiche par le vendeur, majore le cas echeant des frais de service Market18.fr, dont le montant est indique avant validation du paiement.</p><p>Les fonds verses par l'acheteur sont conserves de facon securisee jusqu'a confirmation de la bonne reception de l'article par l'acheteur (ou a l'expiration d'un delai de [X jours] a compter de l'expedition, en l'absence de signalement de litige). Passe ce delai, les fonds sont reverses au vendeur, deduction faite de la commission Market18.fr eventuellement applicable.</p><p>En cas de litige signale par l'acheteur avant confirmation de reception, le versement des fonds au vendeur est suspendu le temps du traitement du litige.</p><h3>Article Y - Droit de retractation</h3><p><b>Ventes conclues avec un vendeur professionnel (compte Pro) :</b> conformement aux articles L221-18 et suivants du Code de la consommation, l'acheteur consommateur dispose d'un delai de 14 jours a compter de la reception du bien pour exercer son droit de retractation, sans avoir a justifier de motifs ni a payer de penalites, a l'exception des cas d'exclusion prevus par la loi.</p><p><b>Ventes conclues entre particuliers :</b> les ventes conclues directement entre deux particuliers, en dehors de toute activite commerciale du vendeur, ne sont pas soumises au droit de retractation legal prevu par le Code de la consommation.</p><p style=\"opacity:.8\">Point a faire trancher par un avocat : la nouvelle obligation applicable a compter du 19 juin 2026 (fonctionnalite de retractation en ligne accessible) doit etre analysee pour determiner son perimetre exact sur Market18.fr.</p><h3>Article Z - Frais et commission Market18.fr</h3><p>[A completer selon le modele economique retenu.]</p>"],
-  retractation:["Annulation, remboursement & droit de rétractation",'<h3>Comment fonctionne la protection acheteur sur Market18.fr</h3><p>Lorsque vous achetez un article sur Market18.fr, votre argent n\'est pas versé immédiatement au vendeur : il est conservé de façon sécurisée le temps que la transaction se déroule normalement. Ce fonctionnement, proche de celui des grandes marketplaces françaises, vous protège si le vendeur ne donne pas suite à votre commande.</p><h3>Les étapes d\'une transaction</h3><ol><li><b>Commande passée</b> — le vendeur a 48h pour confirmer que l\'article est bien disponible. Sans réponse de sa part dans ce délai, vous êtes automatiquement remboursé.</li><li><b>Disponibilité confirmée</b> — le vendeur a ensuite 6 jours pour expédier l\'article. Là aussi, en l\'absence d\'expédition dans ce délai, vous êtes automatiquement remboursé.</li><li><b>Article expédié</b> — vous avez 10 jours pour vérifier votre commande. Si tout est conforme, confirmez la réception depuis <b>Mes achats</b> pour que le vendeur soit payé. Si vous rencontrez un problème, vous pouvez signaler un litige au lieu de confirmer. Passé ce délai sans action de votre part, la réception est considérée comme confirmée et les fonds sont reversés au vendeur.</li></ol><p>Vous pouvez annuler votre commande vous-même, en un clic, depuis la page <b>Mes achats</b>, tant que l\'article n\'a pas encore été expédié.</p><h3>Le droit de rétractation légal (14 jours)</h3><p>Ce système de protection ci-dessus est une garantie propre à Market18.fr, distincte du <b>droit de rétractation</b> prévu par la loi (Code de la consommation) :</p><ul><li><b>Achat auprès d\'un vendeur professionnel</b> (compte identifié comme Pro) : vous disposez de 14 jours à compter de la réception du bien pour vous rétracter, sans justification, conformément aux articles L221-18 et suivants du Code de la consommation.</li><li><b>Achat auprès d\'un particulier</b> : le droit de rétractation légal ne s\'applique pas aux ventes conclues directement entre deux particuliers, en dehors de toute activité commerciale.</li></ul><p class="small" style="opacity:.8">Dans les deux cas, la protection acheteur décrite plus haut (annulation avant expédition, signalement après réception) reste disponible pour tous les achats sur Market18.fr.</p><p class="small" style="opacity:.7;margin-top:10px">Ces informations sont données à titre indicatif et pourront être précisées après validation de nos CGV par un professionnel du droit.</p>'],
-  confidentialite:["Politique de confidentialité","<p>Contenu legal (raccourci pour le test local).</p>"],
-  cookies:["Politique des cookies","<p>Contenu legal (raccourci pour le test local).</p>"],
+  mentions:["Mentions légales","<p><b>Éditeur du site :</b> Franck Moret, entrepreneur individuel exerçant sous le régime de la micro-entreprise immatriculé au Guichet unique de l'INPI.</p><p><b>Statut :</b> Micro-entrepreneur (entrepreneur individuel)<br><b>SIRET :</b> 43889336400010<br><b>Adresse :</b> 89 rue Belliard, 75018 Paris<br><b>E-mail de contact :</b> contact@market18.fr<br><b>Directeur de la publication :</b> Franck Moret</p><p><b>Hébergement du site (interface) :</b> Render Services, Inc. — 525 Brannan Street Ste 300, San Francisco, CA 94107, États-Unis.</p><p><b>Hébergement des données et de l'application (serveur) :</b> Railway Corporation — 548 Market St Suite 68956, San Francisco, CA 94104, États-Unis.</p><p><b>Propriété intellectuelle :</b> l'ensemble des éléments du site Market18.fr (structure, textes, logo, mise en forme, code source) est protégé au titre du droit d'auteur et du droit des marques, sauf mention contraire. Toute reproduction non autorisée est interdite. Les annonces publiées par les utilisateurs (textes, photos) restent la propriété de leurs auteurs, qui garantissent détenir les droits nécessaires sur le contenu publié.</p><p><b>Responsabilité :</b> Market18.fr met en relation des acheteurs et des vendeurs particuliers. Market18.fr n'est pas partie aux transactions conclues entre utilisateurs et ne saurait être tenu responsable des litiges, de la qualité, de la conformité ou de la livraison des biens échangés entre eux.</p><p><b>Droit applicable :</b> les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français compétents seront seuls saisis.</p>"],
+  cgu:["Conditions Générales d'Utilisation (CGU)","<p><i>Dernière mise à jour : 1er août 2026.</i></p><p><b>1. Objet.</b> Les présentes Conditions Générales d'Utilisation régissent l'accès et l'utilisation du site Market18.fr, plateforme de mise en relation entre particuliers pour l'achat et la vente de biens, avec messagerie interne. Leur acceptation est requise pour utiliser le site.</p><p><b>2. Compte utilisateur.</b> La publication d'annonces, la messagerie et les favoris nécessitent la création d'un compte avec une adresse e-mail valide. L'utilisateur est responsable de la confidentialité de ses identifiants et de toute activité effectuée depuis son compte. L'inscription est réservée aux personnes majeures ou mineures dûment autorisées.</p><p><b>3. Description du service.</b> Market18.fr agit en tant qu'intermédiaire technique de mise en relation. Le site n'est pas partie aux transactions (paiement, livraison) conclues entre acheteurs et vendeurs, sauf pour ses éventuels services payants propres (voir les CGV).</p><p><b>4. Obligations de l'utilisateur.</b> L'utilisateur s'engage à publier des annonces conformes à la réalité et licites, à ne pas publier de contenu trompeur, injurieux ou discriminatoire, à ne pas usurper l'identité d'un tiers, et à respecter les autres utilisateurs dans les échanges via la messagerie. Les biens dont la vente est interdite ou réglementée par la loi française ne peuvent être proposés. Sont également interdits le harcèlement, la tentative d'escroquerie, la création de faux comptes ou de fausses annonces, ainsi que toute manipulation artificielle de la visibilité d'une annonce (avis fictifs, comptes multiples, etc.).</p><p><b>5. Modération.</b> Market18.fr peut retirer toute annonce ou contenu contraire aux présentes CGU, et suspendre ou supprimer un compte en cas de manquement grave ou répété.</p><p><b>6. Responsabilité.</b> Conformément à l'article 6 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN), Market18.fr agit en tant qu'hébergeur des annonces et contenus publiés par les utilisateurs et n'exerce aucun contrôle a priori sur ces contenus. Market18.fr ne peut être tenu responsable du contenu publié par les utilisateurs ni des transactions réalisées entre eux. Conformément à l'article 6-I-5 de la LCEN, tout utilisateur peut signaler un contenu qu'il estime illicite à contact@market18.fr en précisant la date du signalement, la description des faits litigieux et leur localisation précise, les motifs légaux de retrait ainsi que ses coordonnées. Market18.fr s'engage à agir promptement pour retirer ou rendre inaccessible tout contenu manifestement illicite signalé dans ces conditions.</p><p><b>7. Données personnelles.</b> Le traitement des données personnelles est décrit dans la Politique de confidentialité, accessible depuis le site.</p><p><b>8. Modification.</b> Market18.fr peut modifier les présentes CGU à tout moment ; la poursuite de l'utilisation du site après modification vaut acceptation.</p><p><b>9. Droit applicable.</b> Droit français. À défaut de résolution amiable, les tribunaux français compétents seront saisis.</p><p>Contact : contact@market18.fr</p>"],
+  cgv:["Conditions Générales de Vente (CGV)","<p><i>Dernière mise à jour : 1er août 2026. Le paiement en ligne (Stripe) est actuellement configuré en mode test ; aucun service payant n'est facturé de façon effective à ce jour.</i></p><p><b>1. Champ d'application.</b> Les présentes CGV s'appliquent exclusivement aux éventuels services payants proposés directement par Market18.fr (mise en avant d'annonces, abonnements, etc.). <b>Market18.fr n'est pas vendeur des objets proposés par les utilisateurs entre eux</b> : ces ventes sont des contrats conclus directement entre particuliers, auxquels Market18.fr n'est pas partie, et dont il ne perçoit aucune somme sauf mention contraire explicite.</p><p><b>2. Services proposés par Market18.fr.</b> Le détail, le prix et les modalités des services optionnels payants sont précisés sur le site au moment de leur souscription.</p><p><b>3. Prix et paiement.</b> Les prix sont indiqués en euros, toutes taxes comprises. Le paiement s'effectue en ligne de façon sécurisée via le prestataire Stripe.</p><p><b>4. Droit de rétractation.</b> Un droit de rétractation de 14 jours peut s'appliquer aux services souscrits en ligne directement auprès de Market18.fr, sauf exceptions légales (service numérique pleinement exécuté avec l'accord exprès de l'utilisateur). Ce droit ne s'applique pas aux ventes de biens conclues entre utilisateurs particuliers.</p><p><b>5. Réclamations.</b> Toute réclamation relative à un service payant de Market18.fr peut être adressée à contact@market18.fr. Les litiges liés à une transaction entre utilisateurs doivent être réglés directement entre les parties.</p><p><b>6. Droit applicable.</b> Droit français, sous réserve des dispositions d'ordre public applicables aux consommateurs.</p><p>Contact : contact@market18.fr</p>"],
+  confidentialite:["Politique de confidentialité","<p><i>Dernière mise à jour : 1er août 2026.</i></p><p><b>1. Responsable du traitement :</b> Franck Moret, micro-entrepreneur (SIRET 43889336400010) — contact@market18.fr.</p><p><b>2. Données collectées :</b> données de compte (nom, e-mail, mot de passe chiffré), données des annonces (titre, description, prix, photos, localisation), messages échangés via la messagerie interne, favoris, données de navigation via Google Analytics (GA4), et données de paiement traitées directement par Stripe (jamais stockées sur nos serveurs).</p><p><b>3. Finalités :</b> gestion des comptes, des annonces et de la messagerie ; envoi d'e-mails transactionnels (confirmation, réinitialisation de mot de passe, notifications) ; mesure d'audience ; gestion des paiements le cas échéant ; sécurité et lutte contre la fraude.</p><p><b>4. Destinataires :</b> Railway (hébergement), Cloudflare (hébergement du site), Resend (envoi d'e-mails), Stripe (paiements), Google Analytics (mesure d'audience). Market18.fr ne vend ni ne loue les données de ses utilisateurs. Certains prestataires étant situés hors de l'Union européenne, les transferts sont encadrés par les garanties prévues par le RGPD.</p><p><b>5. Conservation :</b> les données de compte sont conservées tant que le compte est actif, puis supprimées ou anonymisées sous un délai raisonnable après suppression du compte, sous réserve des obligations légales de conservation.</p><p><b>6. Vos droits :</b> accès, rectification, effacement, limitation, portabilité, opposition, et directives post-mortem, conformément au RGPD. Pour les exercer : contact@market18.fr. Vous pouvez aussi introduire une réclamation auprès de la CNIL (www.cnil.fr).</p><p><b>7. Cookies :</b> cookies nécessaires au fonctionnement du site (session) et cookies de mesure d'audience (Google Analytics), soumis à votre consentement. Vous pouvez gérer vos préférences via votre navigateur.</p><p><b>8. Sécurité :</b> mots de passe chiffrés, connexions sécurisées (HTTPS).</p><p>Contact : contact@market18.fr</p>"],
+  cybersecurite:["Politique de cybersécurité","<p>Market18.fr met en œuvre des mesures de sécurité proportionnées à son activité : connexion chiffrée HTTPS sur l'ensemble du site, mots de passe des utilisateurs stockés sous forme chiffrée, et paiements traités exclusivement par Stripe, prestataire certifié PCI-DSS — Market18.fr ne stocke aucune donnée de carte bancaire.</p><p>L'hébergement des données est assuré par des prestataires professionnels (Railway, Cloudflare). Des sauvegardes régulières des données sont réalisées.</p><p>Market18.fr est actuellement géré par un exploitant unique et ne dispose pas d'une équipe de sécurité dédiée ni d'un système de management de la sécurité de l'information formalisé de type ISO 27001. Ce niveau d'organisation pourra évoluer avec la croissance de la plateforme.</p><p>Toute personne constatant une faille de sécurité ou un incident est invitée à le signaler immédiatement à contact@market18.fr. Nous nous engageons à traiter ce signalement dans les meilleurs délais.</p>"],
+  gouvernanceia:["Gouvernance de l'intelligence artificielle","<p>Market18.fr n'utilise actuellement aucun système d'intelligence artificielle automatisé pour la modération des annonces, la détection de fraude, le scoring des utilisateurs ou toute autre décision affectant les comptes ou les annonces. La modération est assurée manuellement par l'exploitant de la plateforme, dans les conditions décrites dans les CGU.</p><p>Si Market18.fr venait à intégrer des outils d'intelligence artificielle à l'avenir (par exemple pour assister la modération), les utilisateurs en seraient informés et cette page serait mise à jour en conséquence, conformément aux exigences applicables.</p>"],
+  qrcodes:["Politique des QR Codes","<p>Tout utilisateur inscrit peut générer, depuis son espace Mon compte, un QR Code personnel renvoyant vers sa fiche vendeur publique sur Market18.fr (boutique et annonces). Ce QR Code encode un simple lien vers cette fiche et n'entraîne aucune collecte de données supplémentaire lors de son utilisation.</p><p>Le bénéficiaire peut afficher librement ce QR Code (vitrine, carte de visite, flyer, support publicitaire) pour faciliter l'accès à sa fiche vendeur. Il reste responsable du contenu de ses annonces et de sa fiche, dans les mêmes conditions que pour le reste du site.</p><p>Il est interdit de détourner ce QR Code pour rediriger vers un contenu illicite ou trompeur, ou de laisser croire qu'il bénéficierait d'une certification ou d'un partenariat officiel de Market18.fr, qui n'existe pas.</p><p>Market18.fr peut faire évoluer, suspendre ou désactiver cette fonctionnalité à tout moment, notamment en cas de suppression du compte concerné ou d'utilisation contraire aux présentes règles ou aux Conditions Générales d'Utilisation.</p>"],
+  cookies:["Politique des cookies","<p>Market18.fr utilise uniquement des cookies necessaires au fonctionnement du site (connexion, panier, preferences d'affichage) et, si vous l'acceptez, des cookies de mesure d'audience (Google Analytics) permettant de comprendre la frequentation du site.</p><p>Les cookies de mesure d'audience ne sont deposes qu'apres votre accord explicite, donne via le bandeau affiche lors de votre premiere visite sur le site. Sans votre accord, aucun cookie Google Analytics n'est depose.</p><p>Vous pouvez a tout moment revenir sur votre choix : <button type='button' class='linklike' style='color:#5b21b6;text-decoration:underline;display:inline;padding:0' onclick='mvResetCookieChoice()'>gerer mes cookies</button>.</p><p>Aucun cookie publicitaire ni de tracage tiers a but commercial n'est utilise sur ce site.</p>"],
   contact:["Contact","Une question ? Contactez-nous à l'adresse contact@market18.fr."],
-  faq:["Foire aux questions","Marche comme sur le site reel."],
-  apropos2:["À propos de nous","Marketplace generaliste."],
-  qui:["Qui sommes-nous ?","Projet porte par Franck Moret."],
-  securite:["Conseils de sécurité","Privilegiez une remise en main propre dans un lieu public et frequente."],
-  confiance:["Acheter en confiance","Consultez l'indice de confiance du vendeur."],
-  vendre:["Vendre efficacement","Ajoutez plusieurs photos nettes."],
-  obligations:["Vos obligations en tant que vendeur","<p>Informations generales, non un conseil juridique.</p>"]
+  faq:["Foire aux questions","Comment publier une annonce ? Rendez-vous sur \u00abPublier une annonce\u00bb dans le menu. Comment contacter un vendeur ? Ouvrez l\u2019annonce puis cliquez sur \u00abContacter le vendeur\u00bb. Y a-t-il des frais ? Market18.fr est actuellement entièrement gratuit pour les particuliers comme pour les professionnels : aucun frais n'est prélevé, ni sur la publication d'annonces ni sur les transactions."],
+  apropos2:["À propos de nous","Market18.fr est une marketplace généraliste qui permet à toute personne d'acheter et de vendre facilement des objets d'occasion ou neufs, partout en France. Notre mission est simple : rendre la vente entre particuliers rapide, sûre et sans complication. Que vous cherchiez à vider vos placards, trouver une bonne affaire ou vendre un objet dont vous n'avez plus besoin, Market18.fr vous met en relation directe avec des acheteurs et vendeurs de votre région, dans un cadre pensé pour la confiance : messagerie intégrée, fiches d'annonces détaillées, et un système de paiement en cours de finalisation. Le site est actuellement en phase de test avant son lancement officiel."],
+  qui:["Qui sommes-nous ?","Market18.fr est un projet porté par Franck Moret, actuellement en phase de test avant la création officielle d'une micro-entreprise dédiée à cette activité. L'objectif : proposer un site clair, honnête et agréable à utiliser pour vendre et acheter d'occasion, sans publicité intrusive ni fausses promesses. La plateforme évolue progressivement à partir des retours des premiers utilisateurs. Pour toute question, suggestion ou signalement, la page Contact reste le meilleur moyen de nous joindre."],
+  securite:["Conseils de sécurité","Privilégiez une remise en main propre dans un lieu public et fréquenté. Vérifiez l'objet avant de payer. Ne communiquez jamais de coordonnées bancaires par message. Méfiez-vous des prix anormalement bas."],
+  confiance:["Acheter en confiance","Consultez la description et les photos avec attention, posez vos questions au vendeur via la messagerie avant de vous déplacer, et privilégiez un paiement à la remise du bien. Cliquez sur le nom du vendeur depuis une annonce pour consulter son indice de confiance, son ancienneté, ses ventes réussies et les avis laissés par d'autres acheteurs."],
+  vendre:["Vendre efficacement","Ajoutez plusieurs photos nettes, rédigez une description honnête et précise, fixez un prix cohérent avec le marché, et répondez rapidement aux messages des acheteurs intéressés."],obligations:["Vos obligations en tant que vendeur","<p>En tant qu'opérateur de plateforme en ligne, Market18.fr a l'obligation légale de vous rappeler chaque année les grands principes qui peuvent s'appliquer à votre activité de vente. Ces informations sont générales et ne remplacent pas un conseil personnalisé.</p><p><b>Encadrement de la vente aux consommateurs :</b> si vous vendez de façon régulière ou en grande quantité, vous pouvez être qualifié de vendeur professionnel et devez alors respecter les règles du Code de la consommation (information précontractuelle, garanties légales, droit de rétractation le cas échéant).</p><p><b>Location ou mise à disposition d'un bien immobilier :</b> si votre annonce concerne un bien immobilier (location saisonnière, longue durée, etc.), vous restez soumis aux déclarations et autorisations prévues par la réglementation locale (mairie, copropriété, urbanisme) ainsi qu'à la fiscalité applicable à ce type de revenus.</p><p><b>Déclaration de vos revenus aux impôts :</b> les sommes perçues via la plateforme peuvent constituer un revenu imposable ; il vous appartient de vérifier si elles doivent figurer dans votre déclaration de revenus, selon leur nature et leur montant.</p><p><b>Affiliation éventuelle à un régime social :</b> au-delà d'un certain volume ou d'une certaine régularité, votre activité peut être requalifiée en activité professionnelle et entraîner une obligation de vous affilier à un régime de protection sociale (URSSAF notamment).</p><p style='opacity:.75;font-size:.85rem'>Ces informations sont fournies à titre indicatif et ne constituent pas un conseil juridique, fiscal ou social. En cas de doute, rapprochez-vous d'un professionnel (comptable, avocat) ou de l'administration compétente.</p>"]
 };
 function openLegal(key){
   const [title, body] = LEGAL_CONTENT[key] || ["Information","Contenu à venir."];
@@ -2989,19 +3092,40 @@ function openLegal(key){
   document.getElementById('legal-body').innerHTML = body;
   openModal('modal-legal');
 }
+
+/* ---------- ADMIN ---------- */
 async function openAdmin(){
   openModal('modal-admin');
   if(adminUnlocked){ document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); checkSecurityBadge(); return; }
+
+
+}
+function checkAdminPinLegacyDisabled(){
+  const v = document.getElementById('admin-pin-input').value;
+  if(v===ADMIN_PIN){ adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); }
+  else{ showToast("Code incorrect"); document.getElementById('admin-pin-input').value=''; }
 }
 async function checkAdminPin(){ const v = document.getElementById('admin-pin-input').value; try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin:v}) }); const data = await res.json(); if(res.ok && data.token){ window.__adminToken = data.token; adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } else { showToast(data.error || "Code incorrect"); document.getElementById('admin-pin-input').value=''; } }catch(e){ showToast("Impossible de contacter le serveur"); } }
 async function setAdminTab(tab){
   adminTab = tab;
-  ['ads','msgs','revenue','sellers','stats','dac7','clients','securite','newsletter'].forEach(function(t){
-    var btn = document.getElementById('tab-btn-'+t);
-    var pane = document.getElementById('admin-tab-'+t);
-    if(btn) btn.classList.toggle('active', tab===t);
-    if(pane) pane.style.display = tab===t ? 'block':'none';
-  });
+  document.getElementById('tab-btn-ads').classList.toggle('active', tab==='ads');
+  document.getElementById('tab-btn-msgs').classList.toggle('active', tab==='msgs');
+  document.getElementById('tab-btn-revenue').classList.toggle('active', tab==='revenue');
+  document.getElementById('tab-btn-sellers').classList.toggle('active', tab==='sellers');
+  document.getElementById('tab-btn-stats').classList.toggle('active', tab==='stats');
+  document.getElementById('tab-btn-dac7').classList.toggle('active', tab==='dac7');
+  document.getElementById('tab-btn-clients').classList.toggle('active', tab==='clients');
+  document.getElementById('tab-btn-securite').classList.toggle('active', tab==='securite');
+  document.getElementById('tab-btn-newsletter').classList.toggle('active', tab==='newsletter');
+  document.getElementById('admin-tab-ads').style.display = tab==='ads' ? 'block':'none';
+  document.getElementById('admin-tab-msgs').style.display = tab==='msgs' ? 'block':'none';
+  document.getElementById('admin-tab-revenue').style.display = tab==='revenue' ? 'block':'none';
+  document.getElementById('admin-tab-sellers').style.display = tab==='sellers' ? 'block':'none';
+  document.getElementById('admin-tab-stats').style.display = tab==='stats' ? 'block':'none';
+  document.getElementById('admin-tab-dac7').style.display = tab==='dac7' ? 'block':'none';
+  document.getElementById('admin-tab-clients').style.display = tab==='clients' ? 'block':'none';
+  document.getElementById('admin-tab-securite').style.display = tab==='securite' ? 'block':'none';
+  document.getElementById('admin-tab-newsletter').style.display = tab==='newsletter' ? 'block':'none';
   if(tab==='clients') renderAdminClients();
   if(tab==='securite') renderAdminSecurite();
   if(tab==='msgs'){ await loadMessages(); renderAdminMessages(); }
@@ -3011,16 +3135,408 @@ async function setAdminTab(tab){
   if(tab==='dac7'){ renderAdminDac7(); }
   if(tab==='newsletter') renderAdminNewsletter();
 }
-async function renderAdminNewsletter(){ const el = document.getElementById('admin-tab-newsletter'); if(el) el.innerHTML = '<p class="empty">Panneau admin non necessaire pour le test local.</p>'; }
-async function renderAdminClients(){ const el = document.getElementById('admin-tab-clients'); if(el) el.innerHTML = '<p class="empty">Panneau admin non necessaire pour le test local.</p>'; }
-async function renderAdminSecurite(){ const el = document.getElementById('admin-tab-securite'); if(el) el.innerHTML = '<p class="empty">Panneau admin non necessaire pour le test local.</p>'; }
-async function checkSecurityBadge(){}
-async function renderAdminStats(){ const el = document.getElementById('stats-loading'); if(el) el.textContent = 'Panneau non necessaire pour le test local.'; }
-async function renderAdminDac7(){ const el = document.getElementById('dac7-loading'); if(el) el.textContent = 'Panneau non necessaire pour le test local.'; }
-function exportStatsCsv(){ showToast('Non disponible en test local'); }
-function exportDac7Csv(){ showToast('Non disponible en test local'); }
-function downloadDac7Xml(){ showToast('Non disponible en test local'); }
-function fixGeocodeParis(){ showToast('Non disponible en test local'); }
+async function renderAdminNewsletter(){
+  const el = document.getElementById('admin-tab-newsletter');
+  el.innerHTML = '<p>Chargement...</p>';
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/newsletter', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des abonnes.</p>'; return; }
+    const data = await res.json();
+    el.innerHTML = '<div class="statbar" style="margin-bottom:20px"><div class="stat"><b>'+data.count+'</b>Abonnes newsletter</div></div>' +
+      '<h3 style="margin-bottom:10px">Envoyer une campagne</h3>' +
+      '<input id="newsletter-subject" placeholder="Sujet" style="width:100%;padding:10px;border-radius:9px;border:2px solid #ddd;margin-bottom:10px;box-sizing:border-box">' +
+      '<textarea id="newsletter-body" placeholder="Message" rows="8" style="width:100%;padding:10px;border-radius:9px;border:2px solid #ddd;margin-bottom:10px;box-sizing:border-box;font-family:inherit"></textarea>' +
+      '<div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;flex-wrap:wrap">' +
+        '<input id="newsletter-test-email" type="email" autocomplete="off" value="contact@market18.fr" placeholder="Votre e-mail" style="flex:1;min-width:180px;padding:8px;border-radius:9px;border:2px solid #ddd;box-sizing:border-box">' +
+        '<button class="btn outline" onclick="sendNewsletterTest()">Envoyer un test (a moi)</button>' +
+      '</div>' +
+      '<button class="btn" onclick="sendNewsletterCampaign()">Envoyer a tous les abonnes</button>' +
+      '<div id="newsletter-send-status" style="margin-top:10px"></div>';
+  }catch(err){ el.innerHTML = '<p class="empty">Erreur de chargement des abonnes.</p>'; }
+}
+
+async function sendNewsletterCampaign(){
+  const subject = (document.getElementById('newsletter-subject').value||'').trim();
+  const text = (document.getElementById('newsletter-body').value||'').trim();
+  if(!subject || !text){ showToast("Sujet et message requis"); return; }
+  if(!confirm('Envoyer cette newsletter a tous les abonnes ?')) return;
+  const statusEl = document.getElementById('newsletter-send-status');
+  statusEl.textContent = 'Envoi en cours...';
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/newsletter/send', {
+      method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+window.__adminToken},
+      body: JSON.stringify({subject, text})
+    });
+    const data = await res.json().catch(()=>({}));
+    if(res.ok){ statusEl.textContent = 'Envoye : '+data.sent+'/'+data.total+' (echecs : '+data.failed+')'; showToast("Newsletter envoyee"); }
+    else { statusEl.textContent = data.error || "Erreur lors de l'envoi"; }
+  }catch(err){ statusEl.textContent = 'Erreur reseau'; }
+}
+
+async function sendNewsletterTest(){
+  const testEmail = (document.getElementById('newsletter-test-email').value||'').trim();
+  const subject = (document.getElementById('newsletter-subject').value||'').trim();
+  const text = (document.getElementById('newsletter-body').value||'').trim();
+  if(!subject || !text){ showToast("Sujet et message requis"); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(testEmail)){ showToast("Adresse de test invalide"); return; }
+  const statusEl = document.getElementById('newsletter-send-status');
+  statusEl.textContent = 'Envoi du test en cours...';
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/newsletter/send', {
+      method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+window.__adminToken},
+      body: JSON.stringify({subject, text, testEmail})
+    });
+    const data = await res.json().catch(()=>({}));
+    if(res.ok){ statusEl.textContent = 'Test envoye a '+testEmail; showToast("Test envoye"); }
+    else { statusEl.textContent = data.error || "Erreur lors de l'envoi du test"; }
+  }catch(err){ statusEl.textContent = 'Erreur reseau'; }
+}
+
+async function renderAdminClients(){
+const el = document.getElementById('admin-tab-clients');
+el.innerHTML = '<p>Chargement...</p>';
+try{
+const res = await fetch(LISTINGS_API_BASE+'/api/admin/users', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des clients.</p>'; return; }
+const users = await res.json();
+if(!users.length){ el.innerHTML = '<p class="empty">Aucun client inscrit.</p>'; return; }
+var nbPro = users.filter(function(u){ return !!u.isPro; }).length;
+var nbParticulier = users.length - nbPro;
+var statsHtml = '<div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">' +
+  '<button type="button" style="background:#7c3aed;color:#fff;border:none;border-radius:999px;padding:10px 22px;font-weight:700;cursor:default;font-size:.95rem">Particuliers inscrits : '+nbParticulier+'</button>' +
+  '<button type="button" style="background:#1877F2;color:#fff;border:none;border-radius:999px;padding:10px 22px;font-weight:700;cursor:default;font-size:.95rem">Professionnels inscrits : '+nbPro+'</button>' +
+  '</div>';
+
+el.innerHTML = statsHtml + '<table style="width:100%;border-collapse:collapse"><thead><tr style="text-align:left;border-bottom:2px solid rgba(255,255,255,.2)"><th style="padding:8px">Nom</th><th style="padding:8px">Email</th><th style="padding:8px">Inscrit le</th><th style="padding:8px">Actions</th></tr></thead><tbody>' +
+users.map(function(u){
+const d = u.dateCreation ? new Date(u.dateCreation).toLocaleDateString('fr-FR') : '—';
+const em = escapeAttr(u.email);
+return '<tr style="border-bottom:1px solid rgba(255,255,255,.1)"><td style="padding:8px">'+escapeHtml(u.nom||'—')+'</td><td style="padding:8px">'+escapeHtml(u.email)+'</td><td style="padding:8px">'+d+'</td><td style="padding:8px"><button class="btn outline" style="padding:4px 10px;font-size:.85rem" onclick="deleteClient(\''+em+'\')">Supprimer</button></td></tr>';
+}).join('') +
+'</tbody></table>';
+}catch(e){ el.innerHTML = '<p class="empty">Erreur de connexion.</p>'; }
+}
+
+async function deleteClient(email){
+if(!confirm('Supprimer definitivement le client '+email+' ? Cette action est irreversible (le compte sera supprime, ses annonces resteront visibles).')) return;
+if(!LISTINGS_API_BASE || !window.__adminToken) return;
+try{
+const res = await fetch(LISTINGS_API_BASE+'/api/admin/users/'+encodeURIComponent(email), { method:'DELETE', headers:{ Authorization:'Bearer '+window.__adminToken } });
+const data = await res.json().catch(function(){ return {}; });
+if(!res.ok){ showToast(data.error || "Impossible de supprimer ce client"); return; }
+showToast('Client supprime');
+renderAdminClients();
+}catch(e){ showToast("Erreur de connexion"); }
+}
+
+function securityNiveauColor(n){
+  return { Faible:'#22c55e', Moyen:'#f59e0b', Eleve:'#ef4444', Critique:'#991b1b' }[n] || '#888';
+}
+function renderSecurityAlertCard(a){
+  const c = securityNiveauColor(a.niveau);
+  const analyseHtml = a.statutIA==='analyse' ?
+    ('<div style="margin-top:8px;padding:8px;background:rgba(0,0,0,.15);border-radius:8px"><b>Analyse IA (' + escapeHtml((a.resultatIA&&a.resultatIA.niveau)||'') + ')</b><br>' + escapeHtml((a.resultatIA&&a.resultatIA.explication)||'') + '</div>')
+    : ('<button onclick="analyzeSecurityAlert(\''+a.id+'\')" style="margin-top:8px">Analyser avec l\'IA</button>');
+  return '<div style="border-left:4px solid '+c+';padding:12px;margin-bottom:10px;background:rgba(255,255,255,.08);border-radius:8px">' +
+    '<div><span style="background:'+c+';color:#fff;padding:2px 8px;border-radius:8px;font-size:.75rem;font-weight:bold">'+escapeHtml(a.niveau)+'</span> <b>'+escapeHtml(a.titre)+'</b></div>' +
+    '<div style="font-size:.85rem;opacity:.85;margin-top:4px">'+escapeHtml(a.details)+'</div>' +
+    '<div style="font-size:.75rem;opacity:.6;margin-top:4px">'+new Date(a.createdAt).toLocaleString('fr-FR')+'</div>' +
+    analyseHtml +
+    '<button onclick="deleteSecurityAlert(\''+a.id+'\')" style="margin-top:8px;margin-left:8px;background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff">Supprimer</button>' +
+    '</div>';
+}
+
+async function renderAdminSecurite(){
+  const el = document.getElementById('admin-tab-securite');
+  el.innerHTML = '<p>Chargement...</p>';
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/security/alerts', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement.</p>'; return; }
+    const alerts = await res.json();
+    updateSecuriteBadge(alerts);
+    if(!alerts.length){ el.innerHTML = '<p class="empty">Aucune alerte pour le moment.</p>'; return; }
+    el.innerHTML = alerts.map(renderSecurityAlertCard).join('');
+  }catch(e){ el.innerHTML = '<p class="empty">Erreur de connexion.</p>'; }
+}
+async function analyzeSecurityAlert(id){
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/security/alerts/'+id+'/analyze', { method:'POST', headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(res.ok) renderAdminSecurite(); else showToast('Erreur analyse IA');
+  }catch(e){ showToast('Erreur analyse IA'); }
+}
+async function deleteSecurityAlert(id){
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/security/alerts/'+id, { method:'DELETE', headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(res.ok) renderAdminSecurite();
+  }catch(e){}
+}
+function updateSecuriteBadge(alerts){
+  const badge = document.getElementById('securite-badge');
+  if(!badge) return;
+  const pending = alerts.filter(function(a){ return a.statutIA==='non_analyse'; }).length;
+  if(pending>0){ badge.style.display='inline'; badge.textContent = pending; } else { badge.style.display='none'; }
+}
+async function checkSecurityBadge(){
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/security/alerts', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(res.ok) updateSecuriteBadge(await res.json());
+  }catch(e){}
+}
+
+function fmtPct(p){
+  if(p===null || p===undefined || !isFinite(p)) return '—';
+  const sign = p>0?'+':'';
+  return sign+p.toFixed(1)+' %';
+}
+async function fetchJsonSafe(url){
+  if(!LISTINGS_API_BASE) return null;
+  try{
+    const res = await fetch(LISTINGS_API_BASE+url);
+    if(!res.ok) return null;
+    return await res.json();
+  }catch(e){ return null; }
+}
+let lastStatsData = null;
+let currentStatsPeriod = 'mois';
+function buildLineChartSvg(labels, values){
+  const w = Math.max(600, labels.length*36);
+  const h = 240;
+  const padding = {top:20,right:20,bottom:36,left:64};
+  const innerW = w - padding.left - padding.right;
+  const innerH = h - padding.top - padding.bottom;
+  const maxVal = Math.max(1, ...values);
+  const stepX = labels.length>1 ? innerW/(labels.length-1) : 0;
+  const points = values.map((v,i)=>{
+    const x = padding.left + i*stepX;
+    const y = padding.top + innerH - (v/maxVal)*innerH;
+    return [x,y];
+  });
+  const pathD = points.map((p,i)=> (i===0?'M':'L')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  const areaD = points.length ? pathD + ` L${points[points.length-1][0].toFixed(1)},${padding.top+innerH} L${points[0][0].toFixed(1)},${padding.top+innerH} Z` : '';
+  let gridSvg = '';
+  const ySteps = 4;
+  for(let i=0;i<=ySteps;i++){
+    const val = maxVal * i/ySteps;
+    const y = padding.top + innerH - (val/maxVal)*innerH;
+    gridSvg += `<line x1="${padding.left}" y1="${y.toFixed(1)}" x2="${w-padding.right}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,.12)" stroke-width="1"/>`;
+    gridSvg += `<text x="${padding.left-8}" y="${(y+4).toFixed(1)}" text-anchor="end" font-size="11" fill="rgba(255,255,255,.75)">${Math.round(val).toLocaleString('fr-FR')}</text>`;
+  }
+  const labelEvery = Math.max(1, Math.ceil(labels.length/14));
+  let xLabelsSvg='';
+  labels.forEach((lab,i)=>{
+    if(i%labelEvery!==0 && i!==labels.length-1) return;
+    const x = padding.left + i*stepX;
+    xLabelsSvg += `<text x="${x.toFixed(1)}" y="${h-12}" text-anchor="middle" font-size="10" fill="rgba(255,255,255,.75)">${escapeHtml(String(lab))}</text>`;
+  });
+  const dotsSvg = points.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="#fff"/>`).join('');
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="display:block">
+    ${gridSvg}
+    <path d="${areaD}" fill="rgba(124,58,237,.35)" stroke="none"/>
+    <path d="${pathD}" fill="none" stroke="#fff" stroke-width="2.5"/>
+    ${dotsSvg}
+    ${xLabelsSvg}
+  </svg>`;
+}
+function setStatsPeriod(period){
+  currentStatsPeriod = period;
+  document.querySelectorAll('.stats-period-btn').forEach(b=> b.classList.toggle('active', b.dataset.period===period));
+  renderStatsChart();
+}
+function renderStatsChart(){
+  const el = document.getElementById('stats-chart');
+  if(!lastStatsData){ el.innerHTML=''; return; }
+  let labels, values;
+  if(currentStatsPeriod==='mois'){
+    labels = lastStatsData.parJour.map(j=> j.jour.slice(8,10));
+    values = lastStatsData.parJour.map(j=> j.ca);
+  } else {
+    const n = parseInt(currentStatsPeriod,10);
+    const slice = lastStatsData.parMois.slice(-n);
+    labels = slice.map(m=> m.mois);
+    values = slice.map(m=> m.ca);
+  }
+  el.innerHTML = buildLineChartSvg(labels, values);
+}
+async function renderAdminStats(){
+  const loadingEl = document.getElementById('stats-loading');
+  const contentEl = document.getElementById('stats-content');
+  loadingEl.style.display='block'; contentEl.style.display='none';
+  const data = await fetchJsonSafe('/api/stats');
+  loadingEl.style.display='none';
+  if(!data){ loadingEl.style.display='block'; loadingEl.textContent = "Impossible de charger les statistiques (backend indisponible)."; return; }
+  contentEl.style.display='block';
+  lastStatsData = data;
+  document.getElementById('stats-ca').textContent = fmtPrice(data.totalCA);
+  document.getElementById('stats-ventes').textContent = data.totalVentes;
+  document.getElementById('stats-panier').textContent = fmtPrice(Math.round(data.panierMoyen));
+  document.getElementById('stats-evolution').textContent = fmtPct(data.evolutionCA);
+  document.querySelectorAll('.stats-period-btn').forEach(b=> b.classList.toggle('active', b.dataset.period===currentStatsPeriod));
+  renderStatsChart();
+
+  const moisEl = document.getElementById('stats-mois');
+  const moisAvecVentes = data.parMois.filter(m=>m.ventes>0);
+  moisEl.innerHTML = moisAvecVentes.length ? moisAvecVentes.slice().reverse().map(m=>
+    `<div class="admin-item"><div class="info"><div class="t">${m.mois}</div><div class="small">${m.ventes} vente(s) · ${fmtPrice(m.ca)}</div></div></div>`
+  ).join('') : '<p class="empty">Aucune vente pour le moment.</p>';
+
+  const catEl = document.getElementById('stats-categories');
+  catEl.innerHTML = data.parCategorie.length ? data.parCategorie.slice(0,10).map(c=>
+    `<div class="admin-item"><div class="info"><div class="t">${escapeHtml(c.categorie)}</div><div class="small">${c.ventes} vente(s) · ${fmtPrice(c.ca)}</div></div></div>`
+  ).join('') : '<p class="empty">Aucune donnée.</p>';
+
+  const villeEl = document.getElementById('stats-villes');
+  villeEl.innerHTML = data.parVille.length ? data.parVille.slice(0,10).map(v=>
+    `<div class="admin-item"><div class="info"><div class="t">${escapeHtml(v.ville)}</div><div class="small">${v.ventes} vente(s) · ${fmtPrice(v.ca)}</div></div></div>`
+  ).join('') : '<p class="empty">Aucune donnée.</p>';
+
+  const vendEl = document.getElementById('stats-vendeurs');
+  vendEl.innerHTML = data.topVendeurs.length ? data.topVendeurs.slice(0,10).map(v=>
+    `<div class="admin-item"><div class="info"><div class="t">${escapeHtml(v.nom||v.email||'Vendeur inconnu')}</div><div class="small">${v.ventes} vente(s) · ${fmtPrice(v.ca)}</div></div></div>`
+  ).join('') : '<p class="empty">Aucune donnée.</p>';
+}
+async function renderAdminDac7(){
+  const loadingEl = document.getElementById('dac7-loading');
+  const contentEl = document.getElementById('dac7-content');
+  loadingEl.style.display='block'; contentEl.innerHTML='';
+  const data = await fetchJsonSafe('/api/stats/dac7');
+  if(!data){ loadingEl.textContent = "Impossible de charger le suivi DAC7 (backend indisponible)."; return; }
+  loadingEl.style.display='none';
+  if(!data.vendeurs.length){ contentEl.innerHTML = '<p class="empty">Aucun vendeur avec des ventes cette année.</p>'; return; }
+  const statutLabel = {ok:'OK', attention:'À surveiller', depasse:'Seuil dépassé'};
+  const statutColor = {ok:'#22c55e', attention:'#f59e0b', depasse:'#f43f5e'};
+  contentEl.innerHTML = data.vendeurs.map(v=>{
+    const key = (v.email||v.nom||'inconnu').toLowerCase().trim();
+    const idSafe = key.replace(/[^a-z0-9]/g,'_');
+    const ann = v.annotation || {note:'', siret:'', verifie:false};
+    return `<div class="admin-item" style="align-items:flex-start;flex-wrap:wrap">
+      <div class="info" style="min-width:220px">
+        <div class="t">${escapeHtml(v.nom||v.email||'Vendeur inconnu')}</div>
+        <div class="small">${v.transactions} transaction(s) · ${fmtPrice(v.ca)} en ${data.annee}</div>
+        ${v.compte && v.compte.isPro ? `<div style="background:rgba(255,255,255,.08);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:.8rem;line-height:1.6">
+          <div><b>Email :</b> ${escapeHtml(v.email||'-')}</div>
+          <div><b>Nom :</b> ${escapeHtml(v.nom||'-')} ${v.compte.prenom ? escapeHtml(v.compte.prenom) : ''}</div>
+          <div><b>Adresse :</b> ${escapeHtml(v.compte.adresseSiege||'-')}</div>
+          <div><b>Code postal :</b> ${escapeHtml(v.compte.codePostal||'-')}</div>
+          <div><b>Telephone :</b> ${escapeHtml(v.compte.telephone||'-')}</div>
+          <div><b>TVA :</b> ${escapeHtml(v.compte.tva||'-')}</div>
+          <div><b>SIRET :</b> ${escapeHtml(v.compte.siret||'-')}</div>
+        </div>` : ''}
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <input type="text" id="dac7-note-${idSafe}" placeholder="Annotation (remarques, vérifications...)" value="${escapeHtml(ann.note)}" style="flex:1;min-width:180px;padding:6px 8px;font-size:.82rem">
+          <input type="text" id="dac7-siret-${idSafe}" placeholder="SIRET (si pro)" value="${escapeHtml(ann.siret)}" style="max-width:150px;padding:6px 8px;font-size:.82rem">
+          <label style="display:flex;align-items:center;gap:5px;font-size:.8rem;font-weight:normal;margin:0">
+            <input type="checkbox" id="dac7-verifie-${idSafe}" style="width:auto" ${ann.verifie?'checked':''}> Identité vérifiée
+          </label>
+          <button class="iconbtn" onclick="saveSellerNote('${escapeAttr(key)}','${idSafe}')">Enregistrer</button>
+        </div>
+      </div>
+      <span style="background:${statutColor[v.statut]};color:#fff;font-weight:bold;font-size:.75rem;padding:5px 10px;border-radius:8px;white-space:nowrap">${statutLabel[v.statut]}</span>
+    </div>`;
+  }).join('');
+}
+async function saveSellerNote(email, idSafe){
+  const note = document.getElementById('dac7-note-'+idSafe).value.trim();
+  const siret = document.getElementById('dac7-siret-'+idSafe).value.trim();
+  const verifie = document.getElementById('dac7-verifie-'+idSafe).checked;
+  if(!LISTINGS_API_BASE){ showToast("Backend indisponible"); return; }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/seller-notes/'+encodeURIComponent(email), {
+      method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({note, siret, verifie})
+    });
+    if(!res.ok) throw new Error('fail');
+    showToast("Annotation enregistrée");
+  }catch(e){ showToast("Erreur lors de l'enregistrement de l'annotation"); }
+}
+
+function exportStatsCsv(){
+  if(!listings.length){ showToast("Aucune annonce à exporter"); return; }
+  const ventes = listings.filter(l=>l.vendu);
+  if(!ventes.length){ showToast("Aucune vente à exporter pour le moment"); return; }
+  const header = ['Date','Titre','Categorie','Ville','Vendeur','Email','Prix','Prix soldé','Montant retenu','Commission (0%, gratuit pour le moment)'];
+  const rows = ventes.map(l=>{
+    const montant = (l.soldePrix!==undefined && l.soldePrix!==null) ? l.soldePrix : l.prix;
+    const date = new Date(l.ts||Date.now()).toLocaleDateString('fr-FR');
+    return [date, l.titre, l.categorie||'', l.ville||'', l.nom||'', l.email||'', l.prix, l.soldePrix||'', montant, Math.round(montant*COMMISSION_RATE*100)/100];
+  });
+  const csv = [header, ...rows].map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(';')).join('\n');
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'market18-ventes-'+new Date().toISOString().slice(0,10)+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+async function exportDac7Csv(){
+  const data = await fetchJsonSafe('/api/stats/dac7');
+  if(!data){ showToast("Impossible de charger les donnees DAC7 (backend indisponible)."); return; }
+  const risque = (data.vendeurs||[]).filter(v=>v.statut!=='ok');
+  if(!risque.length){ showToast("Aucun vendeur ne depasse ou approche les seuils DAC7 pour le moment."); return; }
+  const header1 = ['Email','Nom','Statut','SIRET','Raison sociale','Adresse siege','RCS','TVA intracommunautaire','Nb ventes','Seuil ventes atteint (30)','CA annuel (EUR)','Seuil montant atteint (2000EUR)','Statut DAC7','Annotation'];
+  const rows1 = risque.map(v=>{
+    const c = v.compte || {};
+    return [v.email||'', v.nom||'', c.isPro?'Professionnel':'Particulier', c.siret||'', c.raisonSociale||'', c.adresseSiege||'', c.rcs||'', c.tva||'', v.transactions||0, v.seuilTransactionsAtteint?'Oui':'Non', v.ca||0, v.seuilMontantAtteint?'Oui':'Non', v.statut||'', (v.annotation&&v.annotation.note)||''];
+  });
+  const header2 = ['Email vendeur','Nom vendeur','Date','Titre annonce','Montant (EUR)'];
+  const rows2 = [];
+  risque.forEach(v=>{
+    (v.detail||[]).forEach(d=>{
+      rows2.push([v.email||'', v.nom||'', new Date(d.date).toLocaleDateString('fr-FR'), d.titre||'', d.montant||0]);
+    });
+  });
+  const escRow = r => r.map(x=>'"'+String(x).replace(/"/g,'""')+'"').join(';');
+  const lines = [];
+  lines.push('Export DAC7 '+(data.annee||'')+' - vendeurs a signaler (seuils : '+((data.seuils&&data.seuils.transactions)||30)+' ventes ou '+((data.seuils&&data.seuils.montant)||2000)+' EUR)');
+  lines.push(escRow(header1));
+  rows1.forEach(r=>lines.push(escRow(r)));
+  lines.push('');
+  lines.push('Detail des ventes');
+  lines.push(escRow(header2));
+  rows2.forEach(r=>lines.push(escRow(r)));
+  const csv = lines.join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dac7-'+(data.annee||new Date().getFullYear())+'.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+async function downloadDac7Xml(){
+  if(!LISTINGS_API_BASE){ showToast("Backend indisponible"); return; }
+  if(!window.__adminToken){ showToast("Session admin expiree, reconnectez-vous"); return; }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/dac7-xml', { headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ showToast("Erreur lors de la generation du fichier XML DAC7"); return; }
+    const total = res.headers.get('X-DAC7-Vendeurs-Total')||'0';
+    const inclus = res.headers.get('X-DAC7-Vendeurs-Inclus')||'0';
+    const incomplets = res.headers.get('X-DAC7-Vendeurs-Incomplets')||'0';
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'DAC7_Market18_'+(new Date().getFullYear())+'.xml';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    let msg = 'Fichier XML DAC7 genere ('+inclus+'/'+total+' vendeurs inclus).';
+    if(Number(incomplets) > 0){ msg += ' '+incomplets+' vendeur(s) exclu(s) : donnees fiscales incompletes (a completer avant depot).'; }
+    showToast(msg);
+  }catch(e){ showToast("Erreur lors du telechargement du fichier XML DAC7"); }
+}
+
+async function fixGeocodeParis(){
+  if(!LISTINGS_API_BASE){ showToast("Backend indisponible"); return; }
+  if(!window.__adminToken){ showToast("Session admin expiree, reconnectez-vous"); return; }
+  showToast("Correction en cours...");
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/admin/fix-geocode-paris', { method:'POST', headers: { Authorization: 'Bearer '+window.__adminToken } });
+    if(!res.ok){ showToast("Erreur lors de la correction"); return; }
+    const data = await res.json();
+    showToast('Corrige : '+data.updated+'/'+data.matched+' annonce(s) Paris mise(s) a jour sur '+data.total+' annonces au total.');
+    if(typeof loadListings === 'function'){ loadListings(); }
+  }catch(e){ showToast("Erreur lors de la correction de geolocalisation"); }
+}
+
 function updateAdminRevenue(){
   const revTotalEl = document.getElementById('rev-total');
   if(!revTotalEl) return;
@@ -3154,15 +3670,190 @@ async function toggleListingSolde(id){
 function renderAdminAds(){
   document.getElementById('admin-count').textContent = listings.length;
   const el = document.getElementById('admin-tab-ads');
+  selectedAdIds = selectedAdIds.filter(id=>listings.some(l=>l.id===id));
   if(!listings.length){ el.innerHTML = '<p class="empty">Aucune annonce.</p>'; return; }
   const sorted = listings.slice().sort((a,b)=>b.ts-a.ts);
-  el.innerHTML = sorted.map(l=>`
+  const allChecked = sorted.length && sorted.every(l=>selectedAdIds.includes(l.id));
+  el.innerHTML = `<div class="admin-item" style="background:transparent;border:none;padding:6px 10px">
+      <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin:0">
+        <input type="checkbox" id="ad-select-all" style="width:auto" ${allChecked?'checked':''} onchange="toggleSelectAllAds(this.checked)"> Tout sélectionner
+      </label>
+      <button class="iconbtn" id="ad-bulk-delete-btn" style="display:${selectedAdIds.length?'inline-block':'none'}" onclick="deleteSelectedListings()">Supprimer la sélection (<span id="ad-selected-count">${selectedAdIds.length}</span>)</button>
+    </div>` +
+    sorted.map(l=>`
     <div class="admin-item">
+      <input type="checkbox" style="width:auto" ${selectedAdIds.includes(l.id)?'checked':''} onchange="toggleAdSelected(${l.id}, this.checked)">
       <img src="${thumb(l)}">
-      <div class="info"><div class="t">${escapeHtml(l.titre)}${l.vendu?' <span style="color:#f43f5e">· Vendu</span>':''}</div><div class="small">${escapeHtml(l.categorie||'')} · ${fmtPrice(l.prix)} · ${escapeHtml(l.ville||'')} · ${escapeHtml(l.nom||'')}${l.email?' · '+escapeHtml(l.email):''}</div></div>
+      <div class="info"><div class="t">${escapeHtml(l.titre)}${l.vendu?' <span style="color:#f43f5e">· Vendu</span>':''}${isOnSale(l)?' <span style="color:#f43f5e">· Solde jusqu\'au '+new Date(l.soldeExpire).toLocaleDateString('fr-FR')+'</span>':''}</div><div class="small">${escapeHtml(l.categorie||'')} · ${isOnSale(l) ? fmtPrice(l.prix)+' → '+fmtPrice(l.soldePrix) : fmtPrice(l.prix)} · ${escapeHtml(l.ville||'')} · ${escapeHtml(l.nom||'')}${l.email?' · '+escapeHtml(l.email):''}</div>
+        ${!isOnSale(l) ? `<div style="display:flex;gap:6px;margin-top:8px">
+          <input type="number" min="0" step="0.01" id="solde-input-${l.id}" placeholder="Prix soldé (${fmtPrice(l.prix)})" style="max-width:160px;padding:6px 8px;font-size:.85rem">
+          <button class="iconbtn" onclick="toggleListingSolde(${l.id})">Mettre en solde</button>
+        </div>` : ''}
+      </div>
+      ${isOnSale(l) ? `<button class="iconbtn" onclick="toggleListingSolde(${l.id})">Retirer le solde</button>` : ''}
       <button class="iconbtn" onclick="toggleListingSold(${l.id})">${l.vendu?'Remettre en vente':'Marquer vendu'}</button>
+      <button class="iconbtn" onclick="adminOpenMessages(${l.id})">Messages</button>
       <button class="iconbtn" onclick="deleteListing(${l.id})">Supprimer</button>
     </div>`).join('');
+}
+function toggleAdSelected(id, checked){
+  if(checked){ if(!selectedAdIds.includes(id)) selectedAdIds.push(id); }
+  else{ selectedAdIds = selectedAdIds.filter(x=>x!==id); }
+  renderAdminAds();
+}
+function toggleSelectAllAds(checked){
+  selectedAdIds = checked ? listings.map(l=>l.id) : [];
+  renderAdminAds();
+}
+async function deleteSelectedListings(){
+  if(!selectedAdIds.length) return;
+  if(!confirm(`Supprimer les ${selectedAdIds.length} annonce(s) sélectionnée(s) ?`)) return;
+  if(LISTINGS_API_BASE){
+    await Promise.all(selectedAdIds.map(id=>
+      fetch(LISTINGS_API_BASE+'/api/admin/listings/'+id, {method:'DELETE', headers:{'Authorization':'Bearer '+window.__adminToken}}).catch(()=>{})
+    ));
+    await loadListings();
+  } else {
+    listings = listings.filter(l=>!selectedAdIds.includes(l.id));
+    await saveListings();
+  }
+  selectedAdIds = [];
+  cleanupCart(); cleanupFavorites(); updateCartBadge(); updateStats();
+  renderAdminAds(); renderAnnonces();
+  showToast("Annonces supprimées");
+}
+function adminOpenMessages(id){ setAdminTab('msgs'); openThreadId=id; renderAdminMessages(); }
+function renderAdminMessages(){
+  const el = document.getElementById('admin-tab-msgs');
+  if(el) el.innerHTML = '<p class="empty">Chargement…</p>';
+  fetchAdminMessages();
+}
+
+let adminThreads = [];
+let expandedMsgThreads = new Set();
+
+async function fetchAdminMessages(){
+  const el = document.getElementById('admin-tab-msgs');
+  if(!el) return;
+  if(!LISTINGS_API_BASE || !window.__adminToken){ el.innerHTML = '<p class="empty">Non connecté en tant qu\'admin.</p>'; return; }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/messages', { headers:{ 'Authorization':'Bearer '+window.__adminToken } });
+    if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des messages.</p>'; return; }
+    const raw = await res.json();
+    let msgAlerts = [];
+    try{
+      const alertsRes = await fetch(LISTINGS_API_BASE+'/api/security/alerts', { headers:{ 'Authorization':'Bearer '+window.__adminToken } });
+      if(alertsRes.ok) msgAlerts = await alertsRes.json();
+    }catch(e){}
+    adminThreads = Object.keys(raw).map(key=>{
+      const sep = key.indexOf('::');
+      const listingId = sep>=0 ? key.slice(0, sep) : key;
+      const buyerEmail = sep>=0 ? key.slice(sep+2) : '';
+      const l = listings.find(x=>String(x.id)===String(listingId));
+      const msgs = raw[key] || [];
+      const last = msgs[msgs.length-1];
+      const alertsForThread = msgAlerts.filter(a=>a.categorie==='message' && a.donnees && String(a.donnees.listingId)===String(listingId) && String(a.donnees.buyerEmail||'').toLowerCase().trim()===String(buyerEmail).toLowerCase().trim());
+      const niveauOrder = { Critique:4, Eleve:3, Moyen:2, Faible:1 };
+      const topAlert = alertsForThread.slice().sort((x,y)=>(niveauOrder[y.niveau]||0)-(niveauOrder[x.niveau]||0))[0];
+      return { key, listingId, buyerEmail, titre: l ? l.titre : 'Annonce supprimée', msgs, lastTs: last ? last.ts : 0, hasAlert: alertsForThread.length>0, alertNiveau: topAlert ? topAlert.niveau : null, alertCount: alertsForThread.length };
+    }).sort((a,b)=>{
+      if(!!b.hasAlert !== !!a.hasAlert) return (b.hasAlert?1:0) - (a.hasAlert?1:0);
+      return b.lastTs-a.lastTs;
+    });
+    selectedMsgIds = selectedMsgIds.filter(k=>adminThreads.some(t=>t.key===k));
+    renderAdminMessagesList();
+  }catch(e){
+    el.innerHTML = '<p class="empty">Erreur de chargement des messages.</p>';
+  }
+}
+
+function renderAdminMessagesList(){
+  const el = document.getElementById('admin-tab-msgs');
+  if(!el) return;
+  if(!adminThreads.length){ el.innerHTML = '<p class="empty">Aucune conversation.</p>'; return; }
+  el.innerHTML = '<div class="admin-msgs-toolbar"><label><input type="checkbox" onchange="toggleSelectAllMsgs(this.checked)" '+(selectedMsgIds.length===adminThreads.length?'checked':'')+'> Tout sélectionner</label><button class="btn small" onclick="deleteSelectedThreads()">Supprimer la sélection</button></div>' +
+    adminThreads.map(function(t){
+      const safeKey = escapeAttr(t.key);
+      const expanded = expandedMsgThreads.has(t.key);
+      const last = t.msgs[t.msgs.length-1];
+      const previewRaw = last ? last.text : 'Pas encore de message.';
+      const preview = previewRaw.length>70 ? previewRaw.slice(0,70)+'…' : previewRaw;
+      const alertBadge = t.hasAlert ? (' <span class="admin-msg-alert-dot" title="'+t.alertCount+' alerte(s) de securite - niveau '+escapeHtml(t.alertNiveau||'')+'"></span>') : '';
+      let html = '<div class="admin-msg-card'+(t.hasAlert?' admin-msg-alert':'')+'">' +
+        '<div class="admin-msg-row">' +
+          '<label class="admin-msg-select" onclick="event.stopPropagation()"><input type="checkbox" '+(selectedMsgIds.includes(t.key)?'checked':'')+' onchange="toggleMsgSelected(\''+safeKey+'\', this.checked)"></label>' +
+          '<div class="admin-msg-summary" onclick="toggleAdminThreadExpand(\''+safeKey+'\')">' +
+            '<span class="admin-msg-toggle">'+(expanded?'▾':'▸')+'</span> ' +
+            '<b>'+escapeHtml(t.titre)+'</b> <span class="small">('+escapeHtml(t.buyerEmail)+')</span>' + alertBadge +
+            '<div class="admin-msg-preview">'+escapeHtml(preview)+' <span class="small" style="opacity:.6">'+(last?timeAgo(last.ts):'')+'</span></div>' +
+          '</div>' +
+          '<button class="btn small" onclick="deleteAdminThread(\''+safeKey+'\')" title="Supprimer cette conversation" style="background:#ef4444;flex-shrink:0">🗑</button>' +
+        '</div>';
+      if(expanded){
+        html += '<div class="admin-msg-expanded">' +
+          '<div class="msgs-box" id="admin-thread-msgs-'+escapeHtml(t.key)+'">'+(t.msgs.map(function(m){ return '<div class="msg '+m.from+'">'+escapeHtml(m.text)+'</div>'; }).join('') || '<p class="small">Pas encore de message.</p>')+'</div>' +
+          '<div class="msg-input">' +
+            '<input id="admin-thread-input-'+escapeHtml(t.key)+'" placeholder="Répondre en tant que vendeur..." onkeydown="if(event.key===\'Enter\')adminReplyThread(\''+safeKey+'\')">' +
+            '<button onclick="adminReplyThread(\''+safeKey+'\')">Envoyer</button>' +
+          '</div>' +
+        '</div>';
+      }
+      return html;
+    }).join('');
+}
+function toggleAdminThreadExpand(key){
+  if(expandedMsgThreads.has(key)) expandedMsgThreads.delete(key);
+  else expandedMsgThreads.add(key);
+  renderAdminMessagesList();
+}
+async function deleteAdminThread(key){
+  if(!confirm('Supprimer cette conversation ?')) return;
+  if(!LISTINGS_API_BASE || !window.__adminToken) return;
+  try{ await fetch(LISTINGS_API_BASE+'/api/messages/'+encodeURIComponent(key), { method:'DELETE', headers:{ 'Authorization':'Bearer '+window.__adminToken } }); }catch(e){}
+  expandedMsgThreads.delete(key);
+  selectedMsgIds = selectedMsgIds.filter(function(k){ return k!==key; });
+  await fetchAdminMessages();
+}
+async function adminReplyThread(key){
+  const input = document.getElementById('admin-thread-input-'+key);
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text) return;
+  const thread = adminThreads.find(t=>t.key===key);
+  if(!thread) return;
+  const l = listings.find(x=>String(x.id)===String(thread.listingId));
+  if(!l || !l.email){ showToast('Annonce introuvable, impossible de répondre'); return; }
+  try{
+    const res = await fetch(LISTINGS_API_BASE+'/api/messages/thread', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ listingId: thread.listingId, buyerEmail: thread.buyerEmail, senderEmail: l.email, text })
+    });
+    if(!res.ok){ const err = await res.json().catch(()=>({})); throw new Error(err.error||'Échec de l\'envoi'); }
+    input.value = '';
+    await fetchAdminMessages();
+  }catch(e){ showToast(e.message || "Impossible d'envoyer le message"); }
+}
+
+function toggleMsgSelected(key, checked){
+  if(checked){ if(!selectedMsgIds.includes(key)) selectedMsgIds.push(key); }
+  else { selectedMsgIds = selectedMsgIds.filter(k=>k!==key); }
+}
+
+function toggleSelectAllMsgs(checked){
+  selectedMsgIds = checked ? adminThreads.map(t=>t.key) : [];
+  renderAdminMessagesList();
+}
+
+async function deleteSelectedThreads(){
+  if(!selectedMsgIds.length) return;
+  if(!confirm(selectedMsgIds.length+' conversation(s) sélectionnée(s) ?')) return;
+  if(!LISTINGS_API_BASE || !window.__adminToken) return;
+  await Promise.all(selectedMsgIds.map(key=>
+    fetch(LISTINGS_API_BASE+'/api/messages/'+encodeURIComponent(key), { method:'DELETE', headers:{ 'Authorization':'Bearer '+window.__adminToken } }).catch(()=>{})
+  ));
+  selectedMsgIds = [];
+  await fetchAdminMessages();
 }
 async function deleteListing(id){
   if(!confirm("Supprimer cette annonce ?")) return;
@@ -3175,8 +3866,9 @@ async function deleteListing(id){
   renderAdminAds(); renderAnnonces();
   showToast("Annonce supprimée");
 }
-function renderAdminMessages(){ const el = document.getElementById('admin-tab-msgs'); if(el) el.innerHTML = '<p class="empty">Panneau admin non necessaire pour le test local.</p>'; }
 document.addEventListener('keydown', e=>{ if(e.ctrlKey && (e.key==='x'||e.key==='X')){ e.preventDefault(); openAdmin(); } });
+
+/* ---------- INIT ---------- */
 function toggleMobileNav(){
   const nav = document.getElementById('nav');
   const btn = document.getElementById('nav-toggle');
@@ -3225,9 +3917,36 @@ document.addEventListener("click", function(e){
     if(btn) btn.classList.remove("active");
   }
 });
-function isInAppBrowser(){ return false; }
-function openInExternalBrowser(){}
-function applyInAppBrowserUI(){}
+function isInAppBrowser(){
+  var ua = navigator.userAgent || "";
+  var isAndroidWebView = /Android/.test(ua) && /; wv\)/.test(ua);
+  var isIOSWebView = /iPhone|iPad|iPod/.test(ua) && /AppleWebKit/.test(ua) && !/Safari/.test(ua);
+  var isKnownInApp = /FBAN|FBAV|Instagram|Line\/|MicroMessenger|TikTok|Snapchat/i.test(ua);
+  var isStandalonePWA = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  return isAndroidWebView || isIOSWebView || isKnownInApp || isStandalonePWA;
+}
+function openInExternalBrowser(){
+  var ua = navigator.userAgent || "";
+  var url = window.location.href;
+  if(/Android/.test(ua)){
+    var withoutProtocol = url.replace(/^https?:\/\//,"");
+    window.location.href = "intent://"+withoutProtocol+"#Intent;scheme=https;package=com.android.chrome;end";
+  } else {
+    if(navigator.clipboard){ navigator.clipboard.writeText(url).catch(function(){}); }
+    alert("Lien copie ! Ouvrez Safari ou Chrome, puis collez le lien dans la barre d'adresse (ou touchez le menu en haut puis Ouvrir dans le navigateur).");
+  }
+}
+function applyInAppBrowserUI(){
+  if(!isInAppBrowser()) return;
+  ["login","register"].forEach(function(suffix){
+    var warn = document.getElementById("inapp-warning-"+suffix);
+    var gbtn = document.getElementById("google-signin-btn-"+suffix);
+    var fbtn = document.getElementById("facebook-btn-"+suffix);
+    if(warn) warn.style.display = "none";
+    if(gbtn) gbtn.style.display = "none";
+    if(fbtn) fbtn.style.display = "none";
+  });
+}
 function initGoogleSignIn(){
   if(!window.google || !google.accounts || !google.accounts.id) return;
   google.accounts.id.initialize({ client_id: '834910886589-mdb7jrk4ocna362umnqjisum7g2fj616.apps.googleusercontent.com', callback: handleGoogleCredential });
@@ -3237,7 +3956,27 @@ function initGoogleSignIn(){
   if(elRegister){ elRegister.innerHTML=''; google.accounts.id.renderButton(elRegister, { theme:'outline', size:'large', width:280, locale:'fr' }); }
 }
 window.initGoogleSignIn = initGoogleSignIn;
-function facebookLogin(){ showToast("Facebook non disponible en test local"); }
+function handleFacebookLoginResponse(response){
+  if(!response || !response.authResponse || !response.authResponse.accessToken){ return; }
+  fetch(LISTINGS_API_BASE+'/api/auth/facebook', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({accessToken: response.authResponse.accessToken}) })
+    .then(function(r){ return r.json().then(function(data){ return {ok:r.ok, data:data}; }); })
+    .then(function(res){
+      if(!res.ok){ showToast(res.data.error || 'Erreur de connexion Facebook'); return; }
+      return saveAuthToken(res.data.token).then(function(){
+        currentUser = res.data.user;
+        syncFavoritesFromBackend();
+        updateAccountNav();
+        closeModal('modal-auth');
+        showToast('Connecte avec Facebook, bienvenue !');
+      });
+    })
+    .catch(function(){ showToast('Impossible de contacter le serveur'); });
+}
+function facebookLogin(){
+  if(!window.FB){ showToast("Facebook n'est pas encore charge, reessaie dans un instant"); return; }
+  FB.login(handleFacebookLoginResponse, {scope:'email,public_profile'});
+}
+
 function attachVilleAutocomplete(inputId){
   var input = document.getElementById(inputId);
   if(!input) return;
@@ -3287,6 +4026,85 @@ function attachVilleAutocomplete(inputId){
   input.addEventListener('blur', function(){ setTimeout(hideBox, 150); });
   window.addEventListener('scroll', function(){ if(box.style.display==='block') positionBox(); }, true);
 }
+let deferredInstallPrompt = null;
+function isIosDevice(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream; }
+function isStandaloneApp(){ return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true; }
+function isPhoneLikeDevice(){
+  return isIosDevice() || /android/i.test(navigator.userAgent) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+}
+function hidePwaInstallUi(){
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'none';
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'none';
+}
+function showPwaBannerIfNeeded(){
+  if(isStandaloneApp()) return;
+  if(localStorage.getItem('mv_pwa_banner_dismissed')) return;
+  if(!isPhoneLikeDevice()) return;
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'flex';
+}
+function dismissPwaBanner(){
+  try{ localStorage.setItem('mv_pwa_banner_dismissed', '1'); }catch(e){}
+  var banner = document.getElementById('pwa-banner');
+  if(banner) banner.style.display = 'none';
+}
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'inline-block';
+  showPwaBannerIfNeeded();
+});
+window.addEventListener('appinstalled', function(){
+  deferredInstallPrompt = null;
+  hidePwaInstallUi();
+  showToast("Market18 est installee sur votre appareil");
+});
+function installPwa(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.then(function(){ deferredInstallPrompt = null; });
+  } else if(isIosDevice()){
+    showToast('Pour installer : appuyez sur le bouton Partager de Safari, puis "Sur l\'ecran d\'accueil"');
+  } else {
+    showToast("Ouvrez le menu de votre navigateur et choisissez Installer l'application, ou Ajouter a l'ecran d'accueil");
+  }
+}
+function __showIosInstallBtnIfNeeded(){
+  var btn = document.getElementById('pwa-install-btn');
+  if(btn) btn.style.display = 'inline-block';
+}
+if(isIosDevice() && !isStandaloneApp()){
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', __showIosInstallBtnIfNeeded); }
+  else { __showIosInstallBtnIfNeeded(); }
+}
+if('serviceWorker' in navigator){
+  var __swReg = null;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/sw.js').then(function(reg){
+      __swReg = reg;
+      reg.addEventListener('updatefound', function(){
+        var nouveauWorker = reg.installing;
+        if(!nouveauWorker) return;
+        nouveauWorker.addEventListener('statechange', function(){
+          if(nouveauWorker.state === 'installed' && navigator.serviceWorker.controller){
+            if(!sessionStorage.getItem('market18-sw-reloaded')){
+              sessionStorage.setItem('market18-sw-reloaded', '1');
+              window.location.reload();
+            }
+          }
+        });
+      });
+    }).catch(function(){});
+  });
+  document.addEventListener('visibilitychange', function(){
+    if(document.visibilityState === 'visible' && __swReg){ __swReg.update().catch(function(){}); }
+  });
+}
+if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', showPwaBannerIfNeeded); }
+else { showPwaBannerIfNeeded(); }
 async function init(){
   applyInAppBrowserUI();
   initGoogleSignIn();
@@ -3300,11 +4118,16 @@ async function init(){
   initFormSuggestions();
   initLivraisonOptions();
   initMobileNav();
-  await loadListings();setTimeout(renderCarousels,500);
+  await loadListings();
   const __adId = __urlParams.get('ad');
   if(__adId){
     if(!currentUser){ openAccountArea(); }
     else { const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
+  }
+  const __vendeurParam = __urlParams.get('vendeur');
+  if(__vendeurParam){
+    currentAdSellerEmail = __vendeurParam;
+    openSellerProfile();
   }
   function __unv(s){ return (s && s.charAt(0)==='v') ? s.slice(1) : s; }
   const __msgListing = __unv(__urlParams.get('msgListing'));
@@ -3323,7 +4146,6 @@ async function init(){
   await loadCart();
   await loadFavorites();
   await loadTransactions();
-  await applyAutoTransitions();
   await loadFirstSaleUsed();
   await loadSellerAccounts();
   await loadReviews();
@@ -3335,21 +4157,148 @@ async function init(){
   cleanupCart();
   cleanupFavorites();
   updateCartBadge();
-  updateTxBadges();
   updateStats();
-  // ===== PATCH TEST LOCAL : deep-link boutique vendeur =====
-  const __vendeurEmail = __urlParams.get('vendeur');
-  if(__vendeurEmail){
-    try{ openSellerProfileFromCard(__vendeurEmail); }
-    catch(e){
-      var __b = document.getElementById('debug-error-banner');
-      if(__b){ __b.style.display='block'; __b.textContent += 'PATCH VENDEUR ERROR: '+(e && (e.stack||e.message))+'\n'; }
-    }
-  }
-  // ===== FIN PATCH =====
   showPage(__autoOpenMessages ? 'messages' : 'accueil');
+  setInterval(async ()=>{
+    if(!document.getElementById('modal-admin').classList.contains('show')){
+      await loadListings();
+      updateStats();
+      if(document.getElementById('page-annonces').style.display==='block') renderAnnonces();
+      if(document.getElementById('page-soldes') && document.getElementById('page-soldes').style.display==='block') renderSoldesPage();
+      const __pm = document.getElementById('page-messages');
+      if(!__pm || __pm.style.display!=='block'){
+        await loadMessages();
+        updateMessagesBadge();
+      }
+    }
+  }, 20000);
+  setInterval(async ()=>{
+    const pm = document.getElementById('page-messages');
+    if(pm && pm.style.display==='block' && !document.getElementById('modal-admin').classList.contains('show')){
+      const __draftEl = document.getElementById('thread-input-current');
+const __wasFocused = !!__draftEl && document.activeElement === __draftEl;
+const __draftVal = __draftEl ? __draftEl.value : null;
+const __caretPos = __draftEl ? __draftEl.selectionStart : null;
+const __prevMsgCount = currentThreadMsgs ? currentThreadMsgs.length : 0;
+await loadMessages();
+if(__wasFocused && currentThreadMsgs.length === __prevMsgCount){
+updateMessagesBadge();
+} else {
+renderMessagesPage();
+updateMessagesBadge();
+if(__draftVal){
+const __restoreEl = document.getElementById('thread-input-current');
+if(__restoreEl){
+__restoreEl.value = __draftVal;
+if(__wasFocused){
+__restoreEl.focus({preventScroll:true});
+const __pos = __caretPos!=null ? __caretPos : __draftVal.length;
+__restoreEl.setSelectionRange(__pos, __pos);
+}
+}
+}
+}
+}
+}, 5000);
 }
 init();
+
+document.addEventListener("mousemove", function(e){
+  const card = e.target.closest && e.target.closest(".card");
+  if(!card) return;
+  const rect = card.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+  const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+  card.style.setProperty("--mx", x+"%");
+  card.style.setProperty("--my", y+"%");
+});
 </script>
+<script>(function(){var REGIONS=[{nom:"Auvergne-Rhône-Alpes",deps:[["01","Ain"],["03","Allier"],["07","Ardèche"],["15","Cantal"],["26","Drôme"],["38","Isère"],["42","Loire"],["43","Haute-Loire"],["63","Puy-de-Dôme"],["69","Rhône"],["73","Savoie"],["74","Haute-Savoie"]]},{nom:"Bourgogne-Franche-Comté",deps:[["21","Côte-d'Or"],["25","Doubs"],["39","Jura"],["58","Nièvre"],["70","Haute-Saône"],["71","Saône-et-Loire"],["89","Yonne"],["90","Territoire de Belfort"]]},{nom:"Bretagne",deps:[["22","Côtes-d'Armor"],["29","Finistère"],["35","Ille-et-Vilaine"],["56","Morbihan"]]},{nom:"Centre-Val de Loire",deps:[["18","Cher"],["28","Eure-et-Loir"],["36","Indre"],["37","Indre-et-Loire"],["41","Loir-et-Cher"],["45","Loiret"]]},{nom:"Corse",deps:[["2A","Corse-du-Sud"],["2B","Haute-Corse"]]},{nom:"Grand Est",deps:[["08","Ardennes"],["10","Aube"],["51","Marne"],["52","Haute-Marne"],["54","Meurthe-et-Moselle"],["55","Meuse"],["57","Moselle"],["67","Bas-Rhin"],["68","Haut-Rhin"],["88","Vosges"]]},{nom:"Hauts-de-France",deps:[["02","Aisne"],["59","Nord"],["60","Oise"],["62","Pas-de-Calais"],["80","Somme"]]},{nom:"Île-de-France",deps:[["75","Paris"],["77","Seine-et-Marne"],["78","Yvelines"],["91","Essonne"],["92","Hauts-de-Seine"],["93","Seine-Saint-Denis"],["94","Val-de-Marne"],["95","Val-d'Oise"]]},{nom:"Normandie",deps:[["14","Calvados"],["27","Eure"],["50","Manche"],["61","Orne"],["76","Seine-Maritime"]]},{nom:"Nouvelle-Aquitaine",deps:[["16","Charente"],["17","Charente-Maritime"],["19","Corrèze"],["23","Creuse"],["24","Dordogne"],["33","Gironde"],["40","Landes"],["47","Lot-et-Garonne"],["64","Pyrénées-Atlantiques"],["79","Deux-Sèvres"],["86","Vienne"],["87","Haute-Vienne"]]},{nom:"Occitanie",deps:[["09","Ariège"],["11","Aude"],["12","Aveyron"],["30","Gard"],["31","Haute-Garonne"],["32","Gers"],["34","Hérault"],["46","Lot"],["48","Lozère"],["65","Hautes-Pyrénées"],["66","Pyrénées-Orientales"],["81","Tarn"],["82","Tarn-et-Garonne"]]},{nom:"Pays de la Loire",deps:[["44","Loire-Atlantique"],["49","Maine-et-Loire"],["53","Mayenne"],["72","Sarthe"],["85","Vendée"]]},{nom:"Provence-Alpes-Côte d'Azur",deps:[["04","Alpes-de-Haute-Provence"],["05","Hautes-Alpes"],["06","Alpes-Maritimes"],["13","Bouches-du-Rhône"],["83","Var"],["84","Vaucluse"]]},{nom:"Outre-mer",deps:[["971","Guadeloupe"],["972","Martinique"],["973","Guyane"],["974","La Réunion"],["976","Mayotte"]]}];function regionOptionsHtml(placeholder){var h=placeholder?('<option value="">'+placeholder+'</option>'):'';for(var i=0;i<REGIONS.length;i++){h+='<option value="'+REGIONS[i].nom+'">'+REGIONS[i].nom+'</option>';}return h;}function deptOptionsHtml(regionNom,placeholder){var region=null;for(var i=0;i<REGIONS.length;i++){if(REGIONS[i].nom===regionNom){region=REGIONS[i];break;}}var h=placeholder?('<option value="">'+placeholder+'</option>'):'';if(region){for(var j=0;j<region.deps.length;j++){h+='<option value="'+region.deps[j][0]+'">'+region.deps[j][0]+' - '+region.deps[j][1]+'</option>';}}return h;}function findRegionByDept(code){for(var i=0;i<REGIONS.length;i++){for(var j=0;j<REGIONS[i].deps.length;j++){if(REGIONS[i].deps[j][0]===code){return REGIONS[i].nom;}}}return null;}function wireCascade(regionSel,deptSel,onChange,deptPlaceholder){regionSel.addEventListener('change',function(){deptSel.innerHTML=deptOptionsHtml(regionSel.value,deptPlaceholder);deptSel.disabled=!regionSel.value;if(onChange)onChange();});if(deptSel&&onChange){deptSel.addEventListener('change',onChange);}}var fVille=document.getElementById('f-ville');if(fVille){var fDept=document.createElement('select');fDept.id='f-departement';fDept.disabled=true;fDept.innerHTML='<option value="">Tous départements</option>';var fRegion=document.createElement('select');fRegion.id='f-region';fRegion.innerHTML=regionOptionsHtml('Toutes régions');fVille.insertAdjacentElement('afterend',fDept);fVille.insertAdjacentElement('afterend',fRegion);wireCascade(fRegion,fDept,function(){if(typeof window.renderAnnonces==='function')window.renderAnnonces();},'Tous départements');}var villeInput=document.getElementById('ville');if(villeInput){var rLabel=document.createElement('label');rLabel.textContent='Région *';var rSelect=document.createElement('select');rSelect.id='region';rSelect.required=true;rSelect.innerHTML='<option value="" disabled selected>Choisir une région</option>'+regionOptionsHtml('');var dLabel=document.createElement('label');dLabel.textContent='Département *';var dSelect=document.createElement('select');dSelect.id='departement';dSelect.required=true;dSelect.disabled=true;dSelect.innerHTML='<option value="" disabled selected>Choisir d\'abord une région</option>';villeInput.insertAdjacentElement('afterend',dSelect);villeInput.insertAdjacentElement('afterend',dLabel);villeInput.insertAdjacentElement('afterend',rSelect);villeInput.insertAdjacentElement('afterend',rLabel);wireCascade(rSelect,dSelect,null,'');}var editVilleInput=document.getElementById('edit-ville');if(editVilleInput){var erLabel=document.createElement('label');erLabel.textContent='Région';var erSelect=document.createElement('select');erSelect.id='edit-region';erSelect.innerHTML=regionOptionsHtml('Choisir une région');var edLabel=document.createElement('label');edLabel.textContent='Département';var edSelect=document.createElement('select');edSelect.id='edit-departement';edSelect.innerHTML='<option value="">Tous départements</option>';editVilleInput.insertAdjacentElement('afterend',edSelect);editVilleInput.insertAdjacentElement('afterend',edLabel);editVilleInput.insertAdjacentElement('afterend',erSelect);editVilleInput.insertAdjacentElement('afterend',erLabel);wireCascade(erSelect,edSelect,null,'Tous départements');}var deptById={};function refreshDeptMap(){if(typeof LISTINGS_API_BASE==='undefined')return;fetch(LISTINGS_API_BASE+'/api/listings').then(function(r){return r.json();}).then(function(data){deptById={};(data||[]).forEach(function(l){deptById[String(l.id)]=l.departement||'';});}).catch(function(){});}refreshDeptMap();setInterval(refreshDeptMap,45000);if(typeof window.applyFilters==='function'){var origApplyFilters=window.applyFilters;window.applyFilters=function(){var list=origApplyFilters();var deptSelEl=document.getElementById('f-departement');var dept=deptSelEl?deptSelEl.value:'';if(dept){list=list.filter(function(l){return deptById[String(l.id)]===dept;});}return list;};}if(typeof window.openEditPhotos==='function'){var origOpenEditPhotos=window.openEditPhotos;window.openEditPhotos=function(){var r=origOpenEditPhotos.apply(this,arguments);try{var id=String(window.currentAdId);var code=deptById[id]||'';var erSelectEl=document.getElementById('edit-region');var edSelectEl=document.getElementById('edit-departement');if(erSelectEl&&edSelectEl){if(code){var regionNom=findRegionByDept(code);if(regionNom){erSelectEl.value=regionNom;edSelectEl.innerHTML=deptOptionsHtml(regionNom,'Tous départements');edSelectEl.value=code;}}else{erSelectEl.value='';edSelectEl.innerHTML='<option value="">Tous départements</option>';}}}catch(e){}return r;};}var origFetch=window.fetch.bind(window);window.fetch=function(url,opts){try{var urlStr=String(url).split('?')[0];if(opts&&opts.method&&(opts.method==='POST'||opts.method==='PUT')&&opts.body&&/\/api\/listings(\/[^/]+)?$/.test(urlStr)){var isEdit=opts.method==='PUT';var regionEl=document.getElementById(isEdit?'edit-region':'region');var deptEl=document.getElementById(isEdit?'edit-departement':'departement');var bodyObj=null;try{bodyObj=JSON.parse(opts.body);}catch(e){}if(bodyObj){if(regionEl)bodyObj.region=regionEl.value||'';if(deptEl)bodyObj.departement=deptEl.value||'';opts=Object.assign({},opts,{body:JSON.stringify(bodyObj)});}}}catch(e){}return origFetch(url,opts);};})();</script><script>(function(){function renameExplorer(){document.querySelectorAll('nav a').forEach(function(a){if(a.textContent.trim()==='Explorer')a.textContent='Échange';});}renameExplorer();setTimeout(renameExplorer,1000);setTimeout(renameExplorer,3000);var soldeBox=document.getElementById('pub-solde-box');if(soldeBox&&!document.getElementById('pub-echange-toggle')){var label=document.createElement('label');label.style.cssText='display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px';label.innerHTML='<input type="checkbox" id="pub-echange-toggle" style="width:auto" onchange="toggleEchangeField()"> \u{1F504} Disponible en échange (troc)';var box=document.createElement('div');box.id='pub-echange-box';box.style.cssText='display:none;margin-top:8px';box.innerHTML='<label>Contre quoi ? (optionnel)</label><input id="pub-echange-recherche" type="text" placeholder="Ex: un vélo, une console, ...">';soldeBox.insertAdjacentElement('afterend',box);soldeBox.insertAdjacentElement('afterend',label);}window.toggleEchangeField=function(){var t=document.getElementById('pub-echange-toggle');var b=document.getElementById('pub-echange-box');if(t&&b)b.style.display=t.checked?'block':'none';};var saveBtn=document.getElementById('edit-photos-save-btn');if(saveBtn&&!document.getElementById('edit-echange-toggle')){var elabel=document.createElement('label');elabel.style.cssText='display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px';elabel.innerHTML='<input type="checkbox" id="edit-echange-toggle" style="width:auto" onchange="toggleEditEchangeField()"> \u{1F504} Disponible en échange (troc)';var ebox=document.createElement('div');ebox.id='edit-echange-box';ebox.style.cssText='display:none;margin-top:8px';ebox.innerHTML='<label>Contre quoi ? (optionnel)</label><input id="edit-echange-recherche" type="text" placeholder="Ex: un vélo, une console, ...">';saveBtn.insertAdjacentElement('beforebegin',elabel);saveBtn.insertAdjacentElement('beforebegin',ebox);}window.toggleEditEchangeField=function(){var t=document.getElementById('edit-echange-toggle');var b=document.getElementById('edit-echange-box');if(t&&b)b.style.display=t.checked?'block':'none';};var prevOpenEditPhotos2=window.openEditPhotos;window.openEditPhotos=function(){if(typeof prevOpenEditPhotos2==='function')prevOpenEditPhotos2.apply(this,arguments);try{var l=exById[String(currentAdId)];var t=document.getElementById('edit-echange-toggle');var r=document.getElementById('edit-echange-recherche');var b=document.getElementById('edit-echange-box');if(t){t.checked=!!(l&&l.echange);if(r)r.value=(l&&l.echangeRecherche)||'';if(b)b.style.display=t.checked?'block':'none';}}catch(e){}};var prevFetch2=window.fetch;window.fetch=function(url,opts){try{if(opts&&opts.body&&typeof opts.body==='string'&&/\/api\/listings(\/[^\/]+)?$/.test(String(url))){var data=JSON.parse(opts.body);var toggle=document.getElementById('pub-echange-toggle');var editToggle=document.getElementById('edit-echange-toggle');if(opts.method==='PUT'&&editToggle){data.echange=!!editToggle.checked;data.echangeRecherche=(document.getElementById('edit-echange-recherche')||{}).value||'';opts.body=JSON.stringify(data);}else if(opts.method==='POST'&&toggle){data.echange=!!toggle.checked;data.echangeRecherche=(document.getElementById('pub-echange-recherche')||{}).value||'';opts.body=JSON.stringify(data);}}}catch(e){}return prevFetch2.apply(this,arguments);};var exById={};function refreshExchangeMap(){fetch(LISTINGS_API_BASE+'/api/listings').then(function(r){return r.json();}).then(function(data){exById={};(data||[]).forEach(function(l){if(l&&l.id)exById[l.id]=l;});applyExchangeBadges();}).catch(function(){});}function applyExchangeBadges(){document.querySelectorAll('#ads .card').forEach(function(card){if(card.querySelector('.echange-badge'))return;var oc=card.getAttribute('onclick')||'';var m=oc.match(/openAd\((\d+)\)/);if(!m)return;var id=m[1];var l=exById[id];if(l&&l.echange){var badge=document.createElement('div');badge.className='echange-badge';badge.style.cssText='margin-top:6px;font-size:.85em;color:#fff;font-weight:bold';badge.textContent='\u{1F504} Échange possible'+(l.echangeRecherche?(' — Recherche : '+l.echangeRecherche):'');card.appendChild(badge);}});}var prevRender2=window.renderAnnonces;window.renderAnnonces=function(){if(typeof prevRender2==='function')prevRender2();applyExchangeBadges();};refreshExchangeMap();setInterval(refreshExchangeMap,45000);setTimeout(function(){if(typeof window.renderAnnonces==='function')window.renderAnnonces();},1500);})();</script><script>(function(){var echangeIds=null,filterActive=false;function loadEchangeIds(){return fetch(LISTINGS_API_BASE+'/api/listings').then(function(r){return r.json();}).then(function(data){echangeIds=new Set((data||[]).filter(function(l){return l&&l.echange;}).map(function(l){return String(l.id);}));}).catch(function(){echangeIds=new Set();});}var prevApplyFilters3 = window.applyFilters;
+function applyFiltersFallback3(){
+  var term = (document.getElementById('f-search').value||'').trim().toLowerCase();
+  var cat = document.getElementById('f-cat').value;
+  var ville = (document.getElementById('f-ville').value||'').trim().toLowerCase();
+  var maxPrice = parseFloat(document.getElementById('f-prix').value);
+  return listings.filter(function(l){
+    return l.titre.toLowerCase().includes(term) &&
+      (!cat || l.categorie===cat) &&
+      (!ville || (l.ville||'').toLowerCase().includes(ville)) &&
+      (isNaN(maxPrice) || effectivePrice(l) <= maxPrice) &&
+      !l.vendu;
+  }).sort(function(a,b){ return b.ts - a.ts; });
+}
+window.applyFilters = function () {
+  var list = prevApplyFilters3 ? prevApplyFilters3() : applyFiltersFallback3();
+  if (filterActive && echangeIds) {
+    list = list.filter(function (l) { return echangeIds.has(String(l.id)); });
+  }
+  return list;
+};var prevShowPage3=window.showPage;window.showPage=function(page){if(page==='annonces'&&!window.__echangeNavClicking){filterActive=false;}return prevShowPage3.apply(this,arguments);};function activateEchangeFilter(){window.__echangeNavClicking=true;filterActive=true;loadEchangeIds().then(function(){if(typeof window.renderAnnonces==='function')window.renderAnnonces();});window.showPage('annonces');window.__echangeNavClicking=false;}function wireEchangeNavLink(){var link=Array.from(document.querySelectorAll('nav a')).find(function(a){return a.getAttribute('onclick')==="showPage('annonces')";});if(link&&!link.__echangeWired){link.__echangeWired=true;link.removeAttribute('onclick');link.addEventListener('click',function(e){if(e)e.preventDefault();activateEchangeFilter();});}}wireEchangeNavLink();setTimeout(wireEchangeNavLink,1000);setTimeout(wireEchangeNavLink,3000);})();</script><script>(function(){window.checkAdminPin=async function(){var input=document.getElementById('admin-pin-input');var pin=input?input.value:'';try{var r=await fetch(LISTINGS_API_BASE+'/api/admin-login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pin:pin})});var data=await r.json();if(r.ok&&data.token){window.__adminToken=data.token;adminUnlocked=true;document.getElementById('admin-pin-gate').style.display='none';document.getElementById('admin-content').style.display='block';if(typeof renderAdminAds==='function')renderAdminAds();if(typeof checkSecurityBadge==='function')checkSecurityBadge();}else{showToast('Code incorrect');if(input)input.value='';}}catch(e){showToast('Erreur de connexion');}};var ADMIN_PATHS=['/api/seller-notes','/api/stats','/api/debug-stripe-account'];var prevFetch4=window.fetch;window.fetch=function(url,opts){try{var u=String(url);var isAdminPath=ADMIN_PATHS.some(function(p){return u.indexOf(p)!==-1;});if(isAdminPath&&window.__adminToken){opts=opts||{};opts.headers=Object.assign({},opts.headers||{},{Authorization:'Bearer '+window.__adminToken});}}catch(e){}return prevFetch4(url,opts);};})();</script><script>(function(){window.__navStack=window.__navStack||["accueil"];window.__navFutureStack=window.__navFutureStack||[];window.__currentPage=window.__currentPage||"accueil";var __origShowPageNav=window.showPage;window.showPage=function(page){if(!window.__navSkip){if(window.__currentPage&&window.__currentPage!==page){window.__navStack.push(window.__currentPage);window.__navFutureStack=[];}}window.__currentPage=page;return __origShowPageNav.apply(this,arguments);};window.navGoBack=function(){if(window.__navStack.length){var prev=window.__navStack.pop();window.__navFutureStack.push(window.__currentPage);window.__navSkip=true;window.showPage(prev);window.__navSkip=false;}else{if(typeof showToast==="function")showToast("Debut de la navigation");}};window.navGoForward=function(){if(window.__navFutureStack.length){var next=window.__navFutureStack.pop();window.__navStack.push(window.__currentPage);window.__navSkip=true;window.showPage(next);window.__navSkip=false;}else{if(typeof showToast==="function")showToast("Pas de page suivante");}};})();</script>
+<div class="modal-overlay" id="modal-fiscal-info">
+  <div class="modal-box" style="max-width:460px">
+    <button class="modal-close" onclick="closeModal('modal-fiscal-info')">×</button>
+    <h2 style="margin-top:0">Informations fiscales requises</h2>
+    <p class="small">La loi (DAC7) nous oblige a transmettre certaines informations sur les vendeurs actifs a l'administration fiscale. Merci de completer ces champs (utilises uniquement a cette fin, jamais affiches publiquement).</p>
+    <label>Numero fiscal (13 chiffres, sur votre avis d'imposition)</label>
+    <input type="text" id="fiscal-numero" placeholder="Ex: 1234567890123">
+    <p class="small">Si vous n'avez pas de numero fiscal francais, indiquez votre date et lieu de naissance :</p>
+    <label>Date de naissance</label>
+    <input type="date" id="fiscal-date-naissance">
+    <label>Lieu de naissance</label>
+    <input type="text" id="fiscal-lieu-naissance" placeholder="Ville, pays">
+    <label>Adresse complete (numero, rue, code postal, ville)</label>
+    <input type="text" id="fiscal-adresse" placeholder="12 rue des Lilas, 75018 Paris">
+    <button class="btn" style="width:100%;margin-top:14px" onclick="saveFiscalInfo()">Enregistrer et publier mon annonce</button>
+  </div>
+</div>
+<script>(function(){
+function needsFiscalInfo(u){
+  if(!u || u.isPro) return false;
+  var trust = (typeof computeTrust === "function") ? computeTrust(u.email) : null;
+  var sales = trust ? (trust.salesCount||0) : 0;
+  if(sales < 10) return false;
+  var hasTin = !!(u.numeroFiscal && String(u.numeroFiscal).trim());
+  var hasBirth = !!(u.dateNaissance && u.lieuNaissance);
+  var hasAddr = !!(u.adresseComplete && String(u.adresseComplete).trim());
+  return !((hasTin || hasBirth) && hasAddr);
+}
+window.__fiscalInfoJustSaved = false;
+var origPublishAd = window.publishAd;
+window.publishAd = function(e){
+  if(typeof currentUser !== "undefined" && currentUser && needsFiscalInfo(currentUser) && !window.__fiscalInfoJustSaved){
+    if(e && e.preventDefault) e.preventDefault();
+    var fn=document.getElementById("fiscal-numero"); if(fn) fn.value=currentUser.numeroFiscal||"";
+    var fd=document.getElementById("fiscal-date-naissance"); if(fd) fd.value=currentUser.dateNaissance||"";
+    var fl=document.getElementById("fiscal-lieu-naissance"); if(fl) fl.value=currentUser.lieuNaissance||"";
+    var fa=document.getElementById("fiscal-adresse"); if(fa) fa.value=currentUser.adresseComplete||"";
+    openModal("modal-fiscal-info");
+    return;
+  }
+  window.__fiscalInfoJustSaved = false;
+  return origPublishAd.apply(this, arguments);
+};
+window.saveFiscalInfo = async function(){
+  var numeroFiscal=(document.getElementById("fiscal-numero").value||"").trim();
+  var dateNaissance=(document.getElementById("fiscal-date-naissance").value||"").trim();
+  var lieuNaissance=(document.getElementById("fiscal-lieu-naissance").value||"").trim();
+  var adresseComplete=(document.getElementById("fiscal-adresse").value||"").trim();
+  if(!numeroFiscal && !(dateNaissance && lieuNaissance)){ showToast("Indique ton numero fiscal, ou a defaut ta date et ton lieu de naissance"); return; }
+  if(!adresseComplete){ showToast("Merci d'indiquer ton adresse complete"); return; }
+  try{
+    var res = await fetch(LISTINGS_API_BASE+"/api/auth/update-fiscal-info", {
+      method:"POST", headers:{"Content-Type":"application/json","Authorization":"Bearer "+authToken},
+      body: JSON.stringify({numeroFiscal:numeroFiscal, dateNaissance:dateNaissance, lieuNaissance:lieuNaissance, adresseComplete:adresseComplete})
+    });
+    var data = await res.json();
+    if(!res.ok){ showToast(data.error || "Erreur lors de l'enregistrement"); return; }
+    currentUser.numeroFiscal=numeroFiscal; currentUser.dateNaissance=dateNaissance; currentUser.lieuNaissance=lieuNaissance; currentUser.adresseComplete=adresseComplete;
+    closeModal("modal-fiscal-info");
+    showToast("Informations enregistrees, merci !");
+    window.__fiscalInfoJustSaved = true;
+    var form = document.getElementById("ad-form");
+    if(form){ if(form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event("submit",{cancelable:true,bubbles:true})); }
+  }catch(err){ showToast("Impossible de contacter le serveur"); }
+};
+})();</script>
 </body>
 </html>
