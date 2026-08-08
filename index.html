@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta name="facebook-domain-verification" content="mhn3Onrk0ie68x5on7ejqtxsmxvqns" />
@@ -109,7 +109,7 @@ main{max-width:1200px;margin:auto;padding:34px 20px 60px}
 .cat-badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,#fff,#e9d8ff);color:#5b21b6;font-weight:900;font-size:.68rem;display:flex;align-items:center;justify-content:center;margin:0 auto 6px}
 .cat-tag .cat-badge-sm{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#fff,#e9d8ff);color:#5b21b6;font-weight:900;font-size:.6rem;display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;margin-right:5px}
 .page{display:none}
-.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;background:rgba(255,255,255,.08);padding:18px;border-radius:18px;margin-bottom:24px;color:#fff}.filters input,.filters select{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2)}.filters input::placeholder{color:rgba(255,255,255,.7)}.filters button{background:#7c3aed;color:#fff;border:none;cursor:pointer}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;background:rgba(255,255,255,.08);padding:18px;border-radius:18px;margin-bottom:24px}
 .filters input,.filters select{padding:10px;border-radius:10px;border:none;font-size:.95rem}
 .filters button{background:#fff;color:#5b21b6;font-weight:bold;border:none;border-radius:10px;cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
@@ -307,77 +307,18 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 .card::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(115deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none;z-index:3}
 .card:hover::after{left:130%}
 
-.carousel-section {
-  margin: 30px auto;
-  max-width: 1200px;
-}
-.carousel-title {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 16px;
-  color: #fff;
-}
-.carousel-wrapper {
-  position: relative;
-  background: linear-gradient(135deg, #7c3aed, #4c1d95);
-  border-radius: 16px;
-  padding: 20px;
-  overflow: hidden;
-}
-.carousel-track {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.carousel-track::-webkit-scrollbar {
-  height: 6px;
-}
-.carousel-track::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.3);
-  border-radius: 3px;
-}
-.carousel-card {
-  flex: 0 0 140px;
-  cursor: pointer;
-  border-radius: 12px;
-  overflow: hidden;
-  background: rgba(255,255,255,0.1);
-  transition: transform 0.2s;
-}
-.carousel-card:hover {
-  transform: translateY(-4px);
-}
-.carousel-card-image {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-}
-.carousel-card-info {
-  padding: 8px;
-  color: #fff;
-  font-size: 0.8rem;
-}
-.carousel-card-title {
-  font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
-}
-.carousel-card-price {
-  font-weight: bold;
-  color: #fbbf24;
-}
-
-
-.page h3{color:#fff}
-.page{color:#fff}
-.page input{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.page input::placeholder{color:rgba(255,255,255,.6)}
-.page select{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.page label{color:#fff}
-.page .small{color:rgba(255,255,255,.8)}
+.carousel-section {margin:30px auto;max-width:1200px}
+.carousel-title {font-size:1.4rem;font-weight:bold;margin-bottom:16px;color:#fff}
+.carousel-wrapper {background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:16px;padding:20px;overflow:hidden}
+.carousel-track {display:flex;gap:12px;overflow-x:auto;scroll-behavior:smooth}
+.carousel-track::-webkit-scrollbar{height:6px}
+.carousel-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:3px}
+.carousel-card {flex:0 0 140px;cursor:pointer;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1);transition:transform .2s}
+.carousel-card:hover{transform:translateY(-4px)}
+.carousel-card-image {width:100%;height:100px;object-fit:cover}
+.carousel-card-info {padding:8px;color:#fff;font-size:.8rem}
+.carousel-card-title {font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px}
+.carousel-card-price {font-weight:bold;color:#fbbf24}
 
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
@@ -591,21 +532,18 @@ window.addEventListener('unhandledrejection', function(e){
       <div class="categories" id="cat-grid"></div>
 
     </div>
-
     <div class="carousel-section">
       <div class="carousel-title">🔥 Promotions</div>
       <div class="carousel-wrapper">
         <div class="carousel-track" id="carousel-promos"></div>
       </div>
     </div>
-
     <div class="carousel-section">
       <div class="carousel-title">🆕 Nouveautés</div>
       <div class="carousel-wrapper">
         <div class="carousel-track" id="carousel-nouveautes"></div>
       </div>
     </div>
-
     <div class="section" id="home-promos-section" style="display:none">
 
         <h3>🔥 Promotions</h3>
@@ -863,13 +801,6 @@ window.addEventListener('unhandledrejection', function(e){
           <button class="btn outline" id="ad-contact-btn" onclick="openMessages(currentAdId);closeModal('modal-ad')">Contacter le vendeur</button>
           <button class="iconbtn fav" id="ad-fav-btn" onclick="toggleFavCurrent()">Favori</button>
           <button class="iconbtn" id="ad-sms-btn" onclick="shareSMSCurrent()">Partager</button>
-        </div>
-        <div id="ad-qr-block" style="display:none;margin:18px 0;padding:0;text-align:center">
-          <h3 style="margin:0 0 10px">📱 QR code de l'annonce</h3>
-          <p class="small" style="margin:0 0 12px;opacity:.8">Scannez ou partagez ce code pour afficher directement cette annonce.</p>
-          <div id="ad-qr-canvas-wrap" style="display:inline-block;background:#fff;padding:10px;border-radius:8px;line-height:0"></div>
-          <p class="small" id="ad-qr-url" style="margin-top:10px;word-break:break-all;opacity:.7"></p>
-          <button type="button" class="btn" style="margin-top:10px" onclick="downloadListingQr()">Telecharger le QR code</button>
         </div>
         <div id="ad-map-wrap"></div>
         <button type="button" class="linklike" style="margin-top:14px;font-size:.82rem;opacity:.8" onclick="openEditPhotos()">C'est votre annonce ? Modifier l'annonce</button>
@@ -1843,7 +1774,6 @@ function openAd(id){
   document.getElementById('ad-addcart-btn').style.display = sold ? 'none' : 'inline-block';
   document.getElementById('ad-contact-btn').style.display = sold ? 'none' : 'inline-block';
   document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(id));
-  renderListingQr(id);
   openModal('modal-ad');
 }
 function renderAdLivraison(l){
@@ -2784,51 +2714,25 @@ function renderSellerQr(email){
   if(urlEl) urlEl.textContent = boutiqueUrl;
 }
 
-let __listingQrCanvas = null;
-function renderListingQr(adId){
-  const block = document.getElementById('ad-qr-block');
-  const wrap = document.getElementById('ad-qr-canvas-wrap');
-  const urlEl = document.getElementById('ad-qr-url');
-  if(!adId || !block || !wrap || typeof QRCode === 'undefined'){ if(block) block.style.display='none'; return; }
-  const listingUrl = 'https://market18.fr/?annonce=' + encodeURIComponent(adId);
-  wrap.innerHTML = '';
-  try{
-    new QRCode(wrap, { text: listingUrl, width: 180, height: 180, colorDark: '#1a1a1a', colorLight: '#ffffff' });
-    __listingQrCanvas = wrap.querySelector('canvas') || wrap.querySelector('img');
-    block.style.display='block';
-  }catch(e){ block.style.display='none'; }
-  if(urlEl) urlEl.textContent = listingUrl;
-}
-function downloadListingQr(){
-  if(!__listingQrCanvas) return;
-  const link = document.createElement('a');
-  link.download = 'qrcode-annonce-market18.png';
-  link.href = (__listingQrCanvas.tagName === 'CANVAS') ? __listingQrCanvas.toDataURL('image/png') : __listingQrCanvas.src;
-  link.click();
-}
 function renderCarousels(){
-  const promoTrack = document.getElementById('carousel-promos');
-  const nouveautesTrack = document.getElementById('carousel-nouveautes');
-  if(!promoTrack || !nouveautesTrack || !listings.length) return;
-  
-  const promos = listings.filter(l => l.soldePrix && l.soldePrix < l.prix).slice(0, 20);
-  const nouveautes = [...listings].sort((a,b) => (b.ts||0) - (a.ts||0)).slice(0, 20);
-  
-  const renderCards = (arr) => arr.map(l => {
-    const img = l.images && l.images[0] ? l.images[0] : (l.thumb || '');
-    const titre = (l.titre || '').substring(0,20);
-    const prix = l.soldePrix && l.soldePrix < l.prix ? l.soldePrix : l.prix;
-    return `<div class="carousel-card" onclick="openAd('${l.id}')">
-      <img class="carousel-card-image" src="${img}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22100%22%3E%3Crect fill=%22%23ddd%22 width=%22140%22 height=%22100%22/%3E%3C/svg%3E'">
-      <div class="carousel-card-info">
-        <div class="carousel-card-title">${titre}</div>
-        <div class="carousel-card-price">${fmtPrice(prix)}</div>
-      </div>
-    </div>`;
-  }).join('');
-  
-  promoTrack.innerHTML = renderCards(promos) || '<p style="color:#fff;padding:20px">Aucune promo</p>';
-  nouveautesTrack.innerHTML = renderCards(nouveautes) || '<p style="color:#fff;padding:20px">Aucune annonce</p>';
+  try{
+    const promos = document.getElementById('carousel-promos');
+    const news = document.getElementById('carousel-nouveautes');
+    if(!promos || !news || !listings || !listings.length) return;
+    
+    const getPromos = listings.filter(l => l.soldePrix && l.soldePrix < l.prix).slice(0,15);
+    const getNews = [...listings].sort((a,b)=>(b.ts||0)-(a.ts||0)).slice(0,15);
+    
+    const buildCard = (l) => {
+      const img = l.images?.[0] || l.thumb || '';
+      const p = l.soldePrix && l.soldePrix < l.prix ? l.soldePrix : l.prix;
+      return `<div class="carousel-card" onclick="openAd('${l.id}')"><img class="carousel-card-image" src="${img}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22140%22 height=%22100%22%3E%3Crect fill=%22%23ddd%22 width=%22140%22 height=%22100%22/%3E%3C/svg%3E'"><div class="carousel-card-info"><div class="carousel-card-title">${(l.titre||'').substring(0,20)}</div><div class="carousel-card-price">${fmtPrice(p)}</div></div></div>`;
+    };
+    
+    promos.innerHTML = getPromos.length ? getPromos.map(buildCard).join('') : '<p style="color:#fff;padding:20px">Pas de promos</p>';
+    news.innerHTML = getNews.length ? getNews.map(buildCard).join('') : '<p style="color:#fff;padding:20px">Pas d'annonces</p>';
+    console.log('Carousels rendered:', getPromos.length, getNews.length);
+  }catch(e){console.error('Carousel error:', e)}
 }
 
 function downloadSellerQr(){
@@ -3437,23 +3341,12 @@ async function init(){
   initFormSuggestions();
   initLivraisonOptions();
   initMobileNav();
-  await loadListings();
-  renderCarousels();
+  await loadListings();setTimeout(()=>renderCarousels(),200);
   const __adId = __urlParams.get('ad');
   if(__adId){
     if(!currentUser){ openAccountArea(); }
     else { const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
   }
-  const __annonce = __urlParams.get('annonce');
-  if(__annonce){
-    const __l = listings.find(x=>String(x.id)===String(__annonce));
-    if(__l){ openAd(__l.id); }
-  }
-  const __vendeur = __urlParams.get('vendeur');
-  if(__vendeur){
-    openSellerProfileFromCard(__vendeur);
-  }
-
   function __unv(s){ return (s && s.charAt(0)==='v') ? s.slice(1) : s; }
   const __msgListing = __unv(__urlParams.get('msgListing'));
   const __msgEmail = __unv(__urlParams.get('msgEmail'));
