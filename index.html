@@ -306,7 +306,7 @@ header h1{font-family:'Fraunces',serif;font-style:italic;font-weight:700}
 .card:hover::before{opacity:1}
 .card::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(115deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .7s ease;pointer-events:none;z-index:3}
 .card:hover::after{left:130%}
-</style>
+.carousel-section{margin:30px auto;max-width:1200px}.carousel-title{font-size:1.4rem;font-weight:bold;margin-bottom:16px;color:#fff}.carousel-wrapper{background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:16px;padding:20px;overflow:hidden}.carousel-track{display:flex;gap:12px;overflow-x:auto}.carousel-card{flex:0 0 140px;cursor:pointer;border-radius:12px;overflow:hidden;background:rgba(255,255,255,.1)}.carousel-card:hover{transform:translateY(-4px)}.carousel-card-image{width:100%;height:100px;object-fit:cover}.carousel-card-info{padding:8px;color:#fff;font-size:.8rem}.carousel-card-title{font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.carousel-card-price{font-weight:bold;color:#fbbf24}</style>
 <script src="https://accounts.google.com/gsi/client" async defer onload="if(window.initGoogleSignIn)initGoogleSignIn()"></script>
 <script>window.fbAsyncInit=function(){FB.init({appId:'2061708997887473',cookie:true,xfbml:false,version:'v21.0'});};</script>
 <script async defer src="https://connect.facebook.net/fr_FR/sdk.js"></script>
@@ -517,8 +517,15 @@ window.addEventListener('unhandledrejection', function(e){
       <h3>Catégories populaires</h3>
       <div class="categories" id="cat-grid"></div>
     </div>
-
-      <div class="section" id="home-promos-section" style="display:none">
+    <div class="carousel-section">
+      <div class="carousel-title">🔥 Promotions</div>
+      <div class="carousel-wrapper"><div class="carousel-track" id="carousel-promos"></div></div>
+    </div>
+    <div class="carousel-section">
+      <div class="carousel-title">🆕 Nouveautés</div>
+      <div class="carousel-wrapper"><div class="carousel-track" id="carousel-nouveautes"></div></div>
+    </div>
+    <div class="section" id="home-promos-section" style="display:none">
         <h3>🔥 Promotions</h3>
         <div class="grid" id="home-promos"></div>
       </div>
@@ -2686,6 +2693,11 @@ function renderSellerQr(email){
   }catch(e){ block.style.display='none'; return; }
   if(urlEl) urlEl.textContent = boutiqueUrl;
 }
+function renderCarousels(){
+if(typeof listings==="undefined"||!listings.length)return;
+document.getElementById("carousel-promos").innerHTML=listings.filter(l=>l.soldePrix&&l.soldePrix<l.prix).slice(0,10).map(l=>"<div class='carousel-card' onclick='openAd("+JSON.stringify(l.id)+")' style='cursor:pointer'><img class='carousel-card-image' src='"+(l.images&&l.images[0]||l.thumb||"")+`' onerror="this.style.background='#ddd'"><div class='carousel-card-info'><div class='carousel-card-title'>${(l.titre||"").substring(0,15)}</div><div class='carousel-card-price'>${"€"}${l.soldePrix||l.prix}</div></div></div>`).join("")||"<p style='color:#fff;padding:20px'>Pas de promos</p>";
+document.getElementById("carousel-nouveautes").innerHTML=listings.slice(0,10).map(l=>"<div class='carousel-card' onclick='openAd("+JSON.stringify(l.id)+")' style='cursor:pointer'><img class='carousel-card-image' src='"+(l.images&&l.images[0]||l.thumb||"")+`' onerror="this.style.background='#ddd'"><div class='carousel-card-info'><div class='carousel-card-title'>${(l.titre||"").substring(0,15)}</div><div class='carousel-card-price'>${"€"}${l.prix}</div></div></div>`).join("")||"<p style='color:#fff;padding:20px'>Pas d'annonces</p>";
+}
 function downloadSellerQr(){
   if(!__sellerQrCanvas) return;
   const link = document.createElement('a');
@@ -3292,7 +3304,7 @@ async function init(){
   initFormSuggestions();
   initLivraisonOptions();
   initMobileNav();
-  await loadListings();
+  await loadListings();renderCarousels();
   const __adId = __urlParams.get('ad');
   if(__adId){
     if(!currentUser){ openAccountArea(); }
