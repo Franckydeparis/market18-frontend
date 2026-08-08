@@ -2120,7 +2120,7 @@ function updateAccountNav(){
   if(navLogout) navLogout.style.display = currentUser ? '' : 'none';
   document.querySelectorAll('#nav a').forEach(function(a){
     if(a.id === 'nav-account' || a.id === 'nav-logout' || a.id === 'pwa-install-btn') return;
-    a.style.display = currentUser ? '' : 'none';
+    a.style.display = '';
   });
 }
 function applyAvatarToEl(el, avatarUrl, nom){
