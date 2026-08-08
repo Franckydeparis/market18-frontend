@@ -4121,7 +4121,7 @@ async function init(){
   await loadListings();
   const __adId = __urlParams.get('ad') || __urlParams.get('annonce');
   if(__adId){
-    if(!currentUser){ openAccountArea(); }
+    if(false){ openAccountArea(); }
     else { const __l = listings.find(x=>String(x.id)===String(__adId)); if(__l){ openAd(__l.id); openModal('modal-ad'); } }
   }
   const __vendeurParam = __urlParams.get('vendeur');
