@@ -1266,7 +1266,7 @@ function initGoogleMapsAutocomplete(){
       <button class="btn" style="display:block;margin:auto" onclick="checkAdminPin()">Déverrouiller</button>
     </div>
     <div id="admin-content" style="display:none">
-      <h2>Administration</h2>
+      <h2>Administration</h2> <button class="btn" onclick="adminLogout()" style="margin:8px 0 14px 0">Se déconnecter</button>
       <div class="tabbar">
         <button id="tab-btn-ads" class="active" onclick="setAdminTab('ads')">Annonces (<span id="admin-count">0</span>)</button>
         <button id="tab-btn-msgs" onclick="setAdminTab('msgs')">Messages</button>
@@ -3105,7 +3105,7 @@ function checkAdminPinLegacyDisabled(){
   if(v===ADMIN_PIN){ adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); }
   else{ showToast("Code incorrect"); document.getElementById('admin-pin-input').value=''; }
 }
-async function checkAdminPin(){ const v = document.getElementById('admin-pin-input').value; try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin:v}) }); const data = await res.json(); if(res.ok && data.token){ window.__adminToken = data.token; adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } else { showToast(data.error || "Code incorrect"); document.getElementById('admin-pin-input').value=''; } }catch(e){ showToast("Impossible de contacter le serveur"); } }
+async function checkAdminPin(){ const v = document.getElementById('admin-pin-input').value; try{ const res = await fetch(LISTINGS_API_BASE+'/api/admin-login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({pin:v}) }); const data = await res.json(); if(res.ok && data.token){ window.__adminToken = data.token; adminUnlocked=true; document.getElementById('admin-pin-gate').style.display='none'; document.getElementById('admin-content').style.display='block'; renderAdminAds(); } else { showToast(data.error || "Code incorrect"); document.getElementById('admin-pin-input').value=''; } }catch(e){ showToast("Impossible de contacter le serveur"); } } function adminLogout(){ fetch(LISTINGS_API_BASE+'/api/admin-logout', { method:'POST', headers:{'Authorization':'Bearer '+(window.__adminToken||'')} }).catch(function(e){}); window.__adminToken=null; adminUnlocked=false; document.getElementById('admin-pin-gate').style.display='block'; document.getElementById('admin-content').style.display='none'; document.getElementById('admin-pin-input').value=''; closeModal('modal-admin'); }
 async function setAdminTab(tab){
   adminTab = tab;
   document.getElementById('tab-btn-ads').classList.toggle('active', tab==='ads');
