@@ -126,7 +126,7 @@ main{max-width:1200px;margin:auto;padding:34px 20px 60px}
 .card .row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
 .iconbtn{background:#6d28d9;border:none;color:#fff;padding:7px 10px;border-radius:9px;font-size:.8rem;cursor:pointer}
 .iconbtn:hover{background:#7c3aed}
-.iconbtn.fav.active{background:#f43f5e}
+.iconbtn.fav.active{background:#f43f5e}.iconbtn.ghost{background:rgba(255,255,255,.14);color:#fff}.iconbtn.ghost:hover{background:rgba(255,255,255,.24)}
 .stats-period-btn.active{background:#f43f5e}
 .btn{background:linear-gradient(135deg,#7c3aed,#6d28d9);color:#fff;border:none;padding:12px 20px;border-radius:12px;font-weight:bold;cursor:pointer;font-size:.95rem;box-shadow:0 10px 20px rgba(0,0,0,.25)}
 .btn:hover{opacity:.9}
@@ -1973,8 +1973,8 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
       <div class="card-time" style="opacity:.55">${(l.vues||0)} vue${(l.vues||0)>1?'s':''} · ${(l.favCount||0)} favori${(l.favCount||0)>1?'s':''}</div>
       <div class="row">
-        <button class="iconbtn fav ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})">Favori</button>
-        ${sold ? '' : `<button class="iconbtn" onclick="event.stopPropagation();addCart(${l.id})">Ajouter</button>
+        <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})">Favori</button>
+        ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})">Ajouter</button>
         <button class="iconbtn" onclick="event.stopPropagation();openMessages(${l.id})">Message</button>`}
       </div>
     </div>
