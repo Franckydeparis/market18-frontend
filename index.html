@@ -1304,10 +1304,12 @@ function initGoogleMapsAutocomplete(){
       <button id="tab-btn-clients" onclick="setAdminTab('clients')">Clients</button>
       <button id="tab-btn-securite" onclick="setAdminTab('securite')">Sécurité <span id="securite-badge" style="display:none;background:#ef4444;color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;margin-left:4px;font-weight:bold"></span></button>
         <button id="tab-btn-newsletter" onclick="setAdminTab('newsletter')">Newsletter</button>
+        <button id="tab-btn-negotiations" onclick="setAdminTab('negotiations')">Négociations</button>
       </div>
       <div id="admin-tab-ads"></div>
       <div id="admin-tab-sellers" style="display:none"></div>
       <div id="admin-tab-newsletter" style="display:none"></div>
+      <div id="admin-tab-negotiations" style="display:none"></div>
       <div id="admin-tab-revenue" style="display:none">
         <div class="statbar" style="margin-bottom:20px">
           <div class="stat"><b id="rev-total">0 €</b>Chiffre d'affaires</div>
@@ -3334,6 +3336,7 @@ async function setAdminTab(tab){
   document.getElementById('tab-btn-securite').classList.toggle('active', tab==='securite');
   document.getElementById('tab-btn-newsletter').classList.toggle('active', tab==='newsletter');
   document.getElementById('admin-tab-ads').style.display = tab==='ads' ? 'block':'none';
+  document.getElementById('tab-btn-negotiations').classList.toggle('active', tab==='negotiations');
   document.getElementById('admin-tab-msgs').style.display = tab==='msgs' ? 'block':'none';
   document.getElementById('admin-tab-revenue').style.display = tab==='revenue' ? 'block':'none';
   document.getElementById('admin-tab-sellers').style.display = tab==='sellers' ? 'block':'none';
@@ -3342,6 +3345,7 @@ async function setAdminTab(tab){
   document.getElementById('admin-tab-clients').style.display = tab==='clients' ? 'block':'none';
   document.getElementById('admin-tab-securite').style.display = tab==='securite' ? 'block':'none';
   document.getElementById('admin-tab-newsletter').style.display = tab==='newsletter' ? 'block':'none';
+  document.getElementById('admin-tab-negotiations').style.display = tab==='negotiations' ? 'block':'none';
   if(tab==='clients') renderAdminClients();
   if(tab==='securite') renderAdminSecurite();
   if(tab==='msgs'){ await loadMessages(); renderAdminMessages(); }
@@ -3350,7 +3354,42 @@ async function setAdminTab(tab){
   if(tab==='stats') renderAdminStats();
   if(tab==='dac7'){ renderAdminDac7(); }
   if(tab==='newsletter') renderAdminNewsletter();
+  if(tab==='negotiations') renderAdminNegotiations();
 }
+  async function renderAdminNegotiations(){
+  const el = document.getElementById('admin-tab-negotiations');
+  el.innerHTML = '<p>Chargement...</p>';
+    try{
+      const res = await fetch(LISTINGS_API_BASE+'/api/admin/negotiations', { headers: { 'Authorization':'Bearer '+window.__adminToken } });
+  if(!res.ok){ el.innerHTML = '<p class="empty">Erreur de chargement des negociations.</p>'; return; }
+  const data = await res.json();
+  const list = data.negotiations || [];
+  const statusLabels = {pending:'En attente',accepted:'Acceptee',refused:'Refusee',expired:'Expiree'};
+      const counts = {pending:0,accepted:0,refused:0,expired:0};
+  list.forEach(function(n){ counts[n.status] = (counts[n.status]||0)+1; });
+  const accList = list.filter(function(n){ return n.status==='accepted' && n.finalPrice; });
+  const avgDiscount = accList.length ? Math.round(accList.reduce(function(s,n){ return s+(1-n.finalPrice/n.originalPrice); },0)/accList.length*100) : 0;
+  let html = '<div class="statbar" style="margin-bottom:20px">';
+  html += '<div class="stat"><b>'+list.length+'</b>Total</div>';
+  html += '<div class="stat"><b>'+(counts.pending||0)+'</b>En attente</div>';
+  html += '<div class="stat"><b>'+(counts.accepted||0)+'</b>Acceptees</div>';
+  html += '<div class="stat"><b>'+(counts.refused||0)+'</b>Refusees</div>';
+  html += '<div class="stat"><b>'+(counts.expired||0)+'</b>Expirees</div>';
+  html += '<div class="stat"><b>'+avgDiscount+'%</b>Remise moy.</div>';
+  html += '</div>';
+  if(!list.length){ html += '<p class="empty">Aucune negociation.</p>'; }
+  list.forEach(function(n){
+  html += '<div class="admin-item"><div class="info">';
+  html += '<div><b>'+escapeHtml(n.listingTitre||n.listingId)+'</b> - '+(statusLabels[n.status]||n.status)+'</div>';
+  html += '<div class="small">'+escapeHtml(n.buyerEmail)+' vers '+escapeHtml(n.sellerEmail)+' - '+fmtPrice(n.currentOffer)+' (initial '+fmtPrice(n.originalPrice)+')'+(n.finalPrice?(' - final '+fmtPrice(n.finalPrice)):'')+'</div>';
+  html += '<div class="small">'+new Date(n.updatedAt).toLocaleString('fr-FR')+'</div>';
+  html += '</div></div>';
+                                                                     });
+      el.innerHTML = html;
+    }catch(err){
+      el.innerHTML = '<p class="empty">Erreur de chargement des negociations.</p>';
+    }
+  }
 async function renderAdminNewsletter(){
   const el = document.getElementById('admin-tab-newsletter');
   el.innerHTML = '<p>Chargement...</p>';
