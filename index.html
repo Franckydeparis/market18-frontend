@@ -15,7 +15,7 @@
   <meta property="og:image:width" content="512">
   <meta property="og:image:height" content="512">
   <meta name="twitter:card" content="summary">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Market18.fr","url":"https://market18.fr/","logo":"https://market18.fr/icons/icon-512.png","description":"Market18.fr, la marketplace française pour acheter, vendre et échanger entre particuliers partout en France."}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Market18.fr","url":"https://market18.fr/","logo":"https://market18.fr/icons/icon-512.png","description":"Market18.fr, la marketplace française pour acheter, vendre et échanger entre particuliers partout en France."}</script>  <script type="application/ld+json" id="ld-product"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700;800;900&family=Fraunces:ital,wght@1,700&display=swap" rel="stylesheet">
@@ -1472,7 +1472,7 @@ const USERS_KEY = "market18-v1-users";
 const PAYMENT_API_BASE = "";
 // Backend annonces (Railway) : quand une valeur est renseignée ici, les annonces sont
 // partagées entre tous les visiteurs/appareils via ce serveur, au lieu de rester locales.
-const LISTINGS_API_BASE = "https://market18-backend-production.up.railway.app";
+const LISTINGS_API_BASE = "https://market18-backend-production.up.railway.app";const __seoDefaults = {title: document.title, desc: (document.querySelector('meta[name="description"]')||{}).content||'', ogTitle: (document.querySelector('meta[property="og:title"]')||{}).content||'', ogDesc: (document.querySelector('meta[property="og:description"]')||{}).content||'', canonical: (document.querySelector('link[rel="canonical"]')||{}).href||''};function updateAdSEO(l){ if(!l) return; const title = l.titre + ' - Market18.fr'; const desc = (l.desc||'').replace(/\s+/g,' ').trim().slice(0,155) || __seoDefaults.desc; document.title = title; const m1=document.querySelector('meta[name="description"]'); if(m1) m1.setAttribute('content', desc); const m2=document.querySelector('meta[property="og:title"]'); if(m2) m2.setAttribute('content', title); const m3=document.querySelector('meta[property="og:description"]'); if(m3) m3.setAttribute('content', desc); const canonicalUrl = 'https://market18.fr/?ad=' + l.id; const c=document.querySelector('link[rel="canonical"]'); if(c) c.setAttribute('href', canonicalUrl); const m4=document.querySelector('meta[property="og:url"]'); if(m4) m4.setAttribute('content', canonicalUrl); const ld=document.getElementById('ld-product'); if(ld){ ld.textContent = JSON.stringify({"@context":"https://schema.org","@type":"Product","name":l.titre,"description":desc,"image":(l.images&&l.images[0])?l.images[0]:thumb(l),"offers":{"@type":"Offer","price":l.prix,"priceCurrency":"EUR","availability":l.vendu?"https://schema.org/SoldOut":"https://schema.org/InStock","url":canonicalUrl}}); } }function resetAdSEO(){ document.title = __seoDefaults.title; const m1=document.querySelector('meta[name="description"]'); if(m1) m1.setAttribute('content', __seoDefaults.desc); const m2=document.querySelector('meta[property="og:title"]'); if(m2) m2.setAttribute('content', __seoDefaults.ogTitle); const m3=document.querySelector('meta[property="og:description"]'); if(m3) m3.setAttribute('content', __seoDefaults.ogDesc); const c=document.querySelector('link[rel="canonical"]'); if(c) c.setAttribute('href', __seoDefaults.canonical); const m4=document.querySelector('meta[property="og:url"]'); if(m4) m4.setAttribute('content', __seoDefaults.canonical); const ld=document.getElementById('ld-product'); if(ld) ld.textContent=''; }
 function backendToFrontend(l){
   return {
     id: Number(l.id),
@@ -1958,7 +1958,7 @@ function cardHtml(l){
     : fmtPrice(l.prix);
   const trust = computeTrust(l.email);
   const hasDelivery = Array.isArray(l.livraison) && l.livraison.length>0;
-  return `<div class="card ${sold?'sold':''}" onclick="openAd(${l.id})">
+  return `<a class="card ${sold?'sold':''}" href="/?ad=${l.id}" onclick="event.preventDefault();openAd(${l.id})" style="display:block;color:inherit;text-decoration:none">
     <div style="position:relative">
       <img src="${escapeHtml(thumb(l))}" loading="lazy" alt="${escapeHtml(l.titre||'Annonce')}">
       ${sold ? '<div class="sold-badge">Vendu</div>' : ''}
@@ -1981,11 +1981,7 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
       <div class="row">
         <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})" title="Favori"><i data-lucide="heart" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
         ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})" title="Ajouter au panier"><i data-lucide="shopping-cart" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
-        <button class="iconbtn" onclick="event.stopPropagation();openMessages(${l.id})">Message</button>`}
-      </div>
-    </div>
-  </div>`;
-}
+        <button class="iconbtn" onclick="event.stopPropagation();openMessages(${l.id})">Message</button>`}      </div>    </div>  </a>`;}
 
 let currentAdImages = [];
 let currentAdImgIndex = 0;
@@ -2217,7 +2213,7 @@ function checkoutNegotiatedOffer(n){
   document.getElementById('ad-addcart-btn').style.display = sold ? 'none' : 'inline-block';
   document.getElementById('ad-contact-btn').style.display = sold ? 'none' : 'inline-block';
     document.getElementById('ad-offer-btn').style.display = (sold || l.negociable===false) ? 'none' : 'inline-block';
-  document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(id));
+  document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(id)); updateAdSEO(l);
   openModal('modal-ad');
 }
 function renderAdLivraison(l){
@@ -3223,7 +3219,7 @@ function clearModalPasswords(modalEl){
   if(!modalEl) return;
   modalEl.querySelectorAll('input[type="password"], input[type="text"][id$="password"]').forEach(inp=>{ inp.value=''; inp.type='password'; });
 }
-function closeModal(id){ const el=document.getElementById(id); if(el){ el.classList.remove('show'); clearModalPasswords(el); } }
+function closeModal(id){ const el=document.getElementById(id); if(el){ el.classList.remove('show'); clearModalPasswords(el); if(id==='modal-ad'){ resetAdSEO(); } } }
 function closeAllModals(){ document.querySelectorAll('.modal-overlay.show').forEach(m=>{ m.classList.remove('show'); clearModalPasswords(m); }); }
 document.querySelectorAll('.modal-overlay').forEach(overlay=>{
   overlay.addEventListener('click', e=>{ if(e.target===overlay){ overlay.classList.remove('show'); clearModalPasswords(overlay); } });
