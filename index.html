@@ -660,6 +660,7 @@ function initGoogleMapsAutocomplete(){
   <a onclick="showPage('messages')" data-page="messages">Messages<span id="messages-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('favoris')" data-page="favoris">Favoris</a>
   <a onclick="showPage('vendeurs-favoris'); renderVendeursFavoris();" data-page="vendeurs-favoris">Vendeurs favoris</a>
+          <a onclick="openModal('modal-mes-offres'); renderMesOffres();" data-page="mes-offres">💬 Mes offres</a>
   <a onclick="showPage('mes-annonces')" data-page="mes-annonces">Mes annonces</a>
   <a onclick="showPage('soldes')" data-page="soldes">🏷️ Soldes</a>
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
@@ -1249,7 +1250,15 @@ function initGoogleMapsAutocomplete(){
                     <button class="btn" style="width:100%;margin-top:12px" onclick="submitOffer()">Envoyer l'offre</button>
               </div>
           </div>
-          <!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
+<!-- MODAL MES OFFRES (negociation) -->
+  <div class="modal-overlay" id="modal-mes-offres" onclick="if(event.target===this) closeModal('modal-mes-offres')">
+      <div class="modal-box wide">
+            <button class="modal-close" onclick="closeModal('modal-mes-offres')">×</button>
+            <h2 style="margin-top:0">Mes offres</h2>
+            <div id="mes-offres-list" style="max-height:70vh;overflow:auto"></div>
+      </div>
+  </div>
+  <!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
 <div class="modal-overlay" id="modal-contact-info" onclick="if(event.target===this) cancelContactInfo()">
   <div class="modal-box" style="max-width:400px">
     <button class="modal-close" onclick="cancelContactInfo()">×</button>
@@ -2016,6 +2025,129 @@ function openOfferModal(){
       closeModal('modal-offer');
       alert('Votre offre a ete envoyee au vendeur !');
   }).catch(()=>{ errEl.textContent = 'Erreur reseau, merci de reessayer.'; errEl.style.display = 'block'; });
+  }
+function mkP(text){
+    var p = document.createElement('p');
+    p.className = 'small';
+    p.textContent = text;
+    return p;
+  }
+  function renderMesOffres(){
+    var el = document.getElementById('mes-offres-list');
+    if(!el) return;
+    if(!currentUser){ el.textContent = ''; el.appendChild(mkP('Connectez-vous pour voir vos offres.')); return; }
+    el.textContent = '';
+    el.appendChild(mkP('Chargement...'));
+    fetch(LISTINGS_API_BASE + '/api/negotiations?email=' + encodeURIComponent(currentUser.email))
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        var list = data.negotiations || data || [];
+        el.textContent = '';
+        if(!list.length){ el.appendChild(mkP('Aucune offre pour le moment.')); return; }
+        list.forEach(function(n){ el.appendChild(buildOfferCard(n)); });
+  })
+      .catch(function(){ el.textContent = ''; el.appendChild(mkP('Erreur de chargement des offres.')); });
+  }
+  function buildOfferCard(n){
+    var isSeller = currentUser && n.sellerEmail && currentUser.email.toLowerCase() === n.sellerEmail.toLowerCase();
+    var canAct = n.status === 'pending' && ((isSeller && n.turn === 'seller') || (!isSeller && n.turn === 'buyer'));
+    var statusMap = {accepted:'Acceptee', refused:'Refusee', expired:'Expiree', cancelled:'Annulee', pending:'En attente'};
+    var card = document.createElement('div');
+    card.style.border = '1px solid rgba(255,255,255,.15)';
+    card.style.borderRadius = '12px';
+    card.style.padding = '12px';
+    card.style.marginBottom = '10px';
+    var top = document.createElement('div');
+    top.style.display = 'flex';
+    top.style.justifyContent = 'space-between';
+    top.style.fontSize = '.8rem';
+    top.style.opacity = '.8';
+    var roleSpan = document.createElement('span');
+    roleSpan.textContent = isSeller ? 'Offre recue' : 'Offre envoyee';
+    var statusSpan = document.createElement('span');
+    statusSpan.textContent = statusMap[n.status] || n.status;
+    top.appendChild(roleSpan);
+    top.appendChild(statusSpan);
+    card.appendChild(top);
+    var titre = document.createElement('div');
+    titre.style.fontWeight = '600';
+    titre.style.marginTop = '4px';
+    titre.textContent = n.listingTitre || '';
+    card.appendChild(titre);
+    var prices = document.createElement('div');
+    prices.style.fontSize = '.85rem';
+    prices.style.opacity = '.85';
+    prices.textContent = 'Prix demande : ' + fmtPrice(n.originalPrice) + ' - Offre actuelle : ' + fmtPrice(n.currentOffer);
+    card.appendChild(prices);
+    if(n.finalPrice){
+      var fin = document.createElement('div');
+      fin.style.fontSize = '.85rem';
+      fin.style.color = '#2ecc71';
+      fin.textContent = 'Prix final : ' + fmtPrice(n.finalPrice);
+      card.appendChild(fin);
+  }
+    if(canAct){
+      var actions = document.createElement('div');
+      actions.style.marginTop = '8px';
+      actions.style.display = 'flex';
+      actions.style.gap = '8px';
+      actions.style.flexWrap = 'wrap';
+      var btnAccept = document.createElement('button');
+      btnAccept.className = 'btn';
+      btnAccept.style.padding = '6px 12px';
+      btnAccept.style.fontSize = '.85rem';
+      btnAccept.textContent = 'Accepter';
+      btnAccept.onclick = function(){ respondOffer(n.id, 'accept'); };
+      var btnRefuse = document.createElement('button');
+      btnRefuse.className = 'btn outline';
+      btnRefuse.style.padding = '6px 12px';
+      btnRefuse.style.fontSize = '.85rem';
+      btnRefuse.textContent = 'Refuser';
+      btnRefuse.onclick = function(){ respondOffer(n.id, 'refuse'); };
+      var btnCounter = document.createElement('button');
+      btnCounter.className = 'btn outline';
+      btnCounter.style.padding = '6px 12px';
+      btnCounter.style.fontSize = '.85rem';
+      btnCounter.textContent = 'Contre-offre';
+      var counterForm = document.createElement('div');
+      counterForm.style.marginTop = '8px';
+      counterForm.style.display = 'none';
+      var counterInput = document.createElement('input');
+      counterInput.type = 'number';
+      counterInput.placeholder = 'Montant';
+      counterInput.style.width = '120px';
+      counterInput.style.marginRight = '8px';
+      var btnSend = document.createElement('button');
+      btnSend.className = 'btn';
+      btnSend.style.padding = '6px 12px';
+      btnSend.style.fontSize = '.85rem';
+      btnSend.textContent = 'Envoyer';
+      btnSend.onclick = function(){
+        var amount = parseFloat(counterInput.value);
+        if(!amount || amount <= 0){ alert('Merci de saisir un montant valide.'); return; }
+        respondOffer(n.id, 'counter', amount);
+  };
+      btnCounter.onclick = function(){ counterForm.style.display = counterForm.style.display === 'none' ? 'block' : 'none'; };
+      counterForm.appendChild(counterInput);
+      counterForm.appendChild(btnSend);
+      actions.appendChild(btnAccept);
+      actions.appendChild(btnRefuse);
+      actions.appendChild(btnCounter);
+      card.appendChild(actions);
+      card.appendChild(counterForm);
+  }
+    return card;
+  }
+  function respondOffer(id, action, amount){
+    var body = {email: currentUser.email, action: action};
+    if(amount !== undefined) body.amount = amount;
+    fetch(LISTINGS_API_BASE + '/api/negotiations/' + id + '/respond', {
+      method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)
+  }).then(function(r){ return r.json().then(function(data){ return {status:r.status, data:data}; }); })
+    .then(function(res){
+      if(res.status >= 400){ alert(res.data.error || 'Erreur.'); return; }
+      renderMesOffres();
+  }).catch(function(){ alert('Erreur reseau, merci de reessayer.'); });
   }
   function openAd(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
