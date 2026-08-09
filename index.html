@@ -1542,7 +1542,7 @@ const LIVRAISON_MODES = {
   'relais': { label: 'Point relais (Mondial Relay)', payant: true }
 };
 const CATEGORIES = ["Immobilier","Véhicules","Mode","Maison & Jardin","Enfants & Bébé","Téléphonie","Informatique","Photo, Audio & Vidéo","Consoles & Jeux vidéo","Électroménager","Sports & Loisirs","Loisirs créatifs & Collection","Animaux","Emploi","Matériel pro","Services","Outillage","Autres"];
-const CATEGORIES_SHORT = {"Immobilier":"IM","Véhicules":"VE","Mode":"MO","Maison & Jardin":"MJ","Enfants & Bébé":"EB","Téléphonie":"TE","Informatique":"IN","Photo, Audio & Vidéo":"PV","Consoles & Jeux vidéo":"CJ","Électroménager":"EL","Sports & Loisirs":"SL","Loisirs créatifs & Collection":"LC","Animaux":"AN","Emploi":"EM","Matériel pro":"MP","Services":"SE","Outillage":"OU","Autres":"AU"};const CATEGORIES_ICON = {"Immobilier":"🏠","Véhicules":"🚗","Mode":"👗","Maison & Jardin":"🛋️","Enfants & Bébé":"🍼","Téléphonie":"📱","Informatique":"💻","Photo, Audio & Vidéo":"📷","Consoles & Jeux vidéo":"🎮","Électroménager":"🧺","Sports & Loisirs":"⚽","Loisirs créatifs & Collection":"🎨","Animaux":"🐾","Emploi":"💼","Matériel pro":"🏢","Services":"🤝","Outillage":"🔧","Autres":"📦"};
+const CATEGORIES_SHORT = {"Immobilier":"IM","Véhicules":"VE","Mode":"MO","Maison & Jardin":"MJ","Enfants & Bébé":"EB","Téléphonie":"TE","Informatique":"IN","Photo, Audio & Vidéo":"PV","Consoles & Jeux vidéo":"CJ","Électroménager":"EL","Sports & Loisirs":"SL","Loisirs créatifs & Collection":"LC","Animaux":"AN","Emploi":"EM","Matériel pro":"MP","Services":"SE","Outillage":"OU","Autres":"AU"};const CATEGORIES_ICON = {"Immobilier":'<i data-lucide="home" style="width:20px;height:20px"></i>',"Véhicules":'<i data-lucide="car" style="width:20px;height:20px"></i>',"Mode":'<i data-lucide="shirt" style="width:20px;height:20px"></i>',"Maison & Jardin":'<i data-lucide="sofa" style="width:20px;height:20px"></i>',"Enfants & Bébé":'<i data-lucide="baby" style="width:20px;height:20px"></i>',"Téléphonie":'<i data-lucide="smartphone" style="width:20px;height:20px"></i>',"Informatique":'<i data-lucide="laptop" style="width:20px;height:20px"></i>',"Photo, Audio & Vidéo":'<i data-lucide="camera" style="width:20px;height:20px"></i>',"Consoles & Jeux vidéo":'<i data-lucide="gamepad-2" style="width:20px;height:20px"></i>',"Électroménager":'<i data-lucide="refrigerator" style="width:20px;height:20px"></i>',"Sports & Loisirs":'<i data-lucide="dumbbell" style="width:20px;height:20px"></i>',"Loisirs créatifs & Collection":'<i data-lucide="palette" style="width:20px;height:20px"></i>',"Animaux":'<i data-lucide="paw-print" style="width:20px;height:20px"></i>',"Emploi":'<i data-lucide="briefcase" style="width:20px;height:20px"></i>',"Matériel pro":'<i data-lucide="building-2" style="width:20px;height:20px"></i>',"Services":'<i data-lucide="handshake" style="width:20px;height:20px"></i>',"Outillage":'<i data-lucide="wrench" style="width:20px;height:20px"></i>',"Autres":'<i data-lucide="package" style="width:20px;height:20px"></i>'};
 const CAR_BRANDS = ["Abarth","Alfa Romeo","Alpine","Aston Martin","Audi","Bentley","BMW","Bugatti","BYD","Cadillac","Chevrolet","Chrysler","Citroën","Cupra","Dacia","Daihatsu","Dodge","DS Automobiles","Ferrari","Fiat","Ford","Honda","Hummer","Hyundai","Infiniti","Isuzu","Iveco","Jaguar","Jeep","Kia","Lada","Lamborghini","Lancia","Land Rover","Lexus","Lotus","Maserati","Maybach","Mazda","McLaren","Mercedes-Benz","MG","Mini","Mitsubishi","Nissan","Opel","Peugeot","Polestar","Porsche","Renault","Rolls-Royce","Rover","Saab","Seat","Skoda","Smart","SsangYong","Subaru","Suzuki","Tesla","Toyota","Volkswagen","Volvo","Autre"];
 const MOTO_BRANDS = ["Aprilia","Beta","BMW","Cagiva","Derbi","Ducati","Fantic","Gas Gas","Gilera","Harley-Davidson","Honda","Husqvarna","Indian","Kawasaki","KTM","Kymco","Malaguti","MBK","Moto Guzzi","MV Agusta","Peugeot Motocycles","Piaggio","Rieju","Royal Enfield","Sherco","Suzuki","SYM","Triumph","Vespa","Yamaha","Zero Motorcycles","Autre"];
 function onCategorieChange(){
@@ -1909,11 +1909,11 @@ function renderAnnonces(){
 function fmtPrice(p){ return Number(p).toLocaleString('fr-FR')+' €'; }
 function isOnSale(l){ return !!(l.soldePrix && l.soldeExpire && l.soldeExpire > Date.now()); }
 function effectivePrice(l){ return isOnSale(l) ? l.soldePrix : l.prix; }
-const ICON_CHECK = '✅';
-const ICON_STAR = '⭐';
-const ICON_SHIELD = '🛡️';
-const ICON_TRUCK = '🚚';
-const ICON_CLOCK = '⏱️';
+const ICON_CHECK = '<i data-lucide="check-circle" style="width:1em;height:1em;vertical-align:-0.15em"></i>';
+const ICON_STAR = '<i data-lucide="star" style="width:1em;height:1em;vertical-align:-0.15em"></i>';
+const ICON_SHIELD = '<i data-lucide="shield-check" style="width:1em;height:1em;vertical-align:-0.15em"></i>';
+const ICON_TRUCK = '<i data-lucide="truck" style="width:1em;height:1em;vertical-align:-0.15em"></i>';
+const ICON_CLOCK = '<i data-lucide="clock" style="width:1em;height:1em;vertical-align:-0.15em"></i>';
 function timeAgo(ts){
   if(!ts) return '';
   const s = Math.max(0, Math.floor((Date.now()-ts)/1000));
