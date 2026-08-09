@@ -2064,6 +2064,13 @@ function renderThreadOfferCards(){
   .catch(function(){});
   }
   
+function checkoutNegotiatedOffer(n){
+  if(!n || n.status!=='accepted') return;
+  var price = n.finalPrice || n.currentOffer;
+  var item = {id: n.listingId, titre: n.listingTitre, prix: price, email: n.sellerEmail};
+  realCheckout([item]);
+  }
+  
   function buildOfferCard(n){
     var isSeller = currentUser && n.sellerEmail && currentUser.email.toLowerCase() === n.sellerEmail.toLowerCase();
     var canAct = n.status === 'pending' && ((isSeller && n.turn === 'seller') || (!isSeller && n.turn === 'buyer'));
@@ -2151,6 +2158,14 @@ function renderThreadOfferCards(){
       actions.appendChild(btnCounter);
       card.appendChild(actions);
       card.appendChild(counterForm);
+  }
+    if(n.status==='accepted' && !isSeller){
+  var btnPay = document.createElement('button');
+  btnPay.className = 'btn';
+  btnPay.style.marginTop = '8px';
+  btnPay.textContent = 'Payer ' + fmtPrice(n.finalPrice||n.currentOffer);
+  btnPay.onclick = function(){ checkoutNegotiatedOffer(n); };
+  card.appendChild(btnPay);
   }
     return card;
   }
