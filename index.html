@@ -1973,8 +1973,8 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
       <div class="card-time" style="opacity:.55">${(l.vues||0)} vue${(l.vues||0)>1?'s':''} · ${(l.favCount||0)} favori${(l.favCount||0)>1?'s':''}</div>
       <div class="row">
-        <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})">Favori</button>
-        ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})">Ajouter</button>
+        <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})" title="Favori">♥</button>
+        ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})" title="Ajouter au panier">🛒</button>
         <button class="iconbtn" onclick="event.stopPropagation();openMessages(${l.id})">Message</button>`}
       </div>
     </div>
