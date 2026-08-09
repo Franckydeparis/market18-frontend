@@ -660,9 +660,9 @@ function initGoogleMapsAutocomplete(){
   <a onclick="showPage('messages')" data-page="messages">Messages<span id="messages-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('favoris')" data-page="favoris">Favoris</a>
   <a onclick="showPage('vendeurs-favoris'); renderVendeursFavoris();" data-page="vendeurs-favoris">Vendeurs favoris</a>
-          <a onclick="openModal('modal-mes-offres'); renderMesOffres();" data-page="mes-offres">💬 Mes offres</a>
+          <a onclick="openModal('modal-mes-offres'); renderMesOffres();" data-page="mes-offres"><i data-lucide="message-square" style="width:1em;height:1em;vertical-align:-0.15em"></i> Mes offres</a>
   <a onclick="showPage('mes-annonces')" data-page="mes-annonces">Mes annonces</a>
-  <a onclick="showPage('soldes')" data-page="soldes">🏷️ Soldes</a>
+  <a onclick="showPage('soldes')" data-page="soldes"><i data-lucide="tag" style="width:1em;height:1em;vertical-align:-0.15em"></i> Soldes</a>
   <a onclick="showPage('panier')" data-page="panier">Panier<span id="cart-badge" class="badge" style="display:none">0</span></a>
   <a onclick="showPage('apropos')" data-page="apropos">À propos</a>
 <a onclick="installPwa()" id="pwa-install-btn" style="display:none">Installer l'application</a>
@@ -764,7 +764,7 @@ function initGoogleMapsAutocomplete(){
       <input id="f-ville" autocomplete="off" placeholder="Ville" oninput="renderAnnonces()">
       <input id="f-prix" type="number" min="0" placeholder="Prix maximum" oninput="renderAnnonces()">
       <button class="btn" onclick="renderAnnonces()">Rechercher</button>
-      <button class="btn outline" onclick="creerAlerteRecherche()">🔔 Creer une alerte</button>
+      <button class="btn outline" onclick="creerAlerteRecherche()"><i data-lucide="bell" style="width:1em;height:1em;vertical-align:-0.15em"></i> Creer une alerte</button>
     </div>
     
     <div style="background:rgba(255,255,255,.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:22px;padding:22px;border:1px solid rgba(255,255,255,.15)"><div id="ads" class="grid"></div></div>
@@ -782,14 +782,14 @@ function initGoogleMapsAutocomplete(){
         <input id="prix" type="number" min="0" step="1" placeholder="350" required>
         <p class="small" style="margin-top:4px">Market18.fr est actuellement entièrement gratuit pour tous les vendeurs (particuliers et professionnels) — aucune commission n'est prélevée.</p>
         <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px">
-          <input type="checkbox" id="pub-solde-toggle" style="width:auto" onchange="togglePubSoldeField()"> 🏷️ Article à solder
+          <input type="checkbox" id="pub-solde-toggle" style="width:auto" onchange="togglePubSoldeField()"> <i data-lucide="tag" style="width:1em;height:1em;vertical-align:-0.15em"></i> Article à solder
         </label>
         <div id="pub-solde-box" style="display:none;margin-top:8px">
           <label>Prix soldé (€)</label>
           <input id="pub-solde-prix" type="number" min="0" step="1" placeholder="Doit être inférieur au prix normal">
-          <p class="small" style="margin-top:4px">Le solde apparaîtra dans l'onglet 🏷️ Soldes du site pendant 10 jours.</p>
+          <p class="small" style="margin-top:4px">Le solde apparaîtra dans l'onglet <i data-lucide="tag" style="width:1em;height:1em;vertical-align:-0.15em"></i> Soldes du site pendant 10 jours.</p>
         </div>
-        <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="pub-non-negociable" style="width:auto"> 🚫 Prix non négociable (désactive les offres)</label>
+        <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="pub-non-negociable" style="width:auto"> <i data-lucide="ban" style="width:1em;height:1em;vertical-align:-0.15em"></i> Prix non négociable (désactive les offres)</label>
         <label>Catégorie *</label>
         <select id="categorie" required onchange="onCategorieChange()">
           <option value="" disabled selected>Choisir une catégorie</option>
@@ -905,7 +905,7 @@ function initGoogleMapsAutocomplete(){
   <section class="page" id="page-messages">
     <h3 style="margin-top:0">Messages</h3>
     <p class="small" style="margin-bottom:18px">Les fils de discussion des annonces que vous avez contactées apparaissent ici. (Historique conservé sur cet appareil et cette session uniquement.)</p>
-    <div class="small" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:10px 14px;margin-bottom:18px">🛡️ Nous garantissons la sécurité de vos échanges. Nous vous conseillons de rester sur la messagerie pour discuter et de passer par le paiement sécurisé pour vos transactions. Nous vous invitons fortement à ne pas divulguer vos coordonnées téléphoniques ni vos informations personnelles.</div>
+    <div class="small" style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:10px 14px;margin-bottom:18px"><i data-lucide="shield-check" style="width:1em;height:1em;vertical-align:-0.15em"></i> Nous garantissons la sécurité de vos échanges. Nous vous conseillons de rester sur la messagerie pour discuter et de passer par le paiement sécurisé pour vos transactions. Nous vous invitons fortement à ne pas divulguer vos coordonnées téléphoniques ni vos informations personnelles.</div>
     <div id="messages-list"></div>
   </section>
 
@@ -932,7 +932,7 @@ function initGoogleMapsAutocomplete(){
 
   <!-- SOLDES -->
   <section class="page" id="page-soldes">
-    <h3 style="margin-top:0">🏷️ Soldes en cours</h3>
+    <h3 style="margin-top:0"><i data-lucide="tag" style="width:1em;height:1em;vertical-align:-0.15em"></i> Soldes en cours</h3>
     <p class="small" style="margin-bottom:18px">Retrouvez ici toutes les annonces actuellement en promotion, avec le prix d'origine et le prix soldé.</p>
     <div id="soldes-grid" class="grid"></div>
   </section>
@@ -942,7 +942,7 @@ function initGoogleMapsAutocomplete(){
     <h3 style="margin-top:0">Panier</h3>
     <div id="cart-content"></div>
     <div id="cart-total" style="margin-top:20px;font-size:1.3rem;font-weight:900;display:none"></div>
-    <div id="cart-trust-badge" class="trust-payment-badge" style="margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.12);font-size:.9rem;line-height:1.4;display:none">🔒 <b>Paiement 100% sécurisé par Stripe</b> — vos données bancaires ne transitent jamais par Market18.fr et ne sont jamais stockées. Vous ne prenez aucun risque.</div>
+    <div id="cart-trust-badge" class="trust-payment-badge" style="margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.12);font-size:.9rem;line-height:1.4;display:none"><i data-lucide="lock" style="width:1em;height:1em;vertical-align:-0.15em"></i> <b>Paiement 100% sécurisé par Stripe</b> — vos données bancaires ne transitent jamais par Market18.fr et ne sont jamais stockées. Vous ne prenez aucun risque.</div>
     <button class="btn" id="pay-btn" style="margin-top:16px;display:none" onclick="simulatePayment()">Valider la commande (paiement test, aucun débit réel)</button>
   </section>
 
@@ -996,7 +996,7 @@ function initGoogleMapsAutocomplete(){
         <p id="ad-sold-banner" style="display:none;margin-top:16px;background:#1e0a45;color:#fff;font-weight:900;padding:10px 14px;border-radius:10px;text-align:center">Cette annonce a été vendue</p>
         <div class="row" style="margin-top:20px" id="ad-actions">
           <button class="btn" id="ad-addcart-btn" onclick="addCartCurrent()">Ajouter au panier</button>
-                    <button class="btn" id="ad-offer-btn" onclick="openOfferModal()">💬 Faire une offre</button>
+                    <button class="btn" id="ad-offer-btn" onclick="openOfferModal()"><i data-lucide="message-square" style="width:1em;height:1em;vertical-align:-0.15em"></i> Faire une offre</button>
           <button class="btn outline" id="ad-contact-btn" onclick="openMessages(currentAdId);closeModal('modal-ad')">Contacter le vendeur</button>
           <button class="iconbtn fav" id="ad-fav-btn" onclick="toggleFavCurrent()">Favori</button>
           <button class="iconbtn" id="ad-sms-btn" onclick="shareSMSCurrent()">Partager</button>
@@ -1048,7 +1048,7 @@ function initGoogleMapsAutocomplete(){
         </select>
       </div>
     </div>
-    <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="review-livraison" checked style="width:auto"> 📦 J'ai bien reçu ma commande</label><label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:8px"><input type="checkbox" id="review-litige" style="width:auto"> ⚠️ Signaler un problème avec cette vente (litige)</label><label>Commentaire</label>
+    <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="review-livraison" checked style="width:auto"> <i data-lucide="package" style="width:1em;height:1em;vertical-align:-0.15em"></i> J'ai bien reçu ma commande</label><label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:8px"><input type="checkbox" id="review-litige" style="width:auto"> <i data-lucide="triangle-alert" style="width:1em;height:1em;vertical-align:-0.15em"></i> Signaler un problème avec cette vente (litige)</label><label>Commentaire</label>
     <textarea id="review-comment" placeholder="Décrivez votre expérience avec ce vendeur..."></textarea>
     <button class="btn" style="margin-top:20px;width:100%" onclick="submitReview()">Publier mon avis</button>
   </div>
@@ -1411,7 +1411,7 @@ function initGoogleMapsAutocomplete(){
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px">
       <a class="linklike" style="color:#fff" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmarket18.fr" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/facebook" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> Facebook</a>
       <a class="linklike" style="color:#fff" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fmarket18.fr&text=Market18.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/x/ffffff" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> X / Twitter</a>
-      <a class="linklike" style="color:#fff" href="https://api.whatsapp.com/send?text=Market18.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger%20-%20https%3A%2F%2Fmarket18.fr" target="_blank" rel="noopener nofollow">💬 WhatsApp</a>
+      <a class="linklike" style="color:#fff" href="https://api.whatsapp.com/send?text=Market18.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger%20-%20https%3A%2F%2Fmarket18.fr" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/whatsapp" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> WhatsApp</a>
       <a class="linklike" style="color:#fff" href="https://t.me/share/url?url=https%3A%2F%2Fmarket18.fr&text=Market18.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/telegram" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> Telegram</a>
       <a class="linklike" style="color:#fff" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fmarket18.fr" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/linkedin" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> LinkedIn</a>
       <a class="linklike" style="color:#fff" href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fmarket18.fr&description=Market18.fr%2C%20la%20marketplace%20fran%C3%A7aise%20pour%20acheter%2C%20vendre%20et%20echanger" target="_blank" rel="noopener nofollow"><img src="https://cdn.simpleicons.org/pinterest" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> Pinterest</a>
@@ -2943,7 +2943,7 @@ function computeTrust(email){ const key = sellerKey(email); if(!key) return {sco
 }
 function trustBadgeHtml(email, big){
   const t = computeTrust(email);
-  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · ⚠️ ${t.litigeCount} litige(s) signalé(s)` : '');   if(!t.hasRating){ return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
+  const title = (t.hasRating ? `${t.label} · ${t.reviewCount} avis` : "Ce vendeur n'a pas encore reçu d'avis d'acheteur") + (t.litigeCount ? ` · <i data-lucide="triangle-alert" style="width:0.9em;height:0.9em;vertical-align:-0.1em"></i> ${t.litigeCount} litige(s) signalé(s)` : '');   if(!t.hasRating){ return `<span class="trust-badge new-seller${big?' lg':''}" title="${title}">Nouveau vendeur</span>`;
   }
   return `<span class="trust-badge${big?' lg':''}" title="${title}">${badgeStarsHtml(t.avgRating, big)}</span>`;
 }
@@ -2994,7 +2994,7 @@ function renderSellerProfile(){
     <div class="trust-item"><b>${t.memberSince ? t.memberSince.toLocaleDateString('fr-FR') : '–'}</b>Membre depuis</div>
     <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${t.reviewCount ? Math.round(t.deliveryRate*100)+'%' : '–'}</b>Livraisons confirmées</div><div class="trust-item"><b>${t.litigeCount||0}</b>Litige(s) signalé(s)</div><div class="trust-item"><b>${(t.score>=80?'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#22c55e;color:#22c55e"></i>':t.score>=50?'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#eab308;color:#eab308"></i>':'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#ef4444;color:#ef4444"></i>')+' '+t.score}</b>Indice Market18</div>
   `;
-  if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">💬 WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📞 Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
+  if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="" style="width:1em;height:1em;vertical-align:-0.15em"> WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><i data-lucide="phone" style="width:1em;height:1em;vertical-align:-0.15em"></i> Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
   var sellerListingsGrid = document.getElementById('seller-listings-grid');
   if (sellerListingsGrid) {
     sellerListingsGrid.innerHTML = sellerListings.length ? sellerListings.map(cardHtml).join('') : '<p class="empty">Ce vendeur n\'a aucune annonce en ligne pour le moment.</p>';
@@ -4042,7 +4042,7 @@ function renderAdminMessagesList(){
             '<b>'+escapeHtml(t.titre)+'</b> <span class="small">('+escapeHtml(t.buyerEmail)+')</span>' + alertBadge +
             '<div class="admin-msg-preview">'+escapeHtml(preview)+' <span class="small" style="opacity:.6">'+(last?timeAgo(last.ts):'')+'</span></div>' +
           '</div>' +
-          '<button class="btn small" onclick="deleteAdminThread(\''+safeKey+'\')" title="Supprimer cette conversation" style="background:#ef4444;flex-shrink:0">🗑</button>' +
+          '<button class="btn small" onclick="deleteAdminThread(\''+safeKey+'\')" title="Supprimer cette conversation" style="background:#ef4444;flex-shrink:0"><i data-lucide="trash-2" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>' +
         '</div>';
       if(expanded){
         html += '<div class="admin-msg-expanded">' +
