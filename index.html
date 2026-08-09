@@ -1071,7 +1071,7 @@ function initGoogleMapsAutocomplete(){
       <label>Adresse e-mail</label>
       <input id="login-email" name="login-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe</label>
-      <div style="position:relative"><input id="login-password" name="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('login-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
+      <div style="position:relative"><input id="login-password" name="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('login-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px"><i data-lucide="eye" style="width:1em;height:1em;vertical-align:-0.15em"></i></button></div>
       <button type="button" class="linklike" style="display:block;margin-top:8px;font-size:.85rem" onclick="forgotPassword()">Mot de passe oublié ?</button>
       <button class="btn" style="margin-top:16px;width:100%" onclick="doLogin()">Se connecter</button>
     </div>
@@ -1086,7 +1086,7 @@ function initGoogleMapsAutocomplete(){
       <label>Adresse e-mail</label>
       <input id="register-email" name="register-email" type="email" autocomplete="email" placeholder="vous@exemple.fr">
       <label>Mot de passe (8 caractères minimum)</label>
-      <div style="position:relative"><input id="register-password" name="register-password" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('register-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
+      <div style="position:relative"><input id="register-password" name="register-password" type="password" autocomplete="new-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('register-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px"><i data-lucide="eye" style="width:1em;height:1em;vertical-align:-0.15em"></i></button></div>
       <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:14px"><input type="checkbox" id="register-pro" onchange="document.getElementById('register-siret-wrap').style.display=this.checked?'block':'none'"> Je vends en tant que professionnel (auto-entrepreneur, société...)</label>
       <div id="register-siret-wrap" style="display:none;margin-top:8px">
         <label for="register-siret">Numéro SIRET (14 chiffres)</label>
@@ -1131,9 +1131,9 @@ function initGoogleMapsAutocomplete(){
 <p class="small"><span id="account-nom"></span> · <span id="account-email"></span></p>
     <h4 style="margin-bottom:6px">Changer mon mot de passe</h4>
     <label>Mot de passe actuel</label>
-    <div style="position:relative"><input id="change-current-password" name="change-current-password" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-current-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
+    <div style="position:relative"><input id="change-current-password" name="change-current-password" type="password" autocomplete="current-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-current-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px"><i data-lucide="eye" style="width:1em;height:1em;vertical-align:-0.15em"></i></button></div>
     <label>Nouveau mot de passe (8 caractères minimum)</label>
-    <div style="position:relative"><input id="change-new-password" name="change-new-password" type="password" autocomplete="new-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-new-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px">👁️</button></div>
+    <div style="position:relative"><input id="change-new-password" name="change-new-password" type="password" autocomplete="new-password" placeholder="••••••••" style="padding-right:36px;box-sizing:border-box"><button type="button" onclick="togglePwField('change-new-password', this)" aria-label="Afficher le mot de passe" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.05rem;line-height:1;padding:4px"><i data-lucide="eye" style="width:1em;height:1em;vertical-align:-0.15em"></i></button></div>
     <button class="btn" style="margin-top:12px;width:100%" onclick="doChangePassword()">Mettre à jour le mot de passe</button>
     <button class="btn outline" style="margin-top:20px;width:100%" onclick="doLogout()">Se déconnecter</button>
   </div>
@@ -1927,10 +1927,10 @@ function timeAgo(ts){
 function sellerPremiumBadgeHtml(l, trust){
   if(!l || !l.sellerIsPro) return '';
   var isParis = l.departement==='75' || /paris/i.test(l.ville||'');
-  if(l.gold) return '<span class="mini-tag" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#111;font-weight:800;margin-right:6px">⭐ Boutique Premium</span>';
-  if(trust && trust.verified) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">🏆 Vendeur Vérifié</span>';
-  if(isParis) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">🇫🇷 Commerce Parisien</span>';
-  return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px">✔️ Entreprise Certifiée</span>';
+  if(l.gold) return '<span class="mini-tag" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#111;font-weight:800;margin-right:6px"><i data-lucide="star" style="width:1em;height:1em;vertical-align:-0.15em"></i> Boutique Premium</span>';
+  if(trust && trust.verified) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px"><i data-lucide="trophy" style="width:1em;height:1em;vertical-align:-0.15em"></i> Vendeur Vérifié</span>';
+  if(isParis) return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px"><i data-lucide="landmark" style="width:1em;height:1em;vertical-align:-0.15em"></i> Commerce Parisien</span>';
+  return '<span class="mini-tag" style="background:#f59e0b;color:#fff;margin-right:6px"><i data-lucide="badge-check" style="width:1em;height:1em;vertical-align:-0.15em"></i> Entreprise Certifiée</span>';
 }
 function renderHomeZones(){
   var promos = listings.filter(function(l){ return !l.vendu && isOnSale(l); }).sort(function(a,b){return b.ts-a.ts;}).slice(0,4);
@@ -1973,8 +1973,8 @@ ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#f
       <div class="card-time">${ICON_CLOCK} Publié ${timeAgo(l.ts)}</div>
       <div class="card-time" style="opacity:.55">${(l.vues||0)} vue${(l.vues||0)>1?'s':''} · ${(l.favCount||0)} favori${(l.favCount||0)>1?'s':''}</div>
       <div class="row">
-        <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})" title="Favori">♥</button>
-        ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})" title="Ajouter au panier">🛒</button>
+        <button class="iconbtn fav ghost ${isFav?'active':''}" onclick="event.stopPropagation();toggleFav(${l.id})" title="Favori"><i data-lucide="heart" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
+        ${sold ? '' : `<button class="iconbtn ghost" onclick="event.stopPropagation();addCart(${l.id})" title="Ajouter au panier"><i data-lucide="shopping-cart" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
         <button class="iconbtn" onclick="event.stopPropagation();openMessages(${l.id})">Message</button>`}
       </div>
     </div>
@@ -2985,14 +2985,14 @@ function renderSellerProfile(){
     applyAvatarToEl(document.getElementById('seller-avatar'), info.avatarUrl, info.nom || nom); var addrBlock = document.getElementById('seller-address-block'); if(addrBlock){ if(info.adressePublique && info.adresseSiege){ addrBlock.innerHTML = '<div class="trust-item" style="width:100%;text-align:left"><b>\uD83D\uDCCD Adresse :</b> '+escapeHtml(info.adresseSiege)+' <a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(info.adresseSiege)+'" target="_blank" rel="noopener" style="margin-left:8px;color:#2563eb;font-weight:700;text-decoration:none">Voir sur Google Maps \u2192</a></div>'; } else { addrBlock.innerHTML=''; } }
   }).catch(function(){});
   renderFavoriVendeurBtn(email);
-  document.getElementById('seller-badge').innerHTML = sellerPremiumBadgeHtml(listing, t) + trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag">✔ Identité vérifiée</span>' : '') + (t.autoTrusted ? ' <span class="verified-tag" style="background:#f59e0b;color:#1a1a1a">🏅 Vendeur confirmé (3+ ventes)</span>' : '');
+  document.getElementById('seller-badge').innerHTML = sellerPremiumBadgeHtml(listing, t) + trustBadgeHtml(email, true) + (t.verified ? ' <span class="verified-tag"><i data-lucide="check" style="width:1em;height:1em;vertical-align:-0.15em"></i> Identité vérifiée</span>' : '') + (t.autoTrusted ? ' <span class="verified-tag" style="background:#f59e0b;color:#1a1a1a"><i data-lucide="medal" style="width:1em;height:1em;vertical-align:-0.15em"></i> Vendeur confirmé (3+ ventes)</span>' : '');
   document.getElementById('seller-label').textContent = t.label;
   document.getElementById('seller-stars').innerHTML = starsHtml(t.avgRating) + ` <span class="small">(${t.reviewCount} avis)</span>`;
   document.getElementById('seller-breakdown').innerHTML = `
     <div class="trust-item"><b>${t.salesCount}</b>Ventes réussies</div>
     <div class="trust-item"><b>${t.reviewCount ? t.avgRating.toFixed(1) : '–'}</b>Note moyenne</div>
     <div class="trust-item"><b>${t.memberSince ? t.memberSince.toLocaleDateString('fr-FR') : '–'}</b>Membre depuis</div>
-    <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${t.reviewCount ? Math.round(t.deliveryRate*100)+'%' : '–'}</b>Livraisons confirmées</div><div class="trust-item"><b>${t.litigeCount||0}</b>Litige(s) signalé(s)</div><div class="trust-item"><b>${(t.score>=80?'🟢':t.score>=50?'🟡':'🔴')+' '+t.score}</b>Indice Market18</div>
+    <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${t.reviewCount ? Math.round(t.deliveryRate*100)+'%' : '–'}</b>Livraisons confirmées</div><div class="trust-item"><b>${t.litigeCount||0}</b>Litige(s) signalé(s)</div><div class="trust-item"><b>${(t.score>=80?'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#22c55e;color:#22c55e"></i>':t.score>=50?'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#eab308;color:#eab308"></i>':'<i data-lucide="circle" style="width:0.8em;height:0.8em;vertical-align:-0.05em;fill:#ef4444;color:#ef4444"></i>')+' '+t.score}</b>Indice Market18</div>
   `;
   if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">💬 WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📞 Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
   var sellerListingsGrid = document.getElementById('seller-listings-grid');
