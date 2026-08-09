@@ -789,6 +789,7 @@ function initGoogleMapsAutocomplete(){
           <input id="pub-solde-prix" type="number" min="0" step="1" placeholder="Doit être inférieur au prix normal">
           <p class="small" style="margin-top:4px">Le solde apparaîtra dans l'onglet 🏷️ Soldes du site pendant 10 jours.</p>
         </div>
+        <label style="display:flex;align-items:center;gap:8px;font-weight:normal;margin-top:14px"><input type="checkbox" id="pub-non-negociable" style="width:auto"> 🚫 Prix non négociable (désactive les offres)</label>
         <label>Catégorie *</label>
         <select id="categorie" required onchange="onCategorieChange()">
           <option value="" disabled selected>Choisir une catégorie</option>
@@ -1501,6 +1502,7 @@ function backendToFrontend(l){
 }
 function frontendToBackend(l){
   return {
+    negociable: l.negociable!==false,
     titre: l.titre,
     description: l.desc || '',
     prix: l.prix,
@@ -2206,6 +2208,7 @@ function checkoutNegotiatedOffer(n){
   document.getElementById('ad-sold-banner').style.display = sold ? 'block' : 'none';
   document.getElementById('ad-addcart-btn').style.display = sold ? 'none' : 'inline-block';
   document.getElementById('ad-contact-btn').style.display = sold ? 'none' : 'inline-block';
+    document.getElementById('ad-offer-btn').style.display = (sold || l.negociable===false) ? 'none' : 'inline-block';
   document.getElementById('ad-fav-btn').classList.toggle('active', favorites.includes(id));
   openModal('modal-ad');
 }
@@ -2765,7 +2768,7 @@ const jardin = (categorie === 'Immobilier') ? document.getElementById('jardin').
 
   const livraison = collectPubLivraison();
   const geo = await geocodeVille(ville);
-  const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, baignoire, wc, balcon, jardin, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison};
+  const draft = {titre, prix, categorie, marque, typeBien, surface, pieces, chambres, etage, garage, baignoire, wc, balcon, jardin, ville, nom, email, telephone, desc, etat, lat: geo?geo.lat:null, lon: geo?geo.lon:null, images: uploadedImages.length?uploadedImages:[], ts:Date.now(), vendu:false, soldePrix, soldeExpire, livraison, negociable: document.getElementById('pub-non-negociable').checked ? false : true};
   if(LISTINGS_API_BASE){
     try{
       const res = await fetch(LISTINGS_API_BASE+'/api/listings', {
