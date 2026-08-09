@@ -994,6 +994,7 @@ function initGoogleMapsAutocomplete(){
         <p id="ad-sold-banner" style="display:none;margin-top:16px;background:#1e0a45;color:#fff;font-weight:900;padding:10px 14px;border-radius:10px;text-align:center">Cette annonce a été vendue</p>
         <div class="row" style="margin-top:20px" id="ad-actions">
           <button class="btn" id="ad-addcart-btn" onclick="addCartCurrent()">Ajouter au panier</button>
+                    <button class="btn" id="ad-offer-btn" onclick="openOfferModal()">💬 Faire une offre</button>
           <button class="btn outline" id="ad-contact-btn" onclick="openMessages(currentAdId);closeModal('modal-ad')">Contacter le vendeur</button>
           <button class="iconbtn fav" id="ad-fav-btn" onclick="toggleFavCurrent()">Favori</button>
           <button class="iconbtn" id="ad-sms-btn" onclick="shareSMSCurrent()">Partager</button>
@@ -1232,7 +1233,23 @@ function initGoogleMapsAutocomplete(){
   </div>
 </div>
 
-<!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
+<!-- MODAL OFFRE (negociation) -->
+          <div class="modal-overlay" id="modal-offer" onclick="if(event.target===this) closeModal('modal-offer')">
+              <div class="modal-box" style="max-width:400px">
+                    <button class="modal-close" onclick="closeModal('modal-offer')">×</button>
+                    <h2 style="margin-top:0">Faire une offre</h2>
+                    <p class="small" id="offer-listing-title" style="font-weight:600"></p>
+                    <p class="small" style="color:#666" id="offer-listing-price"></p>
+                    <label>Votre offre (€)</label>
+                    <input type="number" id="offer-amount" placeholder="Montant en euros">
+                    <p class="small" id="offer-bounds-hint" style="color:#666;margin-top:4px"></p>
+                    <label style="margin-top:10px">Message (optionnel)</label>
+                    <textarea id="offer-message" placeholder="Un message pour le vendeur..." rows="3"></textarea>
+                    <p class="small" id="offer-error" style="color:#c0392b;display:none"></p>
+                    <button class="btn" style="width:100%;margin-top:12px" onclick="submitOffer()">Envoyer l'offre</button>
+              </div>
+          </div>
+          <!-- MODAL COORDONNEES CONTACT (remplace prompt(), non supporte en PWA installee) -->
 <div class="modal-overlay" id="modal-contact-info" onclick="if(event.target===this) cancelContactInfo()">
   <div class="modal-box" style="max-width:400px">
     <button class="modal-close" onclick="cancelContactInfo()">×</button>
@@ -1970,7 +1987,37 @@ function openPhotoZoom(){
   document.getElementById('zoom-img').src = currentAdImages[currentAdImgIndex];
   openModal('modal-photo-zoom');
 }
-function openAd(id){
+function openOfferModal(){
+    if(!currentUser){ alert('Connectez-vous pour faire une offre.'); return; }
+    const l = listings.find(x=>x.id===currentAdId);
+    if(!l) return;
+    if(currentUser.email && l.email && currentUser.email.toLowerCase()===l.email.toLowerCase()){ alert('Vous ne pouvez pas faire une offre sur votre propre annonce.'); return; }
+    document.getElementById('offer-listing-title').textContent = l.titre || '';
+    document.getElementById('offer-listing-price').textContent = 'Prix demande : ' + fmtPrice(l.prix);
+    document.getElementById('offer-bounds-hint').textContent = 'Le vendeur pourra accepter, refuser ou faire une contre-proposition.';
+    document.getElementById('offer-amount').value = '';
+    document.getElementById('offer-message').value = '';
+    document.getElementById('offer-error').style.display = 'none';
+    openModal('modal-offer');
+  }
+  function submitOffer(){
+    const errEl = document.getElementById('offer-error');
+    errEl.style.display = 'none';
+    const amount = parseFloat(document.getElementById('offer-amount').value);
+    if(!amount || amount <= 0){ errEl.textContent = 'Merci de saisir un montant valide.'; errEl.style.display = 'block'; return; }
+    if(!currentUser){ errEl.textContent = 'Connectez-vous pour faire une offre.'; errEl.style.display = 'block'; return; }
+    const message = document.getElementById('offer-message').value || '';
+    fetch(LISTINGS_API_BASE + '/api/negotiations', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({listingId: currentAdId, buyerEmail: currentUser.email, amount: amount, message: message})
+  }).then(r=>r.json().then(data=>({status:r.status, data}))).then(res=>{
+      if(res.status >= 400){ errEl.textContent = res.data.error || 'Erreur lors de l envoi de l offre.'; errEl.style.display = 'block'; return; }
+      closeModal('modal-offer');
+      alert('Votre offre a ete envoyee au vendeur !');
+  }).catch(()=>{ errEl.textContent = 'Erreur reseau, merci de reessayer.'; errEl.style.display = 'block'; });
+  }
+  function openAd(id){
   const l = listings.find(x=>x.id===id); if(!l) return;
   currentAdId = id;
   fetch(LISTINGS_API_BASE+'/api/listings/'+id+'/vue', {method:'POST'}).catch(()=>{});
