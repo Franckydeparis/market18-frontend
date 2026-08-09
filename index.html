@@ -650,9 +650,9 @@ function initGoogleMapsAutocomplete(){
 <div class="nav-top-row">
 <a onclick="openAccountArea()" id="nav-account">Connexion</a>
 <a onclick="doLogout()" id="nav-logout" style="display:none">Déconnexion</a>
-<button type="button" onclick="navGoBack()" id="nav-back-btn" title="Page precedente" style="background:none;border:none;color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;padding:8px 10px;border-radius:10px">◀</button>
+<button type="button" onclick="navGoBack()" id="nav-back-btn" title="Page precedente" style="background:none;border:none;color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;padding:8px 10px;border-radius:10px"><i data-lucide="chevron-left" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
 <button type="button" onclick="toggleNavMenu()" id="nav-menu-toggle">☰ Menu</button>
-<button type="button" onclick="navGoForward()" id="nav-forward-btn" title="Page suivante" style="background:none;border:none;color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;padding:8px 10px;border-radius:10px">▶</button>
+<button type="button" onclick="navGoForward()" id="nav-forward-btn" title="Page suivante" style="background:none;border:none;color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;padding:8px 10px;border-radius:10px"><i data-lucide="chevron-right" style="width:1em;height:1em;vertical-align:-0.15em"></i></button>
 </div>
 <div id="nav-menu-panel">
   <a onclick="showPage('accueil')" data-page="accueil">Accueil</a>
@@ -677,10 +677,10 @@ function initGoogleMapsAutocomplete(){
       <h2>Acheter et vendre en toute confiance.</h2>
       <p>Publiez vos produits en quelques clics et trouvez rapidement ce que vous cherchez.</p>
       <div class="hero-pills">
-        <span class="hero-pill c-blue">🛡️ Paiement sécurisé</span>
-        <span class="hero-pill c-green">✅ Vendeurs vérifiés</span>
-        <span class="hero-pill c-orange">🚚 Livraison partout en France</span>
-        <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer">🎧 Support français</span>
+        <span class="hero-pill c-blue"><i data-lucide="shield-check" style="width:1em;height:1em;vertical-align:-0.15em"></i> Paiement sécurisé</span>
+        <span class="hero-pill c-green"><i data-lucide="check-circle" style="width:1em;height:1em;vertical-align:-0.15em"></i> Vendeurs vérifiés</span>
+        <span class="hero-pill c-orange"><i data-lucide="truck" style="width:1em;height:1em;vertical-align:-0.15em"></i> Livraison partout en France</span>
+        <span class="hero-pill c-violet" onclick="showSupportContact()" style="cursor:pointer"><i data-lucide="headphones" style="width:1em;height:1em;vertical-align:-0.15em"></i> Support français</span>
       </div>
 <div id="video-banner">
   <div>
@@ -689,7 +689,7 @@ function initGoogleMapsAutocomplete(){
 </div>
 
       <div style="max-width:640px;margin:24px auto"><input id="hero-search" autocomplete="off" placeholder="Rechercher un produit, une marque, une ville..." onkeydown="if(event.key==='Enter')heroSearch()" style="width:100%;padding:16px 20px;border:none;border-radius:18px;font-size:1rem;box-shadow:0 12px 28px rgba(0,0,0,.28);background:#7c3aed;color:#fff"></div><div id="promo-gratuit-banner" style="max-width:640px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 20px;text-align:center;color:#fff"> <strong style="font-size:1.15rem">100% GRATUIT pour les particuliers et les professionnels jusqu'au 31/07/2027 !</strong> <div style="margin-top:8px;background:rgba(255,255,255,.18);border-radius:10px;padding:6px 14px;display:inline-block;font-size:.85rem;font-weight:600">100% sans pub</div> </div> <div id="campagne-18e-banner" style="max-width:900px;margin:18px auto 0;background:linear-gradient(135deg,#7c3aed,#4c1d95);border-radius:14px;padding:16px 0 18px;text-align:center;color:#fff;overflow:hidden">
-<strong style="font-size:1.05rem;display:block;margin-bottom:12px">📍 Market18 arrive dans le 18e arrondissement de Paris !</strong>
+<strong style="font-size:1.05rem;display:block;margin-bottom:12px"><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Market18 arrive dans le 18e arrondissement de Paris !</strong>
 <div id="campagne-carousel-viewport"><div id="campagne-carousel-track"><div style="padding:20px;opacity:.7;font-size:.85rem">Chargement des annonces...</div></div></div>
 <p class="small" style="margin:12px 20px 0;opacity:.9">Commerçants donnez votre QR code à vos clients pour retrouver votre boutique sans effort.</p>
 </div>
@@ -742,15 +742,15 @@ function initGoogleMapsAutocomplete(){
     </div>
   
       <div class="section" id="home-promos-section" style="display:none">
-        <h3>🔥 Promotions</h3>
+        <h3><i data-lucide="flame" style="width:1em;height:1em;vertical-align:-0.15em"></i> Promotions</h3>
         <div class="grid" id="home-promos"></div>
       </div>
       <div class="section" id="home-nouveautes-section" style="display:none">
-        <h3>🆕 Nouveautés</h3>
+        <h3><i data-lucide="sparkles" style="width:1em;height:1em;vertical-align:-0.15em"></i> Nouveautés</h3>
         <div class="grid" id="home-nouveautes"></div>
       </div>
       <div class="section" id="home-paris-section" style="display:none">
-        <h3>📍 Made in Paris</h3>
+        <h3><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Made in Paris</h3>
         <div class="grid" id="home-paris"></div>
       </div>
     </section>
@@ -2994,7 +2994,7 @@ function renderSellerProfile(){
     <div class="trust-item"><b>${t.memberSince ? t.memberSince.toLocaleDateString('fr-FR') : '–'}</b>Membre depuis</div>
     <div class="trust-item"><b>${t.reactivityPct===null ? '–' : Math.round(t.reactivityPct*100)+'%'}</b>Taux de réponse</div><div class="trust-item"><b>${t.reviewCount ? Math.round(t.deliveryRate*100)+'%' : '–'}</b>Livraisons confirmées</div><div class="trust-item"><b>${t.litigeCount||0}</b>Litige(s) signalé(s)</div><div class="trust-item"><b>${(t.score>=80?'🟢':t.score>=50?'🟡':'🔴')+' '+t.score}</b>Indice Market18</div>
   `;
-  if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">💬 WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📞 Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📍 Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
+  if(listing && listing.sellerIsPro && listing.telephone){ document.getElementById('seller-breakdown').innerHTML += '<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;width:100%"><a href="https://wa.me/'+listing.telephone.replace(/[^0-9]/g,'')+'" target="_blank" rel="noopener" style="background:#25D366;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">💬 WhatsApp</a><a href="tel:'+listing.telephone+'" style="background:#2563eb;color:#fff;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem">📞 Appeler</a>'+(listing.ville?'<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(listing.ville)+'" target="_blank" rel="noopener" style="background:#f3f4f6;color:#111;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.85rem"><i data-lucide="map-pin" style="width:1em;height:1em;vertical-align:-0.15em"></i> Itinéraire</a>':'')+'</div>'; } var sellerListings = listings.filter(function(l){ return sellerKey(l.email)===key && !l.vendu; });
   var sellerListingsGrid = document.getElementById('seller-listings-grid');
   if (sellerListingsGrid) {
     sellerListingsGrid.innerHTML = sellerListings.length ? sellerListings.map(cardHtml).join('') : '<p class="empty">Ce vendeur n\'a aucune annonce en ligne pour le moment.</p>';
