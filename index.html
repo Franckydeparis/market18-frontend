@@ -712,7 +712,7 @@ function initGoogleMapsAutocomplete(){
         var img = (typeof thumb === "function") ? thumb(l) : ((l.images && l.images[0]) || "");
         var price = (typeof fmtPrice === "function") ? fmtPrice(l.prix) : (l.prix + " €");
         var titre = (typeof escapeHtml === "function") ? escapeHtml(l.titre||"") : (l.titre||"");
-        return '<div class="campagne-card" data-id="'+l.id+'"><img src="'+img+'" loading="lazy"><div class="cc-body"><div class="cc-title">'+titre+'</div><div class="cc-price">'+price+'</div></div></div>';
+        return '<div class="campagne-card" data-id="'+l.id+'"><img src="'+img+'" loading="lazy" alt="'+titre+'"><div class="cc-body"><div class="cc-title">'+titre+'</div><div class="cc-price">'+price+'</div></div></div>';
       }).join("");
       track.innerHTML = html + html;
       Array.from(track.querySelectorAll(".campagne-card")).forEach(function(el){
@@ -983,7 +983,7 @@ function initGoogleMapsAutocomplete(){
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px" id="modal-ad-grid">
       <div class="modal-gallery">
         <div style="position:relative">
-          <img class="main" id="ad-img" onclick="openPhotoZoom()" style="cursor:zoom-in">
+          <img class="main" id="ad-img" onclick="openPhotoZoom()" style="cursor:zoom-in" alt="Photo de l'annonce">
           <button class="gallery-arrow left" onclick="adGalleryStep(-1)" id="ad-gallery-prev" aria-label="Photo précédente">‹</button>
           <button class="gallery-arrow right" onclick="adGalleryStep(1)" id="ad-gallery-next" aria-label="Photo suivante">›</button>
         </div>
@@ -1018,7 +1018,7 @@ function initGoogleMapsAutocomplete(){
 <div class="modal-overlay" id="modal-photo-zoom">
   <div style="max-width:95vw;max-height:95vh;position:relative;padding:16px;border-radius:26px;background:linear-gradient(135deg,#7c3aed,#5b21b6);box-shadow:0 20px 60px rgba(0,0,0,.5)">
     <button class="modal-close" onclick="closeModal('modal-photo-zoom')" style="position:absolute;top:-44px;right:0">×</button>
-    <img id="zoom-img" style="max-width:calc(95vw - 32px - 8px);max-height:calc(90vh - 32px - 8px);object-fit:contain;border-radius:14px;display:block;border:4px solid #ffffff" src="">
+    <img id="zoom-img" style="max-width:calc(95vw - 32px - 8px);max-height:calc(90vh - 32px - 8px);object-fit:contain;border-radius:14px;display:block;border:4px solid #ffffff" alt="Photo agrandie" src="">
   </div>
 </div>
 
@@ -1960,7 +1960,7 @@ function cardHtml(l){
   const hasDelivery = Array.isArray(l.livraison) && l.livraison.length>0;
   return `<div class="card ${sold?'sold':''}" onclick="openAd(${l.id})">
     <div style="position:relative">
-      <img src="${escapeHtml(thumb(l))}" loading="lazy">
+      <img src="${escapeHtml(thumb(l))}" loading="lazy" alt="${escapeHtml(l.titre||'Annonce')}">
       ${sold ? '<div class="sold-badge">Vendu</div>' : ''}
       ${onSale ? '<div class="sold-badge" style="background:#f43f5e">Solde</div>' : ''}
     </div>
@@ -1968,7 +1968,7 @@ function cardHtml(l){
       <div class="cat-tag"><span class="cat-badge-sm">${CATEGORIES_SHORT[l.categorie]||'?'}</span>${escapeHtml(l.categorie||'')}</div>
       <h4>${escapeHtml(l.titre)}</h4>
 ${l.sellerIsPro ? '<span style="display:inline-block;background:#f59e0b;color:#fff;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;margin-left:6px;vertical-align:middle">Pro</span>' : ''}      <div class="price">${priceHtml}</div>
-      <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:16px;height:16px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:3px">' : ''}${trustBadgeHtml(l.email)}</span></div>
+      <div class="city">${escapeHtml(l.ville||'-')} · <span onclick="event.stopPropagation();openSellerProfileFromCard('${escapeAttr(l.email||'')}')" style="cursor:pointer">${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:16px;height:16px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:3px" alt="Avatar du vendeur">' : ''}${trustBadgeHtml(l.email)}</span></div>
       <div class="card-meta-row">
         ${(Date.now()-(l.ts||0))<48*3600*1000 ? '<span class="mini-tag" style="background:#22c55e;color:#fff">Nouveau</span>' : ''}${sellerPremiumBadgeHtml(l, trust)}
         
@@ -1991,7 +1991,7 @@ let currentAdImages = [];
 let currentAdImgIndex = 0;
 function renderAdGallery(){
   document.getElementById('ad-img').src = currentAdImages[currentAdImgIndex];
-  document.getElementById('ad-thumbs').innerHTML = currentAdImages.map((img,i)=>`<img src="${escapeHtml(img)}" class="${i===currentAdImgIndex?'active':''}" onclick="currentAdImgIndex=${i};renderAdGallery()">`).join('');
+  document.getElementById('ad-thumbs').innerHTML = currentAdImages.map((img,i)=>`<img src="${escapeHtml(img)}" alt="Photo ${i+1}" class="${i===currentAdImgIndex?'active':''}" onclick="currentAdImgIndex=${i};renderAdGallery()">`).join('');
   const multi = currentAdImages.length > 1;
   document.getElementById('ad-gallery-prev').disabled = !multi;
   document.getElementById('ad-gallery-next').disabled = !multi;
@@ -2587,7 +2587,7 @@ document.getElementById('edit-jardin').value = (l.jardin===true||l.jardin==='Oui
 }
 function renderEditPhotosGrid(){
   const grid = document.getElementById('edit-photos-grid');
-  grid.innerHTML = editPhotosDraft.map((img,i)=>`<div class="edit-photo-thumb"><img src="${escapeHtml(img)}"><button class="rm" onclick="removeEditPhoto(${i})">×</button></div>`).join('');
+  grid.innerHTML = editPhotosDraft.map((img,i)=>`<div class="edit-photo-thumb"><img src="${escapeHtml(img)}" alt="Photo ${i+1}"><button class="rm" onclick="removeEditPhoto(${i})">×</button></div>`).join('');
   document.getElementById('edit-upload-zone').style.display = editPhotosDraft.length >= 4 ? 'none' : 'block';
 }
 function removeEditPhoto(i){
@@ -2665,7 +2665,7 @@ l.jardin = (l.categorie === 'Immobilier') ? document.getElementById('edit-jardin
 function renderPhotoPreview(){
   const preview = document.getElementById('preview');
   preview.innerHTML = uploadedImages.map((dataUrl,i)=>
-    `<div class="edit-photo-thumb"><img src="${dataUrl}"><button type="button" class="rm" onclick="removeUploadedImage(${i})">×</button></div>`
+    `<div class="edit-photo-thumb"><img src="${dataUrl}" alt="Aperçu ${i+1}"><button type="button" class="rm" onclick="removeUploadedImage(${i})">×</button></div>`
   ).join('');
 }
 function removeUploadedImage(i){
@@ -2888,7 +2888,7 @@ function renderCartPage(){
   const items = cart.map(id=>listings.find(l=>l.id===id)).filter(Boolean);
   if(!items.length){ el.innerHTML = '<p class="empty">Votre panier est vide.</p>'; document.getElementById('cart-total').style.display='none';document.getElementById('cart-trust-badge').style.display='none'; document.getElementById('pay-btn').style.display='none'; return; }
   let total=0;
-  el.innerHTML = items.map(l=>{ total+=effectivePrice(l); const priceHtml = isOnSale(l) ? `<span style="text-decoration:line-through;opacity:.6;margin-right:6px">${fmtPrice(l.prix)}</span><span style="color:#f43f5e">${fmtPrice(l.soldePrix)}</span>` : fmtPrice(l.prix); return `<div class="admin-item"><img src="${escapeHtml(thumb(l))}"><div class="info"><div class="t">${escapeHtml(l.titre)}</div><div>${priceHtml}</div></div><button class="iconbtn" onclick="removeCart(${l.id})">Retirer</button></div>`; }).join('');
+  el.innerHTML = items.map(l=>{ total+=effectivePrice(l); const priceHtml = isOnSale(l) ? `<span style="text-decoration:line-through;opacity:.6;margin-right:6px">${fmtPrice(l.prix)}</span><span style="color:#f43f5e">${fmtPrice(l.soldePrix)}</span>` : fmtPrice(l.prix); return `<div class="admin-item"><img src="${escapeHtml(thumb(l))}" alt="${escapeHtml(l.titre||'Annonce')}"><div class="info"><div class="t">${escapeHtml(l.titre)}</div><div>${priceHtml}</div></div><button class="iconbtn" onclick="removeCart(${l.id})">Retirer</button></div>`; }).join('');
   document.getElementById('cart-total').style.display='block';document.getElementById('cart-trust-badge').style.display='block';
   document.getElementById('cart-total').textContent = 'Total : '+fmtPrice(total);
   document.getElementById('pay-btn').style.display='inline-block';
@@ -3853,7 +3853,7 @@ function renderMesAnnonces(){
     const sold = !!l.vendu;
     return `<div class="card ${sold?'sold':''}">
       <div style="position:relative">
-        <img src="${escapeHtml(thumb(l))}" loading="lazy">
+        <img src="${escapeHtml(thumb(l))}" loading="lazy" alt="${escapeHtml(l.titre||'Annonce')}">
         <span class="sold-badge" style="${sold?'':'background:#16a34a'}">${sold?'Vendue':'En ligne'}</span>
       </div>
       <div class="body">
@@ -3861,7 +3861,7 @@ function renderMesAnnonces(){
         <h4>${escapeHtml(l.titre)}</h4>
         <div class="price">${fmtPrice(l.prix)}</div>
         <div class="city">${escapeHtml(l.ville||'-')}</div>
-        ${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-top:6px;border:1px solid #ddd" title="Ton avatar">' : ''}
+        ${l.sellerAvatarUrl ? '<img src="'+escapeAttr(l.sellerAvatarUrl)+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-top:6px;border:1px solid #ddd" title="Ton avatar" alt="Ton avatar">' : ''}
         <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
           <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openAd(${l.id})">Voir</button>
           <button class="btn outline" style="padding:8px 12px;font-size:.85rem" onclick="openEditPhotos(${l.id})">Modifier</button>
@@ -3944,7 +3944,7 @@ function renderAdminAds(){
     sorted.map(l=>`
     <div class="admin-item">
       <input type="checkbox" style="width:auto" ${selectedAdIds.includes(l.id)?'checked':''} onchange="toggleAdSelected(${l.id}, this.checked)">
-      <img src="${thumb(l)}">
+      <img src="${thumb(l)}" alt="${escapeHtml(l.titre||'Annonce')}">
       <div class="info"><div class="t">${escapeHtml(l.titre)}${l.vendu?' <span style="color:#f43f5e">· Vendu</span>':''}${isOnSale(l)?' <span style="color:#f43f5e">· Solde jusqu\'au '+new Date(l.soldeExpire).toLocaleDateString('fr-FR')+'</span>':''}</div><div class="small">${escapeHtml(l.categorie||'')} · ${isOnSale(l) ? fmtPrice(l.prix)+' → '+fmtPrice(l.soldePrix) : fmtPrice(l.prix)} · ${escapeHtml(l.ville||'')} · ${escapeHtml(l.nom||'')}${l.email?' · '+escapeHtml(l.email):''}</div>
         ${!isOnSale(l) ? `<div style="display:flex;gap:6px;margin-top:8px">
           <input type="number" min="0" step="0.01" id="solde-input-${l.id}" placeholder="Prix soldé (${fmtPrice(l.prix)})" style="max-width:160px;padding:6px 8px;font-size:.85rem">
